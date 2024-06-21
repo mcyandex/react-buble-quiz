@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 body {
   animation: fadeInAnimation ease 2s;
   animation-iteration-count: 1;

@@ -19,9 +19,6 @@ export default function App() {
                 style={{ width: "10vh", height: "auto" }}
               />
             </div>
-            <div className="">B i b l e</div>
-            <div className="">V e r s e</div>
-            <div className="">M a s t e r</div>
           </div>
         </MDBCol>
         <MDBCol

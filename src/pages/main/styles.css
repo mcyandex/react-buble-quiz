@@ -1,0 +1,8 @@
+@media (min-width: 300px) and (max-width: 550px) {
+  .chapterOptions .col-sm-6 {
+    width: 50%;
+  }
+  .verseOptions .col-sm-6 {
+    width: 50%;
+  }
+}

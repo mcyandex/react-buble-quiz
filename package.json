@@ -1,0 +1,43 @@
+{
+  "name": "new",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "react-scripts start"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "assert": "^2.1.0",
+    "axios": "^1.7.2",
+    "browserify-zlib": "^0.2.0",
+    "follow-redirects": "^1.15.6",
+    "https": "^1.0.0",
+    "https-browserify": "^1.0.0",
+    "mdb-react-ui-kit": "^8.0.0",
+    "proxy-from-env": "^1.1.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.23.1",
+    "react-scripts": "^5.0.1",
+    "react-select": "^5.8.0",
+    "stream": "^0.0.2",
+    "stream-browserify": "^3.0.0",
+    "stream-http": "^3.2.0",
+    "url": "^0.11.3"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

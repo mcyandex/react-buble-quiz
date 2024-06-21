@@ -1,0 +1,20 @@
+.start-page {
+  height: 100%;
+  width: 100%;
+  background-color: white;
+}
+
+.start-page-main {
+  height: inherit;
+}
+
+.start-page-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 4rem;
+}
+
+.start-page-content {
+  font-size: 2rem;
+}

@@ -1,0 +1,72 @@
+{
+  "quizzes": [
+    {
+      "title": "HTML",
+      "icon": "./assets/images/icon-html.svg",
+      "questions": [
+        {
+          "id": 1,
+          "question": "What does HTML stand for?",
+          "options": [
+            "Hyper Trainer Marking Language",
+            "Hyper Text Marketing Language",
+            "Hyper Text Markup Language",
+            "Hyper Text Markup Leveler"
+          ],
+          "answer": "Hyper Text Markup Language"
+        }
+      ]
+    },
+    {
+      "title": "CSS",
+      "icon": "./assets/images/icon-css.svg",
+      "questions": [
+        {
+          "id": 1,
+          "question": "What does CSS stand for?",
+          "options": [
+            "Colorful Style Sheets",
+            "Computer Style Sheets",
+            "Cascading Style Sheets",
+            "Creative Style Sheets"
+          ],
+          "answer": "Cascading Style Sheets"
+        }
+      ]
+    },
+    {
+      "title": "JavaScript",
+      "icon": "./assets/images/icon-js.svg",
+      "questions": [
+        {
+          "id": 1,
+          "question": "Which syntax is correct to output 'Hello World' in an alert box?",
+          "options": [
+            "alertBox('Hello World');",
+            "msg('Hello World');",
+            "alert('Hello World');",
+            "msgBox('Hello World');"
+          ],
+          "answer": "alert('Hello World');"
+        }
+      ]
+    },
+    {
+      "title": "Accessibility",
+      "icon": "./assets/images/icon-accessibility.svg",
+      "questions": [
+        {
+          "id": 1,
+          "question": "What does 'WCAG' stand for?",
+          "options": [
+            "Web Content Accessibility Guidelines",
+            "Web Compliance Accessibility Guide",
+            "Web Content Accessibility Goals",
+            "Website Compliance and Accessibility Guidelines"
+          ],
+          "answer": "Web Content Accessibility Guidelines"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+[
+  { "value": "10-14", "bible": "Whole Bible" },
+  { "value": "7-10", "bible": "OT" },
+  { "value": "4-5", "bible": "Pentateuch" },
+  { "value": "6-8", "bible": "History" },
+  { "value": "4-5", "bible": "Writings" },
+  { "value": "5-7", "bible": "Prophets" },
+  { "value": "8-12", "bible": "NT" }
+]

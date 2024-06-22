@@ -22,10 +22,12 @@ const container = document.getElementById("root");
 const root = createRoot(container);
 
 import "./index.css";
+import Navbar from "./components/Navbar";
 
 root.render(
   <React.StrictMode>
     <BrowserRouter>
+      <Navbar />
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/before" element={<BeforePage />} />

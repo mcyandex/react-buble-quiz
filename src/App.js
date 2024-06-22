@@ -13,14 +13,14 @@ export default function App() {
       md={5}
       sm={12}
     >
-      <div className="flex justify-center items-center gap-10 sm:gap-16 md:gap-24 xl:gap-32 flex-col sm:flex-row w-full h-screen pt-96 bg-gradient-to-b from-emerald-500 ">
+      <div className="flex justify-center items-center gap-10 sm:gap-16 md:gap-24 xl:gap-32 flex-col sm:flex-row w-full h-screen pt-96 bg-gradient-to-b from-emerald-200 ">
         <Link to="/instruction">
           <Button
             className="w-40 h-12 md:w-48 md:h-14 xl:w-56 xl:h-16 gap-4  "
             variant="contained"
             color="info"
           >
-            <div className="md:text-md xl:text-xl">Instruction</div>
+            <div className="text-md md:text-lg xl:text-xl">Instruction</div>
             <MenuBookIcon />
           </Button>
         </Link>
@@ -30,7 +30,7 @@ export default function App() {
             variant="contained"
             color="success"
           >
-            <div className="md:text-md xl:text-xl">Start</div>
+            <div className="text-md md:text-lg xl:text-xl">Start</div>
             <PlayArrowIcon />
           </Button>
         </Link>

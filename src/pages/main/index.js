@@ -30,6 +30,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import TelegramIcon from "@mui/icons-material/Telegram";
 import NextPlanIcon from "@mui/icons-material/NextPlan";
+import CancelIcon from "@mui/icons-material/Cancel";
 
 let bookRange = [];
 let bookId, chapterRange, chapterId, verseId;
@@ -74,28 +75,66 @@ export default function Main() {
     let message = "";
     switch (score) {
       case 0:
-        message = `Your Total Score is ${score}.\n Maybe just a little more study to get you off the mark!`;
+        message = (
+          <div>
+            Your Total Score is {score}.<br /> <br /> Maybe just a little more
+            study to get you off the mark!
+          </div>
+        );
         break;
       case 1:
-        message = `Your Total Score is ${score}.\n You're off the mark, nice job!`;
+        message = (
+          <div>
+            Your Total Score is {score}. <br /> <br />
+            You're off the mark, nice job!
+          </div>
+        );
         break;
       case 2:
-        message = `Your Total Score is ${score}.\n 2's no fluke, keep'em coming`;
+        message = (
+          <div>
+            Your Total Score is {score}. <br /> <br /> 2's no fluke, keep'em
+            coming
+          </div>
+        );
         break;
       case 3:
-        message = `Your Total Score is ${score}.\n Yes, yes, some more studying to take you higher`;
+        message = (
+          <div>
+            Your Total Score is {score}. <br /> <br /> Yes, yes, some more
+            studying to take you higher
+          </div>
+        );
         break;
       case 4:
-        message = `Your Total Score is ${score}.\n You're getting the hang of it`;
+        message = (
+          <div>
+            Your Total Score is {score}. <br /> <br /> You're getting the hang
+            of it
+          </div>
+        );
         break;
       case 5:
-        message = `Your Total Score is ${score}.\n oh on FIRE!`;
+        message = (
+          <div>
+            Your Total Score is {score}. <br /> <br /> oh on FIRE!
+          </div>
+        );
         break;
       case 6:
-        message = `Your Total Score is ${score}.\n This is incredible...!`;
+        message = (
+          <div>
+            Your Total Score is {score}. <br /> <br /> This is incredible...!
+          </div>
+        );
         break;
       default:
-        message = `Your Total Score is ${score}.\n You're invincible! A true Bible Verse Master!`;
+        message = (
+          <div>
+            Your Total Score is {score}. <br /> <br /> You're invincible! A true
+            Bible Verse Master!
+          </div>
+        );
         break;
     }
     return message;
@@ -129,7 +168,7 @@ export default function Main() {
 
   const handleSubmitAnswer = () => {
     if (!selectedOption) {
-      handleNewModal("exclamation-triangle", "warning", "Select the option");
+      handleNewModal("exclamation-triangle", "warning", "Select the option!");
       return;
     }
     if (questionType == 0) {
@@ -236,21 +275,22 @@ export default function Main() {
   }, [lang, section]);
 
   return (
-    <div className="main-page h-96 bg-gradient-to-b from-emerald-500 w-full pt-24 sm:pt-28 md:pt-32">
+    <div className="main-page h-96 bg-gradient-to-b from-emerald-200 w-full pt-24 sm:pt-28 md:pt-32">
       <MDBTypography
         tag={"h2"}
-        className="text-center text-xl md:text-5xl xl:text-6xl fw-bold m-4 text-green-500"
+        className="text-center text-3xl md:text-5xl xl:text-6xl fw-bold m-4 text-emerald-500 "
       >
         Question {questionNumber}
       </MDBTypography>
-      <div className="w-1/5 m-auto">
+      <div className="w-2/3 m-auto md:w-1/2 xl:w-1/3">
         <Slider
           value={questionNumber}
           step={1}
           marks
           min={0}
           max={10}
-          color="success"
+          className="text-emerald-500"
+          color="p"
         />
       </div>
       {isLoading ? (
@@ -304,7 +344,7 @@ export default function Main() {
                   <Button
                     variant="contained"
                     className="md:w-32 my-2 mx-4"
-                    color="success"
+                    color="info"
                     onClick={handleSubmitAnswer}
                     style={
                       !answerStatus ? { display: "block" } : { display: "none" }
@@ -318,7 +358,7 @@ export default function Main() {
                   <Button
                     variant="contained"
                     className="md:w-32 my-2 mx-4"
-                    color="info"
+                    color="success"
                     onClick={handleNext}
                     style={
                       answerStatus && questionNumber != PROBLEM_NUM
@@ -554,7 +594,9 @@ export default function Main() {
             className="m-2"
             onClick={toggleModal}
           >
-            Close
+            <div>
+              <CancelIcon /> Close
+            </div>
           </Button>
         </DialogActions>
       </BootstrapDialog>

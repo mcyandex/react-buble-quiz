@@ -8,6 +8,7 @@ import LANG_DATA from "./data/LanguagesData.json";
 import SECTION_DATA from "./data/SectionsData.json";
 
 import "./styles.css";
+import SchoolSharpIcon from "@mui/icons-material/SchoolSharp";
 
 export default function Before(props) {
   const [versionOptions, setVersionOptions] = useState([]);
@@ -48,9 +49,9 @@ export default function Before(props) {
   };
 
   return (
-    <div className="before-page h-screen bg-gradient-to-b from-emerald-500 flex flex-col md:flex-row md:gap-40 lg:gap-48 xl:gap-96 md:items-center">
-      <MDBTypography className="font-sans font-bold text-white text-center text-2xl  sm:text-3xl py-6 md:w-1/4 xl:text-5xl">
-        Please select Language, Version of Bible, Section of Bible.
+    <div className="before-page h-screen bg-gradient-to-b from-emerald-200 flex flex-col md:flex-row md:gap-40 lg:gap-48 md:items-center">
+      <MDBTypography className="font-sans font-bold text-center text-2xl  sm:text-3xl py-6 md:w-1/4 xl:text-5xl">
+        Please select Language, Version of Bible, Verse of Bible.
       </MDBTypography>
       <div className="mt-2 md:w-3/4">
         <div className="mt-1 w-full items-center">
@@ -153,7 +154,8 @@ export default function Before(props) {
               )
             }
           >
-            Start
+            <SchoolSharpIcon />{" "}
+            <span className="text-md">Start Test</span>
           </MDBBtn>
         </div>
       </div>

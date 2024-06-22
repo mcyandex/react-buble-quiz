@@ -3,7 +3,6 @@ import { useParams, useNavigate } from "react-router-dom";
 import {
   MDBTypography,
   MDBBtn,
-  MDBContainer,
   MDBCard,
   MDBIcon,
   MDBCardHeader,
@@ -18,7 +17,6 @@ import {
   MDBModalDialog,
   MDBModalFooter,
   MDBSpinner,
-  MDBCol,
   MDBRow,
 } from "mdb-react-ui-kit";
 
@@ -27,12 +25,26 @@ import getRandomNumber from "../../libs/getRandomNumber";
 import BooksData from "../../consts/BooksData.json";
 
 import "./styles.css";
-import { Button, List, ListItem, Radio, RadioGroup } from "@mui/material";
+import { styled } from "@mui/material/styles";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  IconButton,
+  List,
+  ListItem,
+  Radio,
+  RadioGroup,
+  Typography,
+} from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 
 let bookRange = [];
 let bookId, chapterRange, chapterId, verseId;
 
-const PROBLEM_NUM = 10;
+const PROBLEM_NUM = 1;
 
 export default function Main() {
   const { lang, section } = useParams();
@@ -41,7 +53,7 @@ export default function Main() {
   const [isLoading, setIsLoading] = useState(false);
   const [cardLoading, setCardLoading] = useState(false);
 
-  const [visibleModal, setVisibleModal] = useState(true);
+  const [visibleModal, setVisibleModal] = useState(false);
   const [modalIcon, setModalIcon] = useState("");
   const [modalTitle, setModalTitle] = useState("");
   const [modalColor, setModalColor] = useState("");
@@ -71,28 +83,28 @@ export default function Main() {
     let message = "";
     switch (score) {
       case 0:
-        message = `Your Total Score is ${score}. <br /> Maybe just a little more study to get you off the mark!`;
+        message = `Your Total Score is ${score}.\n Maybe just a little more study to get you off the mark!`;
         break;
       case 1:
-        message = `Your Total Score is ${score}. <br /> You're off the mark, nice job!`;
+        message = `Your Total Score is ${score}.\n You're off the mark, nice job!`;
         break;
       case 2:
-        message = `Your Total Score is ${score}. <br /> 2's no fluke, keep'em coming`;
+        message = `Your Total Score is ${score}.\n 2's no fluke, keep'em coming`;
         break;
       case 3:
-        message = `Your Total Score is ${score}. <br /> Yes, yes, some more studying to take you higher`;
+        message = `Your Total Score is ${score}.\n Yes, yes, some more studying to take you higher`;
         break;
       case 4:
-        message = `Your Total Score is ${score}. <br /> You're getting the hang of it`;
+        message = `Your Total Score is ${score}.\n You're getting the hang of it`;
         break;
       case 5:
-        message = `Your Total Score is ${score}. <br /> oh on FIRE!`;
+        message = `Your Total Score is ${score}.\n oh on FIRE!`;
         break;
       case 6:
-        message = `Your Total Score is ${score}. <br /> This is incredible...!`;
+        message = `Your Total Score is ${score}.\n This is incredible...!`;
         break;
       default:
-        message = `Your Total Score is ${score}. <br /> You're invincible! A true Bible Verse Master!`;
+        message = `Your Total Score is ${score}.\n You're invincible! A true Bible Verse Master!`;
         break;
     }
     return message;
@@ -412,48 +424,46 @@ export default function Main() {
                     <MDBCardBody>
                       <MDBCardTitle>Select the correct Verse.</MDBCardTitle>
                       <div className="grid grid-cols-3 gap-4">
-                        <MDBRow>
-                          {verseOptions.map((one) => {
-                            return (
-                              <div className="p-2 rounded-3xl border-4 border-teal-400">
-                                <MDBRadio
-                                  key={one.pk}
-                                  name="verseOption"
-                                  id={one.verse}
-                                  label={one.verse}
-                                  onChange={() => {
-                                    // console.log("333333", one.verse, verseId);
-                                    setSelectedOption(one.verse);
-                                  }}
-                                  value={one.verse}
-                                  checked={one.verse == selectedOption}
-                                  labelStyle={
-                                    questionType == 2 && answerStatus == 2
-                                      ? one.verse === selectedOption
-                                        ? { textDecoration: "line-through" }
-                                        : one.verse == verseId
-                                        ? {}
-                                        : {}
+                        {verseOptions.map((one) => {
+                          return (
+                            <div className="p-2 rounded-3xl border-4 border-teal-400">
+                              <MDBRadio
+                                key={one.pk}
+                                name="verseOption"
+                                id={one.verse}
+                                label={one.verse}
+                                onChange={() => {
+                                  // console.log("333333", one.verse, verseId);
+                                  setSelectedOption(one.verse);
+                                }}
+                                value={one.verse}
+                                checked={one.verse == selectedOption}
+                                labelStyle={
+                                  questionType == 2 && answerStatus == 2
+                                    ? one.verse === selectedOption
+                                      ? { textDecoration: "line-through" }
+                                      : one.verse == verseId
+                                      ? {}
                                       : {}
-                                  }
-                                  wrapperStyle={
-                                    questionType == 2 && answerStatus == 2
-                                      ? one.verse == selectedOption
-                                        ? { color: "red" }
-                                        : one.verse == verseId
-                                        ? {
-                                            color: "green",
-                                            fontWeight: "bolder",
-                                          }
-                                        : { color: "black" }
-                                      : {}
-                                  }
-                                  disabled={answerStatus}
-                                />
-                              </div>
-                            );
-                          })}
-                        </MDBRow>
+                                    : {}
+                                }
+                                wrapperStyle={
+                                  questionType == 2 && answerStatus == 2
+                                    ? one.verse == selectedOption
+                                      ? { color: "red" }
+                                      : one.verse == verseId
+                                      ? {
+                                          color: "green",
+                                          fontWeight: "bolder",
+                                        }
+                                      : { color: "black" }
+                                    : {}
+                                }
+                                disabled={answerStatus}
+                              />
+                            </div>
+                          );
+                        })}
                       </div>
                     </MDBCardBody>
                   )}
@@ -464,37 +474,45 @@ export default function Main() {
         </div>
       )}
 
-      <div className="d-flex justify-content-center mt-5">
-        <MDBModal
-          animationDirection="right"
-          show={visibleModal}
-          setShow={setVisibleModal}
-          tabIndex="-1"
+      <BootstrapDialog
+        onClose={toggleModal}
+        aria-labelledby="customized-dialog-title"
+        open={visibleModal}
+        className="w-1/2 m-auto"
+      >
+        <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title" className={`text-${modalColor}`}>
+          {modalColor.toUpperCase()}
+        </DialogTitle>
+        <IconButton
+          aria-label="close"
+          onClick={toggleModal}
+          sx={{
+            position: "absolute",
+            right: 8,
+            top: 8,
+            color: (theme) => theme.palette.grey[500],
+          }}
         >
-          <MDBModalDialog centered>
-            <MDBModalContent>
-              <MDBModalBody>
-                <div className="text-center">
-                  <MDBIcon
-                    fas
-                    icon={modalIcon}
-                    className={`text-${modalColor}`}
-                    style={{ fontSize: "3rem" }}
-                  />
-                </div>
-                <MDBTypography
-                  tag={"h3"}
-                  className="text-center"
-                  dangerouslySetInnerHTML={{ __html: modalTitle }}
-                ></MDBTypography>
-              </MDBModalBody>
-              <MDBModalFooter className="justify-content-center">
-                <MDBBtn onClick={toggleModal}>Close</MDBBtn>
-              </MDBModalFooter>
-            </MDBModalContent>
-          </MDBModalDialog>
-        </MDBModal>
-      </div>
+          <CloseIcon />
+        </IconButton>
+        <DialogContent className="" dividers>
+          <Typography className={`p-10 w-[400px] text-center text-${modalColor}`} gutterBottom>{modalTitle}</Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button variant="contained" onClick={toggleModal}>
+            Close
+          </Button>
+        </DialogActions>
+      </BootstrapDialog>
     </div>
   );
 }
+
+const BootstrapDialog = styled(Dialog)(({ theme }) => ({
+  "& .MuiDialogContent-root": {
+    padding: theme.spacing(2),
+  },
+  "& .MuiDialogActions-root": {
+    padding: theme.spacing(1),
+  },
+}));

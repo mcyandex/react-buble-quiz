@@ -243,14 +243,14 @@ export default function Main() {
       >
         Question {questionNumber}
       </MDBTypography>
-      <div className="w-3/5 m-auto">
+      <div className="w-1/5 m-auto">
         <Slider
           value={questionNumber}
           step={1}
           marks
           min={0}
           max={10}
-          color="error"
+          color="success"
         />
       </div>
       {isLoading ? (

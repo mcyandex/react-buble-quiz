@@ -480,8 +480,8 @@ export default function Main() {
         open={visibleModal}
         className="w-1/2 m-auto"
       >
-        <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
-          Result
+        <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title" className={`text-${modalColor}`}>
+          {modalColor.toUpperCase()}
         </DialogTitle>
         <IconButton
           aria-label="close"
@@ -496,10 +496,10 @@ export default function Main() {
           <CloseIcon />
         </IconButton>
         <DialogContent className="" dividers>
-          <Typography className="p-10 w-[400px] text-center" gutterBottom>{modalTitle}</Typography>
+          <Typography className={`p-10 w-[400px] text-center text-${modalColor}`} gutterBottom>{modalTitle}</Typography>
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={toggleModal}>
+          <Button variant="contained" onClick={toggleModal}>
             Close
           </Button>
         </DialogActions>

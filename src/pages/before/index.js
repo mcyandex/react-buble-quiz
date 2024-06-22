@@ -52,14 +52,12 @@ export default function Before(props) {
       <MDBTypography
         id="language"
         tag={"h4"}
-        className="my-20 mx-10 font-sans hover:font-serif"
+        className="font-sans hover:font-serif text-emerald-600 font-bold text-center text-5xl"
       >
         Please select Language, Version, Section of Bible.
       </MDBTypography>
 
-      <label htmlFor="language" className="mb-4">
         Language:
-      </label>
       <Select
         className="mb-1"
         placeholder={"Please select"}

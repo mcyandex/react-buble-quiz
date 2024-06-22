@@ -14,7 +14,7 @@ export default function Navbar() {
                 <img
                   src={`/assets/images/icon.png`}
                   alt="Bible"
-                  className="w-[6vh] md:w-[10vh] h-auto"
+                  className="w-16 sm:w-20 xl:w-24"
                 />
               </div>
             </div>

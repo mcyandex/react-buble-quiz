@@ -27,6 +27,7 @@ import getRandomNumber from "../../libs/getRandomNumber";
 import BooksData from "../../consts/BooksData.json";
 
 import "./styles.css";
+import { Button, List, ListItem, Radio, RadioGroup } from "@mui/material";
 
 let bookRange = [];
 let bookId, chapterRange, chapterId, verseId;
@@ -209,8 +210,11 @@ export default function Main() {
   }, [lang, section]);
 
   return (
-    <MDBContainer className="pt-5 main-page">
-      <MDBTypography tag={"h2"} className="text-center fw-bold">
+    <div className="main-page h-96 bg-gradient-to-b from-teal-100 w-full pt-40">
+      <MDBTypography
+        tag={"h2"}
+        className="text-center fw-bold m-4 text-green-500"
+      >
         Question {questionNumber}
       </MDBTypography>
       {isLoading ? (
@@ -223,16 +227,16 @@ export default function Main() {
           </MDBSpinner>
         </div>
       ) : (
-        <div>
+        <div className="w-3/4 m-auto">
           <MDBTypography
             tag={"h4"}
-            className="text-center"
+            className="text-center text-xl m-3"
             dangerouslySetInnerHTML={{ __html: randomVerse.text }}
-          ></MDBTypography>
+          />
           <MDBCard>
-            <MDBCardHeader className="text-end">
-              Scored Points:{" "}
-              <big>
+            <MDBCardHeader className="flex justify-center">
+              <div className="text-blue-400 text-xl m-1">Score : </div>
+              <big className="text-red-400 text-xl m-1">
                 <strong>{totalPoints}</strong>
               </big>
             </MDBCardHeader>
@@ -247,150 +251,322 @@ export default function Main() {
               </div>
             ) : (
               <div>
-                {questionType === 0 ? (
-                  <MDBCardBody>
-                    <MDBCardTitle>
-                      Select the correct Book where this verse came from.
-                    </MDBCardTitle>
-                    <MDBCardText>
-                      {bookOptions.length > 10 ? (
-                        <MDBRow>
-                          <MDBCol sm={6} md={6}>
-                            {bookOptions
-                              .slice(0, Math.round(bookOptions.length / 2))
-                              .map((one, index) => {
-                                return (
-                                  <MDBRadio
-                                    key={one.bookid}
-                                    name="bookOption"
-                                    id={one.bookid}
-                                    label={one.name}
-                                    onChange={(_, e) => {
-                                      // console.log("1111", one.bookid, bookId);
-                                      setSelectedOption(one.bookid);
-                                    }}
-                                    value={one.bookid}
-                                    checked={one.bookid == selectedOption}
-                                    labelStyle={
-                                      questionType == 0 && answerStatus == 2
-                                        ? one.bookid === selectedOption
-                                          ? { textDecoration: "line-through" }
-                                          : one.bookid == bookId
-                                          ? {}
+                <div className="flex flex-col md:flex-row justify-content-end">
+                  <Button
+                    variant="outlined"
+                    className="m-2"
+                    color="warning"
+                    onClick={() => {
+                      navigate("/before");
+                    }}
+                  >
+                    Restart
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    className="m-2"
+                    color="primary"
+                    onClick={handleSubmitAnswer}
+                    style={
+                      !answerStatus ? { display: "block" } : { display: "none" }
+                    }
+                  >
+                    Submit Answer
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    className="m-2"
+                    color="primary"
+                    onClick={handleNext}
+                    style={
+                      answerStatus && questionNumber != PROBLEM_NUM
+                        ? { display: "block" }
+                        : { display: "none" }
+                    }
+                  >
+                    Next Question
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    className="m-2"
+                    color="secondary"
+                    onClick={() => {
+                      navigate("/");
+                    }}
+                    style={
+                      answerStatus && questionNumber == PROBLEM_NUM
+                        ? { visibility: "visible" }
+                        : { visibility: "hidden" }
+                    }
+                  >
+                    Homepage
+                  </Button>
+                </div>
+                <MDBCardFooter>
+                  {questionType === 0 ? (
+                    <MDBCardBody>
+                      <div>
+                        Select the correct Book where this verse came from.
+                      </div>
+                      <MDBCardText>
+                        {bookOptions.length > 10 ? (
+                          <MDBRow>
+                            <MDBCol sm={6} md={6}>
+                              {bookOptions
+                                .slice(0, Math.round(bookOptions.length / 2))
+                                .map((one, index) => {
+                                  return (
+                                    <MDBRadio
+                                      key={one.bookid}
+                                      name="bookOption"
+                                      id={one.bookid}
+                                      label={one.name + "Bottom"}
+                                      onChange={(_, e) => {
+                                        // console.log("1111", one.bookid, bookId);
+                                        setSelectedOption(one.bookid);
+                                      }}
+                                      value={one.bookid}
+                                      checked={one.bookid == selectedOption}
+                                      labelStyle={
+                                        questionType == 0 && answerStatus == 2
+                                          ? one.bookid === selectedOption
+                                            ? { textDecoration: "line-through" }
+                                            : one.bookid == bookId
+                                            ? {}
+                                            : {}
                                           : {}
-                                        : {}
-                                    }
-                                    wrapperStyle={
-                                      questionType == 0 && answerStatus == 2
-                                        ? one.bookid == selectedOption
-                                          ? { color: "red" }
-                                          : one.bookid == bookId
-                                          ? {
-                                              fontWeight: "bold",
-                                              color: "green",
-                                            }
-                                          : { color: "black" }
-                                        : {}
-                                    }
-                                    disabled={answerStatus}
-                                  />
-                                );
-                              })}
-                          </MDBCol>
-                          <MDBCol sm={6} md={6}>
-                            {bookOptions
-                              .slice(Math.round(bookOptions.length / 2))
-                              .map((one, index) => {
-                                return (
-                                  <MDBRadio
-                                    key={one.bookid}
-                                    name="bookOption"
-                                    id={one.bookid}
-                                    label={one.name}
-                                    onChange={(_, e) => {
-                                      // console.log("1111", one.bookid, bookId);
-                                      setSelectedOption(one.bookid);
-                                    }}
-                                    value={one.bookid}
-                                    checked={one.bookid == selectedOption}
-                                    labelStyle={
-                                      questionType == 0 && answerStatus == 2
-                                        ? one.bookid === selectedOption
-                                          ? { textDecoration: "line-through" }
-                                          : one.bookid == bookId
-                                          ? {}
+                                      }
+                                      wrapperStyle={
+                                        questionType == 0 && answerStatus == 2
+                                          ? one.bookid == selectedOption
+                                            ? { color: "red" }
+                                            : one.bookid == bookId
+                                            ? {
+                                                fontWeight: "bold",
+                                                color: "green",
+                                              }
+                                            : { color: "black" }
                                           : {}
+                                      }
+                                      disabled={answerStatus}
+                                    />
+                                  );
+                                })}
+                            </MDBCol>
+                            <MDBCol sm={6} md={6}>
+                              {bookOptions
+                                .slice(Math.round(bookOptions.length / 2))
+                                .map((one, index) => {
+                                  return (
+                                    <MDBRadio
+                                      key={one.bookid}
+                                      name="bookOption"
+                                      id={one.bookid}
+                                      label={one.name}
+                                      onChange={(_, e) => {
+                                        // console.log("1111", one.bookid, bookId);
+                                        setSelectedOption(one.bookid);
+                                      }}
+                                      value={one.bookid}
+                                      checked={one.bookid == selectedOption}
+                                      labelStyle={
+                                        questionType == 0 && answerStatus == 2
+                                          ? one.bookid === selectedOption
+                                            ? {
+                                                textDecoration: "line-through",
+                                              }
+                                            : one.bookid == bookId
+                                            ? {}
+                                            : {}
+                                          : {}
+                                      }
+                                      wrapperStyle={
+                                        questionType == 0 && answerStatus == 2
+                                          ? one.bookid == selectedOption
+                                            ? { color: "red" }
+                                            : one.bookid == bookId
+                                            ? {
+                                                color: "green",
+                                                fontWeight: "bolder",
+                                              }
+                                            : { color: "black" }
+                                          : {}
+                                      }
+                                      disabled={answerStatus}
+                                    />
+                                  );
+                                })}
+                            </MDBCol>
+                          </MDBRow>
+                        ) : (
+                          <MDBRow>
+                            {bookOptions.map((one, index) => {
+                              return (
+                                <MDBRadio
+                                  key={one.bookid}
+                                  name="bookOption"
+                                  id={one.bookid}
+                                  label={one.name}
+                                  onChange={(_, e) => {
+                                    // console.log("1111", one.bookid, bookId);
+                                    setSelectedOption(one.bookid);
+                                  }}
+                                  value={one.bookid}
+                                  checked={one.bookid == selectedOption}
+                                  labelStyle={
+                                    questionType == 0 && answerStatus == 2
+                                      ? one.bookid === selectedOption
+                                        ? { textDecoration: "line-through" }
+                                        : one.bookid == bookId
+                                        ? {}
                                         : {}
-                                    }
-                                    wrapperStyle={
-                                      questionType == 0 && answerStatus == 2
-                                        ? one.bookid == selectedOption
-                                          ? { color: "red" }
-                                          : one.bookid == bookId
-                                          ? {
-                                              color: "green",
-                                              fontWeight: "bolder",
-                                            }
-                                          : { color: "black" }
-                                        : {}
-                                    }
-                                    disabled={answerStatus}
-                                  />
-                                );
-                              })}
-                          </MDBCol>
-                        </MDBRow>
-                      ) : (
-                        <MDBRow>
-                          {bookOptions.map((one, index) => {
-                            return (
-                              <MDBRadio
-                                key={one.bookid}
-                                name="bookOption"
-                                id={one.bookid}
-                                label={one.name}
-                                onChange={(_, e) => {
-                                  // console.log("1111", one.bookid, bookId);
-                                  setSelectedOption(one.bookid);
-                                }}
-                                value={one.bookid}
-                                checked={one.bookid == selectedOption}
-                                labelStyle={
-                                  questionType == 0 && answerStatus == 2
-                                    ? one.bookid === selectedOption
-                                      ? { textDecoration: "line-through" }
-                                      : one.bookid == bookId
-                                      ? {}
                                       : {}
-                                    : {}
-                                }
-                                wrapperStyle={
-                                  questionType == 0 && answerStatus == 2
-                                    ? one.bookid == selectedOption
-                                      ? { color: "red" }
-                                      : one.bookid == bookId
-                                      ? { color: "green", fontWeight: "bolder" }
-                                      : { color: "black" }
-                                    : {}
-                                }
-                                disabled={answerStatus}
-                              />
-                            );
-                          })}
-                        </MDBRow>
-                      )}
-                    </MDBCardText>
-                  </MDBCardBody>
-                ) : questionType === 1 ? (
-                  <MDBCardBody>
-                    <MDBCardTitle>
-                      Select the correct Chapter where this verse came from.
-                    </MDBCardTitle>
-                    <MDBCardText>
-                      {chapterRange > 10 ? (
-                        <MDBRow className="chapterOptions">
-                          <MDBCol sm={6}>
-                            {Array(Math.round(chapterRange / 2))
+                                  }
+                                  wrapperStyle={
+                                    questionType == 0 && answerStatus == 2
+                                      ? one.bookid == selectedOption
+                                        ? { color: "red" }
+                                        : one.bookid == bookId
+                                        ? {
+                                            color: "green",
+                                            fontWeight: "bolder",
+                                          }
+                                        : { color: "black" }
+                                      : {}
+                                  }
+                                  disabled={answerStatus}
+                                />
+                              );
+                            })}
+                          </MDBRow>
+                        )}
+                      </MDBCardText>
+                    </MDBCardBody>
+                  ) : questionType === 1 ? (
+                    <MDBCardBody>
+                      <MDBCardTitle>
+                        Select the correct Chapter where this verse came from.
+                      </MDBCardTitle>
+                      <MDBCardText>
+                        {chapterRange > 10 ? (
+                          <MDBRow className="chapterOptions">
+                            <MDBCol sm={6}>
+                              {Array(Math.round(chapterRange / 2))
+                                .fill(0)
+                                .map((one, index) => {
+                                  return (
+                                    <MDBRadio
+                                      key={index + 1}
+                                      name="bookOption"
+                                      id={index + 1}
+                                      label={`Chapter ${index + 1}`}
+                                      onChange={() => {
+                                        // console.log("2222", index + 1, chapterId);
+                                        setSelectedOption(index + 1);
+                                      }}
+                                      value={index + 1}
+                                      checked={index + 1 == selectedOption}
+                                      labelStyle={
+                                        questionType == 1 && answerStatus == 2
+                                          ? index + 1 === selectedOption
+                                            ? { textDecoration: "line-through" }
+                                            : index + 1 == chapterId
+                                            ? {}
+                                            : {}
+                                          : {}
+                                      }
+                                      wrapperStyle={
+                                        questionType == 1 && answerStatus == 2
+                                          ? index + 1 == selectedOption
+                                            ? { color: "red" }
+                                            : index + 1 == chapterId
+                                            ? {
+                                                color: "green",
+                                                fontWeight: "bolder",
+                                              }
+                                            : { color: "black" }
+                                          : {}
+                                      }
+                                      disabled={answerStatus}
+                                    />
+                                  );
+                                })}
+                            </MDBCol>
+                            <MDBCol sm={6}>
+                              {Array(Math.round(chapterRange / 2))
+                                .fill(0)
+                                .map((one, index) => {
+                                  return (
+                                    <MDBRadio
+                                      key={
+                                        Math.round(chapterRange / 2) + index + 1
+                                      }
+                                      name="bookOption"
+                                      id={
+                                        Math.round(chapterRange / 2) + index + 1
+                                      }
+                                      label={`Chapter ${
+                                        Math.round(chapterRange / 2) + index + 1
+                                      }`}
+                                      onChange={() => {
+                                        // console.log("2222", index + 1, chapterId);
+                                        setSelectedOption(
+                                          Math.round(chapterRange / 2) +
+                                            index +
+                                            1
+                                        );
+                                      }}
+                                      value={
+                                        Math.round(chapterRange / 2) + index + 1
+                                      }
+                                      checked={
+                                        Math.round(chapterRange / 2) +
+                                          index +
+                                          1 ==
+                                        selectedOption
+                                      }
+                                      labelStyle={
+                                        questionType == 1 && answerStatus == 2
+                                          ? index +
+                                              1 +
+                                              Math.round(chapterRange / 2) ===
+                                            selectedOption
+                                            ? { textDecoration: "line-through" }
+                                            : index +
+                                                1 +
+                                                Math.round(chapterRange / 2) ==
+                                              chapterId
+                                            ? {}
+                                            : {}
+                                          : {}
+                                      }
+                                      wrapperStyle={
+                                        questionType == 1 && answerStatus == 2
+                                          ? Math.round(chapterRange / 2) +
+                                              index +
+                                              1 ==
+                                            selectedOption
+                                            ? { color: "red" }
+                                            : Math.round(chapterRange / 2) +
+                                                index +
+                                                1 ==
+                                              chapterId
+                                            ? {
+                                                color: "green",
+                                                fontWeight: "bolder",
+                                              }
+                                            : { color: "black" }
+                                          : {}
+                                      }
+                                      disabled={answerStatus}
+                                    />
+                                  );
+                                })}
+                            </MDBCol>
+                          </MDBRow>
+                        ) : (
+                          <MDBRow>
+                            {Array(chapterRange)
                               .fill(0)
                               .map((one, index) => {
                                 return (
@@ -430,108 +606,130 @@ export default function Main() {
                                   />
                                 );
                               })}
-                          </MDBCol>
-                          <MDBCol sm={6}>
-                            {Array(Math.round(chapterRange / 2))
-                              .fill(0)
-                              .map((one, index) => {
-                                return (
-                                  <MDBRadio
-                                    key={
-                                      Math.round(chapterRange / 2) + index + 1
-                                    }
-                                    name="bookOption"
-                                    id={
-                                      Math.round(chapterRange / 2) + index + 1
-                                    }
-                                    label={`Chapter ${
-                                      Math.round(chapterRange / 2) + index + 1
-                                    }`}
-                                    onChange={() => {
-                                      // console.log("2222", index + 1, chapterId);
-                                      setSelectedOption(
-                                        Math.round(chapterRange / 2) + index + 1
-                                      );
-                                    }}
-                                    value={
-                                      Math.round(chapterRange / 2) + index + 1
-                                    }
-                                    checked={
-                                      Math.round(chapterRange / 2) +
-                                        index +
-                                        1 ==
-                                      selectedOption
-                                    }
-                                    labelStyle={
-                                      questionType == 1 && answerStatus == 2
-                                        ? index +
-                                            1 +
-                                            Math.round(chapterRange / 2) ===
-                                          selectedOption
-                                          ? { textDecoration: "line-through" }
-                                          : index +
-                                              1 +
-                                              Math.round(chapterRange / 2) ==
-                                            chapterId
-                                          ? {}
+                          </MDBRow>
+                        )}
+                      </MDBCardText>
+                    </MDBCardBody>
+                  ) : (
+                    <MDBCardBody>
+                      <MDBCardTitle>Select the correct Verse.</MDBCardTitle>
+                      <MDBCardText>
+                        {verseOptions.length > 10 ? (
+                          <MDBRow className="verseOptions">
+                            <MDBCol sm={6}>
+                              {verseOptions
+                                .slice(0, Math.round(verseOptions.length / 2))
+                                .map((one) => {
+                                  return (
+                                    <MDBRadio
+                                      key={one.pk}
+                                      name="verseOption"
+                                      id={one.verse}
+                                      label={one.verse}
+                                      onChange={() => {
+                                        // console.log("333333", one.verse, verseId);
+                                        setSelectedOption(one.verse);
+                                      }}
+                                      value={one.verse}
+                                      checked={one.verse == selectedOption}
+                                      labelStyle={
+                                        questionType == 2 && answerStatus == 2
+                                          ? one.verse === selectedOption
+                                            ? { textDecoration: "line-through" }
+                                            : one.verse == verseId
+                                            ? {}
+                                            : {}
                                           : {}
-                                        : {}
-                                    }
-                                    wrapperStyle={
-                                      questionType == 1 && answerStatus == 2
-                                        ? Math.round(chapterRange / 2) +
-                                            index +
-                                            1 ==
-                                          selectedOption
-                                          ? { color: "red" }
-                                          : Math.round(chapterRange / 2) +
-                                              index +
-                                              1 ==
-                                            chapterId
-                                          ? {
-                                              color: "green",
-                                              fontWeight: "bolder",
-                                            }
-                                          : { color: "black" }
-                                        : {}
-                                    }
-                                    disabled={answerStatus}
-                                  />
-                                );
-                              })}
-                          </MDBCol>
-                        </MDBRow>
-                      ) : (
-                        <MDBRow>
-                          {Array(chapterRange)
-                            .fill(0)
-                            .map((one, index) => {
+                                      }
+                                      wrapperStyle={
+                                        questionType == 2 && answerStatus == 2
+                                          ? one.verse == selectedOption
+                                            ? { color: "red" }
+                                            : one.verse == verseId
+                                            ? {
+                                                color: "green",
+                                                fontWeight: "bolder",
+                                              }
+                                            : { color: "black" }
+                                          : {}
+                                      }
+                                      disabled={answerStatus}
+                                    />
+                                  );
+                                })}
+                            </MDBCol>
+                            <MDBCol sm={6}>
+                              {verseOptions
+                                .slice(Math.round(verseOptions.length / 2))
+                                .map((one) => {
+                                  return (
+                                    <MDBRadio
+                                      key={one.pk}
+                                      name="verseOption"
+                                      id={one.verse}
+                                      label={one.verse}
+                                      onChange={() => {
+                                        // console.log("333333", one.verse, verseId);
+                                        setSelectedOption(one.verse);
+                                      }}
+                                      value={one.verse}
+                                      checked={one.verse == selectedOption}
+                                      labelStyle={
+                                        questionType == 2 && answerStatus == 2
+                                          ? one.verse === selectedOption
+                                            ? { textDecoration: "line-through" }
+                                            : one.verse == verseId
+                                            ? {}
+                                            : {}
+                                          : {}
+                                      }
+                                      wrapperStyle={
+                                        questionType == 2 && answerStatus == 2
+                                          ? one.verse == selectedOption
+                                            ? { color: "red" }
+                                            : one.verse == verseId
+                                            ? {
+                                                color: "green",
+                                                fontWeight: "bolder",
+                                              }
+                                            : { color: "black" }
+                                          : {}
+                                      }
+                                      disabled={answerStatus}
+                                    />
+                                  );
+                                })}
+                            </MDBCol>
+                          </MDBRow>
+                        ) : (
+                          <MDBRow>
+                            {verseOptions.map((one) => {
                               return (
                                 <MDBRadio
-                                  key={index + 1}
-                                  name="bookOption"
-                                  id={index + 1}
-                                  label={`Chapter ${index + 1}`}
+                                  key={one.pk}
+                                  name="verseOption"
+                                  id={one.verse}
+                                  label={one.verse}
                                   onChange={() => {
-                                    // console.log("2222", index + 1, chapterId);
-                                    setSelectedOption(index + 1);
+                                    // console.log("333333", one.verse, verseId);
+                                    setSelectedOption(one.verse);
                                   }}
-                                  value={index + 1}
-                                  checked={index + 1 == selectedOption}
+                                  value={one.verse}
+                                  checked={one.verse == selectedOption}
                                   labelStyle={
-                                    questionType == 1 && answerStatus == 2
-                                      ? index + 1 === selectedOption
+                                    questionType == 2 && answerStatus == 2
+                                      ? one.verse === selectedOption
                                         ? { textDecoration: "line-through" }
-                                        : index + 1 == chapterId
+                                        : one.verse == verseId
                                         ? {}
                                         : {}
                                       : {}
                                   }
                                   wrapperStyle={
-                                    questionType == 1 && answerStatus == 2
-                                      ? index + 1 == selectedOption
+                                    questionType == 2 && answerStatus == 2
+                                      ? one.verse == selectedOption
                                         ? { color: "red" }
-                                        : index + 1 == chapterId
+                                        : one.verse == verseId
                                         ? {
                                             color: "green",
                                             fontWeight: "bolder",
@@ -543,196 +741,11 @@ export default function Main() {
                                 />
                               );
                             })}
-                        </MDBRow>
-                      )}
-                    </MDBCardText>
-                  </MDBCardBody>
-                ) : (
-                  <MDBCardBody>
-                    <MDBCardTitle>Select the correct Verse.</MDBCardTitle>
-                    <MDBCardText>
-                      {verseOptions.length > 10 ? (
-                        <MDBRow className="verseOptions">
-                          <MDBCol sm={6}>
-                            {verseOptions
-                              .slice(0, Math.round(verseOptions.length / 2))
-                              .map((one) => {
-                                return (
-                                  <MDBRadio
-                                    key={one.pk}
-                                    name="verseOption"
-                                    id={one.verse}
-                                    label={one.verse}
-                                    onChange={() => {
-                                      // console.log("333333", one.verse, verseId);
-                                      setSelectedOption(one.verse);
-                                    }}
-                                    value={one.verse}
-                                    checked={one.verse == selectedOption}
-                                    labelStyle={
-                                      questionType == 2 && answerStatus == 2
-                                        ? one.verse === selectedOption
-                                          ? { textDecoration: "line-through" }
-                                          : one.verse == verseId
-                                          ? {}
-                                          : {}
-                                        : {}
-                                    }
-                                    wrapperStyle={
-                                      questionType == 2 && answerStatus == 2
-                                        ? one.verse == selectedOption
-                                          ? { color: "red" }
-                                          : one.verse == verseId
-                                          ? {
-                                              color: "green",
-                                              fontWeight: "bolder",
-                                            }
-                                          : { color: "black" }
-                                        : {}
-                                    }
-                                    disabled={answerStatus}
-                                  />
-                                );
-                              })}
-                          </MDBCol>
-                          <MDBCol sm={6}>
-                            {verseOptions
-                              .slice(Math.round(verseOptions.length / 2))
-                              .map((one) => {
-                                return (
-                                  <MDBRadio
-                                    key={one.pk}
-                                    name="verseOption"
-                                    id={one.verse}
-                                    label={one.verse}
-                                    onChange={() => {
-                                      // console.log("333333", one.verse, verseId);
-                                      setSelectedOption(one.verse);
-                                    }}
-                                    value={one.verse}
-                                    checked={one.verse == selectedOption}
-                                    labelStyle={
-                                      questionType == 2 && answerStatus == 2
-                                        ? one.verse === selectedOption
-                                          ? { textDecoration: "line-through" }
-                                          : one.verse == verseId
-                                          ? {}
-                                          : {}
-                                        : {}
-                                    }
-                                    wrapperStyle={
-                                      questionType == 2 && answerStatus == 2
-                                        ? one.verse == selectedOption
-                                          ? { color: "red" }
-                                          : one.verse == verseId
-                                          ? {
-                                              color: "green",
-                                              fontWeight: "bolder",
-                                            }
-                                          : { color: "black" }
-                                        : {}
-                                    }
-                                    disabled={answerStatus}
-                                  />
-                                );
-                              })}
-                          </MDBCol>
-                        </MDBRow>
-                      ) : (
-                        <MDBRow>
-                          {verseOptions.map((one) => {
-                            return (
-                              <MDBRadio
-                                key={one.pk}
-                                name="verseOption"
-                                id={one.verse}
-                                label={one.verse}
-                                onChange={() => {
-                                  // console.log("333333", one.verse, verseId);
-                                  setSelectedOption(one.verse);
-                                }}
-                                value={one.verse}
-                                checked={one.verse == selectedOption}
-                                labelStyle={
-                                  questionType == 2 && answerStatus == 2
-                                    ? one.verse === selectedOption
-                                      ? { textDecoration: "line-through" }
-                                      : one.verse == verseId
-                                      ? {}
-                                      : {}
-                                    : {}
-                                }
-                                wrapperStyle={
-                                  questionType == 2 && answerStatus == 2
-                                    ? one.verse == selectedOption
-                                      ? { color: "red" }
-                                      : one.verse == verseId
-                                      ? { color: "green", fontWeight: "bolder" }
-                                      : { color: "black" }
-                                    : {}
-                                }
-                                disabled={answerStatus}
-                              />
-                            );
-                          })}
-                        </MDBRow>
-                      )}
-                    </MDBCardText>
-                  </MDBCardBody>
-                )}
-                <MDBCardFooter>
-                  <div className="d-flex flex-wrap justify-content-evenly text-center">
-                    <MDBBtn
-                      outline
-                      className="m-2"
-                      color="warning"
-                      onClick={() => {
-                        navigate("/before");
-                      }}
-                    >
-                      Restart
-                    </MDBBtn>
-                    <MDBBtn
-                      outline
-                      className="m-2"
-                      onClick={handleSubmitAnswer}
-                      style={
-                        !answerStatus
-                          ? { visibility: "visible" }
-                          : { visibility: "hidden" }
-                      }
-                    >
-                      Submit Answer
-                    </MDBBtn>
-                    <MDBBtn
-                      outline
-                      className="m-2"
-                      color="info"
-                      onClick={handleNext}
-                      style={
-                        answerStatus && questionNumber != PROBLEM_NUM
-                          ? { visibility: "visible" }
-                          : { visibility: "hidden" }
-                      }
-                    >
-                      Next Question
-                    </MDBBtn>
-                    <MDBBtn
-                      outline
-                      className="m-2"
-                      color="secondary"
-                      onClick={() => {
-                        navigate("/");
-                      }}
-                      style={
-                        answerStatus && questionNumber == PROBLEM_NUM
-                          ? { visibility: "visible" }
-                          : { visibility: "hidden" }
-                      }
-                    >
-                      Homepage
-                    </MDBBtn>
-                  </div>
+                          </MDBRow>
+                        )}
+                      </MDBCardText>
+                    </MDBCardBody>
+                  )}
                 </MDBCardFooter>
               </div>
             )}
@@ -771,6 +784,6 @@ export default function Main() {
           </MDBModalDialog>
         </MDBModal>
       </div>
-    </MDBContainer>
+    </div>
   );
 }

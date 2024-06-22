@@ -233,13 +233,13 @@ export default function Main() {
         Question {questionNumber}
       </MDBTypography>
       {isLoading ? (
-        <div className="text-center mt-5">
-          <MDBSpinner
-            className="m-2"
-            style={{ textAlign: "center", width: "3rem", height: "3rem" }}
-          >
-            <span className="visually-hidden">Loading...</span>
-          </MDBSpinner>
+        <div className="w-full flex justify-center h-full items-center">
+          <div className="loading-wave">
+            <div className="loading-bar"></div>
+            <div className="loading-bar"></div>
+            <div className="loading-bar"></div>
+            <div className="loading-bar"></div>
+          </div>
         </div>
       ) : (
         <div className="w-3/4 m-auto">
@@ -306,8 +306,8 @@ export default function Main() {
                     }
                   >
                     <div className="flex flex-row items-center align-middle gap-1 justify-center">
-                    <NextPlanIcon />
-                    Next
+                      <NextPlanIcon />
+                      Next
                     </div>
                   </Button>
                 </div>
@@ -506,7 +506,12 @@ export default function Main() {
           </Typography>
         </DialogContent>
         <DialogActions>
-          <Button variant="contained" color="error" className="m-2" onClick={toggleModal}>
+          <Button
+            variant="contained"
+            color="error"
+            className="m-2"
+            onClick={toggleModal}
+          >
             Close
           </Button>
         </DialogActions>

@@ -13,7 +13,7 @@ export default function App() {
       md={5}
       sm={12}
     >
-      <div className="flex justify-center items-center gap-10 sm:gap-16 md:gap-24 xl:gap-32 flex-col sm:flex-row w-full h-screen pt-96 h-96 bg-gradient-to-b from-emerald-500 ">
+      <div className="flex justify-center items-center gap-10 sm:gap-16 md:gap-24 xl:gap-32 flex-col sm:flex-row w-full h-screen pt-96 bg-gradient-to-b from-emerald-500 ">
         <Link to="/instruction">
           <Button
             className="w-40 h-12 md:w-48 md:h-14 xl:w-56 xl:h-16 gap-4  "

@@ -33,7 +33,6 @@ root.render(
         <Route path="/before" element={<BeforePage />} />
         <Route path="/main/:lang/:section" element={<MainPage />} />
         <Route path="/instruction" element={<InstructionPage />} />
-
         <Route path="/basic" element={<Basic />} />
         <Route path="/multiple-choice" element={<MultipleChoice />} />
         <Route path="/card" element={<Card />} />

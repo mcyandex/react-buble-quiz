@@ -1,13 +1,13 @@
 import React, { useState, useEffect, version } from "react";
-import { MDBBtn, MDBContainer, MDBTypography } from "mdb-react-ui-kit";
+import { MDBBtn, MDBTypography } from "mdb-react-ui-kit";
 import Select from "react-select";
 import { useNavigate } from "react-router-dom";
+import Alert from "@mui/material/Alert";
 
 import LANG_DATA from "./data/LanguagesData.json";
 import SECTION_DATA from "./data/SectionsData.json";
 
 import "./styles.css";
-import { FormControl, InputLabel, NativeSelect } from "@mui/material";
 
 export default function Before(props) {
   const [versionOptions, setVersionOptions] = useState([]);
@@ -48,98 +48,114 @@ export default function Before(props) {
   };
 
   return (
-    <div className="px-96 pt-40 before-page h-96 bg-gradient-to-b from-teal-100">
-      <MDBTypography
-        id="language"
-        tag={"h4"}
-        className="font-sans hover:font-serif text-emerald-600 font-bold text-center text-5xl"
-      >
-        Please select Language, Version, Section of Bible.
+    <div className="before-page h-screen bg-gradient-to-b from-emerald-500 flex flex-col md:flex-row md:gap-6 md:items-center">
+      <MDBTypography className="font-sans font-bold text-white text-center text-2xl  sm:text-3xl py-6 md:w-1/4">
+        Please select Language, Version of Bible, Section of Bible.
       </MDBTypography>
+      <div className="mt-2 md:w-3/4">
+        <div className="mt-1 w-full justify-between items-center gap-4">
+          <div className="font-sans font-bold py-1 md:py-4 text-lg sm:text-xl xl:mt-2 mb-2">
+            Language:
+          </div>
+          <Select
+            className="mb-1 sm:w-full"
+            placeholder={"Enter language..."}
+            options={LANG_DATA}
+            getOptionLabel={(option) => option.language}
+            getOptionValue={(option) => option.language}
+            onChange={(e) => {
+              setSelectedLanguage(e);
+              localStorage.setItem("language", e.language);
+              setVersionOptions(e.translations);
+              setSelectedVersion({});
+            }}
+            value={
+              localStorage.getItem("language")
+                ? selectedLanguage
+                : "Please select"
+            }
+            required
+          />
+        </div>
+        {!selectedLanguage.language && (
+          <Alert variant="outlined" color="info" severity="warning">
+            Language must be input!
+          </Alert>
+        )}
 
-        Language:
-      <Select
-        className="mb-1"
-        placeholder={"Please select"}
-        options={LANG_DATA}
-        getOptionLabel={(option) => option.language}
-        getOptionValue={(option) => option.language}
-        onChange={(e) => {
-          setSelectedLanguage(e);
-          localStorage.setItem("language", e.language);
-          setVersionOptions(e.translations);
-          setSelectedVersion({});
-        }}
-        value={
-          localStorage.getItem("language") ? selectedLanguage : "Please select"
-        }
-        required
-      />
-      {!selectedLanguage.language && (
-        <p className="text-danger">Select the Language</p>
-      )}
+        <div className="mt-2 w-full justify-between items-center gap-4">
+          <div className="font-sans font-bold py-1 md:py-4 text-lg sm:text-xl xl:mt-2 mb-2">
+            Version:
+          </div>
+          <Select
+            className="mb-1 sm:w-full"
+            placeholder={"Enter version of Bible..."}
+            options={versionOptions}
+            getOptionLabel={(option) =>
+              option.short_name && `${option.short_name} - ${option.full_name}`
+            }
+            getOptionValue={(option) => option.short_name}
+            value={
+              selectedVersion.short_name ? selectedVersion : "Please select"
+            }
+            onChange={(val) => {
+              setSelectedVersion(val);
+              localStorage.setItem("version-short", val.short_name);
+              localStorage.setItem("version-full", val.full_name);
+            }}
+            required
+          />
+        </div>
+        {!selectedVersion.short_name && (
+          <Alert variant="outlined" color="info" severity="warning">
+            Version of Bible must be input!
+          </Alert>
+        )}
 
-      <label htmlFor="language" className="mb-1">
-        Version:
-      </label>
-      <Select
-        className="mb-4"
-        placeholder={"Please select"}
-        options={versionOptions}
-        getOptionLabel={(option) =>
-          option.short_name && `${option.short_name} - ${option.full_name}`
-        }
-        getOptionValue={(option) => option.short_name}
-        value={selectedVersion.short_name ? selectedVersion : "Please select"}
-        onChange={(val) => {
-          setSelectedVersion(val);
-          localStorage.setItem("version-short", val.short_name);
-          localStorage.setItem("version-full", val.full_name);
-        }}
-        required
-      />
-      {!selectedVersion.short_name && (
-        <p className="text-danger">Select the Version</p>
-      )}
+        <div className="mt-2 w-full justify-between items-center gap-4">
+          <div className="font-sans font-bold py-2 text-lg sm:text-xl lg:text-2xl  xl:text-3xl xl:mt-2 mb-2">
+            Section:
+          </div>
+          <Select
+            className="mb-1 sm:w-full"
+            placeholder={"Enter section of Bible..."}
+            options={SECTION_DATA}
+            getOptionLabel={(option) => option.bible}
+            getOptionValue={(option) => option.bible}
+            value={
+              localStorage.getItem("section-label")
+                ? selectedSection
+                : "Please select"
+            }
+            onChange={(val) => {
+              setSelectedSection(val);
+              localStorage.setItem("section-value", val.value);
+              localStorage.setItem("section-label", val.label);
+            }}
+          />
+        </div>
+        {!selectedSection.value && (
+          <Alert variant="outlined" color="info" severity="warning">
+            Section of Bible must be input!
+          </Alert>
+        )}
 
-      <label htmlFor="language" className="mb-1">
-        Section of Bible:
-      </label>
-      <Select
-        className="mb-4"
-        placeholder={"Please select"}
-        options={SECTION_DATA}
-        getOptionLabel={(option) => option.bible}
-        getOptionValue={(option) => option.bible}
-        value={
-          localStorage.getItem("section-label")
-            ? selectedSection
-            : "Please select"
-        }
-        onChange={(val) => {
-          setSelectedSection(val);
-          localStorage.setItem("section-value", val.value);
-          localStorage.setItem("section-label", val.label);
-        }}
-      />
-      {!selectedSection.value && (
-        <p className="text-danger">Select the Bible</p>
-      )}
-
-      <div className="text-center">
-        <MDBBtn
-          type="submit"
-          onClick={onStart}
-          disabled={
-            !(
-              selectedLanguage.language &&
-              selectedVersion.short_name &&
-              selectedSection.value
-            )
-          }
-        >
-          Start!
-        </MDBBtn>
+        <div className="text-center">
+          <MDBBtn
+            type="submit"
+            className="w-full bg-green-600 mt-3"
+            onClick={onStart}
+            disabled={
+              !(
+                selectedLanguage.language &&
+                selectedVersion.short_name &&
+                selectedSection.value
+              )
+            }
+          >
+            Start!
+          </MDBBtn>
+        </div>
       </div>
     </div>
   );

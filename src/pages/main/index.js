@@ -40,6 +40,8 @@ import {
   Typography,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+import RestartAltIcon from "@mui/icons-material/RestartAlt";
+import TelegramIcon from "@mui/icons-material/Telegram";
 
 let bookRange = [];
 let bookId, chapterRange, chapterId, verseId;
@@ -222,10 +224,10 @@ export default function Main() {
   }, [lang, section]);
 
   return (
-    <div className="main-page h-96 bg-gradient-to-b from-teal-100 w-full pt-40">
+    <div className="main-page h-96 bg-gradient-to-b from-emerald-500 w-full pt-40">
       <MDBTypography
         tag={"h2"}
-        className="text-center fw-bold m-4 text-green-500"
+        className="text-center text-5xl fw-bold m-4 text-green-500"
       >
         Question {questionNumber}
       </MDBTypography>
@@ -247,8 +249,8 @@ export default function Main() {
           />
           <MDBCard>
             <MDBCardHeader className="flex justify-center">
-              <div className="text-blue-400 text-xl m-1">Score : </div>
-              <big className="text-red-400 text-xl m-1">
+              <div className=" text-3xl m-1">Score : </div>
+              <big className=" text-4xl m-1">
                 <strong>{totalPoints}</strong>
               </big>
             </MDBCardHeader>
@@ -263,27 +265,33 @@ export default function Main() {
               </div>
             ) : (
               <div>
-                <div className="flex flex-col md:flex-row justify-content-end">
+                <div className="flex flex-col md:flex-row justify-between">
                   <Button
-                    variant="outlined"
-                    className="m-2"
-                    color="warning"
+                    variant="contained"
+                    className="m-4"
+                    color="success"
                     onClick={() => {
                       navigate("/before");
                     }}
                   >
-                    Restart
+                    <div className="flex flex-row items-center align-middle gap-1">
+                      <RestartAltIcon />
+                      Restart
+                    </div>
                   </Button>
                   <Button
-                    variant="outlined"
-                    className="m-2"
+                    variant="contained"
+                    className="m-4"
                     color="primary"
                     onClick={handleSubmitAnswer}
                     style={
                       !answerStatus ? { display: "block" } : { display: "none" }
                     }
                   >
-                    Submit Answer
+                    <div className="flex flex-row items-center align-middle gap-1">
+                      <TelegramIcon />
+                      Submit
+                    </div>
                   </Button>
                   <Button
                     variant="outlined"
@@ -298,26 +306,11 @@ export default function Main() {
                   >
                     Next Question
                   </Button>
-                  <Button
-                    variant="outlined"
-                    className="m-2"
-                    color="secondary"
-                    onClick={() => {
-                      navigate("/");
-                    }}
-                    style={
-                      answerStatus && questionNumber == PROBLEM_NUM
-                        ? { visibility: "visible" }
-                        : { visibility: "hidden" }
-                    }
-                  >
-                    Homepage
-                  </Button>
                 </div>
                 <MDBCardFooter>
                   {questionType === 0 ? (
                     <div>
-                      <div className="m-3">
+                      <div className="my-3 mx-0">
                         Select the correct Book where this verse came from.
                       </div>
                       <MDBCardText>
@@ -326,7 +319,7 @@ export default function Main() {
                             return (
                               <div
                                 key={index}
-                                className="p-2 rounded-3xl border-4 border-teal-400"
+                                className="p-2 rounded-lg border-[1px]"
                               >
                                 <MDBRadio
                                   key={one.bookid}
@@ -360,6 +353,7 @@ export default function Main() {
                                         : { color: "black" }
                                       : {}
                                   }
+                                  wrapperClass="mb-0"
                                   disabled={answerStatus}
                                 />
                               </div>
@@ -369,17 +363,17 @@ export default function Main() {
                       </MDBCardText>
                     </div>
                   ) : questionType === 1 ? (
-                    <MDBCardBody>
-                      <MDBCardTitle>
+                    <div>
+                      <div className="my-3 mx-0">
                         Select the correct Chapter where this verse came from.
-                      </MDBCardTitle>
+                      </div>
                       <MDBCardText>
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                           {Array(chapterRange)
                             .fill(0)
                             .map((one, index) => {
                               return (
-                                <div className="p-2 rounded-3xl border-4 border-teal-400">
+                                <div className="p-2 rounded-lg border-[1px]">
                                   <MDBRadio
                                     key={index + 1}
                                     name="bookOption"
@@ -419,14 +413,14 @@ export default function Main() {
                             })}
                         </div>
                       </MDBCardText>
-                    </MDBCardBody>
+                    </div>
                   ) : (
-                    <MDBCardBody>
-                      <MDBCardTitle>Select the correct Verse.</MDBCardTitle>
+                    <div>
+                      <div className="my-3 mx-0">Select the correct Verse.</div>
                       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                         {verseOptions.map((one) => {
                           return (
-                            <div className="p-2 rounded-3xl border-4 border-teal-400">
+                            <div className="p-2 rounded-lg border-[1px]">
                               <MDBRadio
                                 key={one.pk}
                                 name="verseOption"
@@ -465,7 +459,7 @@ export default function Main() {
                           );
                         })}
                       </div>
-                    </MDBCardBody>
+                    </div>
                   )}
                 </MDBCardFooter>
               </div>
@@ -480,7 +474,11 @@ export default function Main() {
         open={visibleModal}
         className="w-1/2 m-auto"
       >
-        <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title" className={`text-${modalColor}`}>
+        <DialogTitle
+          sx={{ m: 0, p: 2 }}
+          id="customized-dialog-title"
+          className={`text-${modalColor}`}
+        >
           {modalColor.toUpperCase()}
         </DialogTitle>
         <IconButton
@@ -496,7 +494,12 @@ export default function Main() {
           <CloseIcon />
         </IconButton>
         <DialogContent className="" dividers>
-          <Typography className={`p-10 w-[400px] text-center text-${modalColor}`} gutterBottom>{modalTitle}</Typography>
+          <Typography
+            className={`p-10 w-[400px] text-center text-${modalColor}`}
+            gutterBottom
+          >
+            {modalTitle}
+          </Typography>
         </DialogContent>
         <DialogActions>
           <Button variant="contained" onClick={toggleModal}>

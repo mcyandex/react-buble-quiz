@@ -5,7 +5,7 @@ import { Button } from "@mui/material";
 
 export default function Navbar() {
   return (
-    <div className="">
+    <div className="fixed z-10">
       <div className="">
         <Link to="/">
           <div className="m-5" md={7} sm={12}>

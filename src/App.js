@@ -13,14 +13,14 @@ export default function App() {
       md={5}
       sm={12}
     >
-      <div className="flex justify-around w-full mt-96">
-        <Link to="/before">
+      <div className="flex justify-around w-full pt-96 h-96 bg-gradient-to-b from-teal-100 ">
+        <Link to="/instruction">
           <Button className="w-56 h-12 gap-4" variant="contained" color="secondary">
             <div>Instruction</div>
             <MenuBookIcon />
           </Button>
         </Link>
-        <Link to="/instruction">
+        <Link to="/before">
           <Button className="w-56 h-12 gap-4" variant="contained">
             Start
             <PlayArrowIcon />

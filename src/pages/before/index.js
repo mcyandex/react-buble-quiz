@@ -7,6 +7,7 @@ import LANG_DATA from "./data/LanguagesData.json";
 import SECTION_DATA from "./data/SectionsData.json";
 
 import "./styles.css";
+import { FormControl, InputLabel, NativeSelect } from "@mui/material";
 
 export default function Before(props) {
   const [versionOptions, setVersionOptions] = useState([]);
@@ -47,8 +48,12 @@ export default function Before(props) {
   };
 
   return (
-    <MDBContainer className="before-page">
-      <MDBTypography id="language" className="my-5" tag={"h4"}>
+    <div className="px-96 pt-40 before-page h-96 bg-gradient-to-b from-teal-100">
+      <MDBTypography
+        id="language"
+        tag={"h4"}
+        className="my-20 mx-10 font-sans hover:font-serif"
+      >
         Please select Language, Version, Section of Bible.
       </MDBTypography>
 
@@ -120,7 +125,7 @@ export default function Before(props) {
         }}
       />
       {!selectedSection.value && (
-        <p className="text-danger">Select the Version</p>
+        <p className="text-danger">Select the Bible</p>
       )}
 
       <div className="text-center">
@@ -138,6 +143,6 @@ export default function Before(props) {
           Start!
         </MDBBtn>
       </div>
-    </MDBContainer>
+    </div>
   );
 }

@@ -316,12 +316,12 @@ export default function Main() {
                 </div>
                 <MDBCardFooter>
                   {questionType === 0 ? (
-                    <MDBCardBody>
+                    <div>
                       <div className="m-3">
                         Select the correct Book where this verse came from.
                       </div>
                       <MDBCardText>
-                        <div className="grid grid-cols-3 gap-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                           {bookOptions.map((one, index) => {
                             return (
                               <div
@@ -367,14 +367,14 @@ export default function Main() {
                           })}
                         </div>
                       </MDBCardText>
-                    </MDBCardBody>
+                    </div>
                   ) : questionType === 1 ? (
                     <MDBCardBody>
                       <MDBCardTitle>
                         Select the correct Chapter where this verse came from.
                       </MDBCardTitle>
                       <MDBCardText>
-                        <div className="grid grid-cols-3 gap-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                           {Array(chapterRange)
                             .fill(0)
                             .map((one, index) => {
@@ -423,7 +423,7 @@ export default function Main() {
                   ) : (
                     <MDBCardBody>
                       <MDBCardTitle>Select the correct Verse.</MDBCardTitle>
-                      <div className="grid grid-cols-3 gap-4">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                         {verseOptions.map((one) => {
                           return (
                             <div className="p-2 rounded-3xl border-4 border-teal-400">

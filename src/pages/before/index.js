@@ -114,11 +114,11 @@ export default function Before(props) {
 
         <div className="mt-4 w-full items-center">
           <div className="font-sans font-bold py-2 text-lg sm:text-xl xl:mt-12 xl:text-3xl">
-            Section:
+            Verse:
           </div>
           <Select
             className="mb-1 sm:w-full"
-            placeholder={"Enter section of Bible..."}
+            placeholder={"Enter verse of Bible..."}
             options={SECTION_DATA}
             getOptionLabel={(option) => option.bible}
             getOptionValue={(option) => option.bible}
@@ -136,7 +136,7 @@ export default function Before(props) {
         </div>
         {!selectedSection.value && (
           <Alert variant="outlined" color="info" severity="warning">
-            Section of Bible must be input!
+            Verse of Bible must be input!
           </Alert>
         )}
 

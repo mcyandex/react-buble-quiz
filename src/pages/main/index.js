@@ -2,22 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import {
   MDBTypography,
-  MDBBtn,
   MDBCard,
-  MDBIcon,
   MDBCardHeader,
-  MDBCardBody,
-  MDBCardTitle,
   MDBCardText,
   MDBCardFooter,
   MDBRadio,
-  MDBModal,
-  MDBModalBody,
-  MDBModalContent,
-  MDBModalDialog,
-  MDBModalFooter,
   MDBSpinner,
-  MDBRow,
 } from "mdb-react-ui-kit";
 
 import { GetRandomChapter, GetBooks } from "../../libs/axios";
@@ -33,10 +23,6 @@ import {
   DialogContent,
   DialogTitle,
   IconButton,
-  List,
-  ListItem,
-  Radio,
-  RadioGroup,
   Typography,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
@@ -57,7 +43,6 @@ export default function Main() {
   const [cardLoading, setCardLoading] = useState(false);
 
   const [visibleModal, setVisibleModal] = useState(false);
-  const [modalIcon, setModalIcon] = useState("");
   const [modalTitle, setModalTitle] = useState("");
   const [modalColor, setModalColor] = useState("");
 
@@ -74,9 +59,11 @@ export default function Main() {
 
   const [selectedOption, setSelectedOption] = useState("");
 
+  const [chapterNum, setChapterNum] = useState(0);
+  const [verseNum, setVerseNum] = useState(0);
+
   const handleNewModal = (icon, color, title) => {
     setModalColor(color);
-    setModalIcon(icon);
     setModalTitle(title);
 
     setVisibleModal(true);
@@ -118,6 +105,7 @@ export default function Main() {
     bookId = getRandomNumber(bookRange[0], bookRange[1]);
     chapterRange = BooksData.find((one) => one.bookid == bookId).chapters;
     chapterId = getRandomNumber(1, +chapterRange);
+    setChapterNum(getItemCounts(chapterRange));
 
     setIsLoading(true);
     const randomChapterVerses = await GetRandomChapter(lang, bookId, chapterId);
@@ -126,6 +114,7 @@ export default function Main() {
     verseId = getRandomNumber(0, randomChapterVerses.length - 1);
     setRandomVerse(randomChapterVerses[verseId]);
     verseId = randomChapterVerses[verseId].verse;
+    setVerseNum(getItemCounts(randomChapterVerses.length));
 
     const allBooksSection = await GetBooks(lang);
     const booksOfSection = allBooksSection.filter(
@@ -134,6 +123,7 @@ export default function Main() {
     // booksOfSection.sort((a, b) => 0.5 - Math.random());
     setBookOptions(booksOfSection);
     setIsLoading(false);
+    console.log(chapterNum, verseNum);
   };
 
   const handleSubmitAnswer = () => {
@@ -218,6 +208,26 @@ export default function Main() {
 
   const toggleModal = () => {
     setVisibleModal(!visibleModal);
+  };
+
+  const getItemCounts = (num) => {
+    let index = Math.floor(num / 5);
+    switch (index) {
+      case 0:
+        return num;
+      case 1:
+        return 5 + Math.ceil(Math.random() * 2);
+      case 2:
+        return 7 + Math.ceil(Math.random() * 2);
+      case 3:
+        return 9 + Math.ceil(Math.random() * 2);
+      case 4:
+        return 10 + Math.ceil(Math.random() * 3);
+      case 5:
+        return 13 + Math.ceil(Math.random() * 3);
+      default:
+        return 15 + Math.ceil(Math.random() * 6);
+    }
   };
 
   useEffect(() => {
@@ -306,8 +316,8 @@ export default function Main() {
                     }
                   >
                     <div className="flex flex-row items-center align-middle gap-1 justify-center">
-                    <NextPlanIcon />
-                    Next
+                      <NextPlanIcon />
+                      Next
                     </div>
                   </Button>
                 </div>
@@ -375,9 +385,17 @@ export default function Main() {
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                           {Array(chapterRange)
                             .fill(0)
-                            .map((one, index) => {
+                            .slice(
+                              Math.floor(chapterId / chapterNum) * chapterNum,
+                              (Math.floor(chapterId / chapterNum) + 1) *
+                                chapterNum
+                            )
+                            .map((one, i) => {
+                              let index =
+                                i +
+                                Math.floor(chapterId / chapterNum) * chapterNum;
                               return (
-                                <div className="p-2 rounded-lg border-[1px]">
+                                <div key={index} className="p-2 rounded-lg border-[1px]">
                                   <MDBRadio
                                     key={index + 1}
                                     name="bookOption"
@@ -422,46 +440,53 @@ export default function Main() {
                     <div>
                       <div className="my-3 mx-0">Select the correct Verse.</div>
                       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                        {verseOptions.map((one) => {
-                          return (
-                            <div className="p-2 rounded-lg border-[1px]">
-                              <MDBRadio
-                                key={one.pk}
-                                name="verseOption"
-                                id={one.verse}
-                                label={one.verse}
-                                onChange={() => {
-                                  // console.log("333333", one.verse, verseId);
-                                  setSelectedOption(one.verse);
-                                }}
-                                value={one.verse}
-                                checked={one.verse == selectedOption}
-                                labelStyle={
-                                  questionType == 2 && answerStatus == 2
-                                    ? one.verse === selectedOption
-                                      ? { textDecoration: "line-through" }
-                                      : one.verse == verseId
-                                      ? {}
+                        {verseOptions
+                          .slice(
+                            Math.floor(verseOptions.length / verseNum) *
+                              verseNum,
+                            (Math.floor(verseOptions.length / verseNum) + 1) *
+                              verseNum
+                          )
+                          .map((one, index) => {
+                            return (
+                              <div key={index} className="p-2 rounded-lg border-[1px]">
+                                <MDBRadio
+                                  key={one.pk}
+                                  name="verseOption"
+                                  id={one.verse}
+                                  label={one.verse}
+                                  onChange={() => {
+                                    // console.log("333333", one.verse, verseId);
+                                    setSelectedOption(one.verse);
+                                  }}
+                                  value={one.verse}
+                                  checked={one.verse == selectedOption}
+                                  labelStyle={
+                                    questionType == 2 && answerStatus == 2
+                                      ? one.verse === selectedOption
+                                        ? { textDecoration: "line-through" }
+                                        : one.verse == verseId
+                                        ? {}
+                                        : {}
                                       : {}
-                                    : {}
-                                }
-                                wrapperStyle={
-                                  questionType == 2 && answerStatus == 2
-                                    ? one.verse == selectedOption
-                                      ? { color: "red" }
-                                      : one.verse == verseId
-                                      ? {
-                                          color: "green",
-                                          fontWeight: "bolder",
-                                        }
-                                      : { color: "black" }
-                                    : {}
-                                }
-                                disabled={answerStatus}
-                              />
-                            </div>
-                          );
-                        })}
+                                  }
+                                  wrapperStyle={
+                                    questionType == 2 && answerStatus == 2
+                                      ? one.verse == selectedOption
+                                        ? { color: "red" }
+                                        : one.verse == verseId
+                                        ? {
+                                            color: "green",
+                                            fontWeight: "bolder",
+                                          }
+                                        : { color: "black" }
+                                      : {}
+                                  }
+                                  disabled={answerStatus}
+                                />
+                              </div>
+                            );
+                          })}
                       </div>
                     </div>
                   )}
@@ -506,7 +531,12 @@ export default function Main() {
           </Typography>
         </DialogContent>
         <DialogActions>
-          <Button variant="contained" color="error" className="m-2" onClick={toggleModal}>
+          <Button
+            variant="contained"
+            color="error"
+            className="m-2"
+            onClick={toggleModal}
+          >
             Close
           </Button>
         </DialogActions>

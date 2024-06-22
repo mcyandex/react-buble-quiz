@@ -23,6 +23,7 @@ import {
   DialogContent,
   DialogTitle,
   IconButton,
+  Slider,
   Typography,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
@@ -242,6 +243,16 @@ export default function Main() {
       >
         Question {questionNumber}
       </MDBTypography>
+      <div className="w-3/5 m-auto">
+        <Slider
+          value={questionNumber}
+          step={1}
+          marks
+          min={0}
+          max={10}
+          color="error"
+        />
+      </div>
       {isLoading ? (
         <div className="text-center mt-5">
           <MDBSpinner
@@ -395,7 +406,10 @@ export default function Main() {
                                 i +
                                 Math.floor(chapterId / chapterNum) * chapterNum;
                               return (
-                                <div key={index} className="p-2 rounded-lg border-[1px]">
+                                <div
+                                  key={index}
+                                  className="p-2 rounded-lg border-[1px]"
+                                >
                                   <MDBRadio
                                     key={index + 1}
                                     name="bookOption"
@@ -449,7 +463,10 @@ export default function Main() {
                           )
                           .map((one, index) => {
                             return (
-                              <div key={index} className="p-2 rounded-lg border-[1px]">
+                              <div
+                                key={index}
+                                className="p-2 rounded-lg border-[1px]"
+                              >
                                 <MDBRadio
                                   key={one.pk}
                                   name="verseOption"

@@ -1,8 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import { Button } from "@mui/material";
-
 export default function Navbar() {
   return (
     <div className="relative sm:fixed mb-[-96px] sm:mb-0 z-10">
@@ -13,7 +11,7 @@ export default function Navbar() {
                 <img
                   src={`/assets/images/icon.png`}
                   alt="Bible"
-                  className="w-16 sm:w-20"
+                  className="w-16 xl:w-20"
                 />
             </div>
           </div>

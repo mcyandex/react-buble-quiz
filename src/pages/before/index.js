@@ -48,13 +48,13 @@ export default function Before(props) {
   };
 
   return (
-    <div className="before-page h-screen bg-gradient-to-b from-emerald-500 flex flex-col md:flex-row md:gap-6 md:items-center">
-      <MDBTypography className="font-sans font-bold text-white text-center text-2xl  sm:text-3xl py-6 md:w-1/4">
+    <div className="before-page h-screen bg-gradient-to-b from-emerald-500 flex flex-col md:flex-row md:gap-40 lg:gap-48 xl:gap-96 md:items-center">
+      <MDBTypography className="font-sans font-bold text-white text-center text-2xl  sm:text-3xl py-6 md:w-1/4 xl:text-5xl">
         Please select Language, Version of Bible, Section of Bible.
       </MDBTypography>
       <div className="mt-2 md:w-3/4">
-        <div className="mt-1 w-full justify-between items-center gap-4">
-          <div className="font-sans font-bold py-1 md:py-4 text-lg sm:text-xl xl:mt-2 mb-2">
+        <div className="mt-1 w-full items-center">
+          <div className="font-sans font-bold py-2 md:py-4 text-lg sm:text-xl  xl:mt-12 xl:text-3xl">
             Language:
           </div>
           <Select
@@ -83,8 +83,8 @@ export default function Before(props) {
           </Alert>
         )}
 
-        <div className="mt-2 w-full justify-between items-center gap-4">
-          <div className="font-sans font-bold py-1 md:py-4 text-lg sm:text-xl xl:mt-2 mb-2">
+        <div className="mt-4 w-full items-center">
+          <div className="font-sans font-bold py-2 md:py-4 text-lg sm:text-xl  xl:mt-12 xl:text-3xl">
             Version:
           </div>
           <Select
@@ -112,8 +112,8 @@ export default function Before(props) {
           </Alert>
         )}
 
-        <div className="mt-2 w-full justify-between items-center gap-4">
-          <div className="font-sans font-bold py-2 text-lg sm:text-xl lg:text-2xl  xl:text-3xl xl:mt-2 mb-2">
+        <div className="mt-4 w-full items-center">
+          <div className="font-sans font-bold py-2 text-lg sm:text-xl xl:mt-12 xl:text-3xl">
             Section:
           </div>
           <Select
@@ -140,10 +140,10 @@ export default function Before(props) {
           </Alert>
         )}
 
-        <div className="text-center">
+        <div className="text-right">
           <MDBBtn
             type="submit"
-            className="w-full bg-green-600 mt-3"
+            className="bg-green-600 mt-3"
             onClick={onStart}
             disabled={
               !(
@@ -153,7 +153,7 @@ export default function Before(props) {
               )
             }
           >
-            Start!
+            Start
           </MDBBtn>
         </div>
       </div>

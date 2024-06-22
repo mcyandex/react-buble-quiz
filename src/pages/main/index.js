@@ -42,11 +42,12 @@ import {
 import CloseIcon from "@mui/icons-material/Close";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import TelegramIcon from "@mui/icons-material/Telegram";
+import NextPlanIcon from "@mui/icons-material/NextPlan";
 
 let bookRange = [];
 let bookId, chapterRange, chapterId, verseId;
 
-const PROBLEM_NUM = 1;
+const PROBLEM_NUM = 10;
 
 export default function Main() {
   const { lang, section } = useParams();
@@ -162,7 +163,7 @@ export default function Main() {
         setSelectedOption("");
         setCardLoading(true);
 
-        handleNewModal("checked", "success", "You scored 1 point.");
+        handleNewModal("checked", "info", "You scored 1 point.");
 
         setTotalPoints(totalPoints + 1);
 
@@ -180,7 +181,7 @@ export default function Main() {
       if (selectedOption == verseId) {
         setQuestionType(2);
 
-        handleNewModal("checked", "success", "You scored additional 1 point.");
+        handleNewModal("checked", "info", "You scored additional 1 point.");
 
         setTotalPoints(totalPoints + 1);
 
@@ -224,10 +225,10 @@ export default function Main() {
   }, [lang, section]);
 
   return (
-    <div className="main-page h-96 bg-gradient-to-b from-emerald-500 w-full pt-40">
+    <div className="main-page h-96 bg-gradient-to-b from-emerald-500 w-full pt-24 sm:pt-28 md:pt-32">
       <MDBTypography
         tag={"h2"}
-        className="text-center text-5xl fw-bold m-4 text-green-500"
+        className="text-center text-xl md:text-5xl xl:text-6xl fw-bold m-4 text-green-500"
       >
         Question {questionNumber}
       </MDBTypography>
@@ -268,8 +269,8 @@ export default function Main() {
                 <div className="flex flex-col md:flex-row justify-between">
                   <Button
                     variant="contained"
-                    className="m-4"
-                    color="success"
+                    className="md:w-32 my-2 mx-4"
+                    color="error"
                     onClick={() => {
                       navigate("/before");
                     }}
@@ -281,22 +282,22 @@ export default function Main() {
                   </Button>
                   <Button
                     variant="contained"
-                    className="m-4"
-                    color="primary"
+                    className="md:w-32 my-2 mx-4"
+                    color="success"
                     onClick={handleSubmitAnswer}
                     style={
                       !answerStatus ? { display: "block" } : { display: "none" }
                     }
                   >
-                    <div className="flex flex-row items-center align-middle gap-1">
+                    <div className="flex flex-row items-center align-middle gap-1 justify-center">
                       <TelegramIcon />
                       Submit
                     </div>
                   </Button>
                   <Button
-                    variant="outlined"
-                    className="m-2"
-                    color="primary"
+                    variant="contained"
+                    className="md:w-32 my-2 mx-4"
+                    color="info"
                     onClick={handleNext}
                     style={
                       answerStatus && questionNumber != PROBLEM_NUM
@@ -304,7 +305,10 @@ export default function Main() {
                         : { display: "none" }
                     }
                   >
-                    Next Question
+                    <div className="flex flex-row items-center align-middle gap-1 justify-center">
+                    <NextPlanIcon />
+                    Next
+                    </div>
                   </Button>
                 </div>
                 <MDBCardFooter>
@@ -472,7 +476,7 @@ export default function Main() {
         onClose={toggleModal}
         aria-labelledby="customized-dialog-title"
         open={visibleModal}
-        className="w-1/2 m-auto"
+        className="m-auto"
       >
         <DialogTitle
           sx={{ m: 0, p: 2 }}
@@ -493,7 +497,7 @@ export default function Main() {
         >
           <CloseIcon />
         </IconButton>
-        <DialogContent className="" dividers>
+        <DialogContent dividers>
           <Typography
             className={`p-10 w-[400px] text-center text-${modalColor}`}
             gutterBottom
@@ -502,7 +506,7 @@ export default function Main() {
           </Typography>
         </DialogContent>
         <DialogActions>
-          <Button variant="contained" onClick={toggleModal}>
+          <Button variant="contained" color="error" className="m-2" onClick={toggleModal}>
             Close
           </Button>
         </DialogActions>

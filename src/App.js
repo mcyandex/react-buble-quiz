@@ -20,7 +20,7 @@ export default function App() {
             variant="contained"
             color="info"
           >
-            <div>Instruction</div>
+            <div className="md:text-md xl:text-xl">Instruction</div>
             <MenuBookIcon />
           </Button>
         </Link>
@@ -30,7 +30,7 @@ export default function App() {
             variant="contained"
             color="success"
           >
-            Start
+            <div className="md:text-md xl:text-xl">Start</div>
             <PlayArrowIcon />
           </Button>
         </Link>

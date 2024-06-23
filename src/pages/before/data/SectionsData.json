@@ -1,9 +1,9 @@
 [
-  { "value": "10-14", "bible": "Whole Bible" },
-  { "value": "7-10", "bible": "OT" },
-  { "value": "4-5", "bible": "Pentateuch" },
-  { "value": "6-8", "bible": "History" },
-  { "value": "4-5", "bible": "Writings" },
-  { "value": "5-7", "bible": "Prophets" },
-  { "value": "8-12", "bible": "NT" }
+  { "value": "1-66", "bible": "Whole Bible" },
+  { "value": "1-39", "bible": "OT" },
+  { "value": "1-5", "bible": "Pentateuch" },
+  { "value": "6-17", "bible": "History" },
+  { "value": "18-22", "bible": "Writings" },
+  { "value": "23-39", "bible": "Prophets" },
+  { "value": "40-66", "bible": "NT" }
 ]

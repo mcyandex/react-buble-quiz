@@ -1,7 +1,6 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
 import "mdb-react-ui-kit/dist/css/mdb.min.css";
-// import reportWebVitals from "./reportWebVitals";
 import Basic from "./components/basic/Basic";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import App from "./App";

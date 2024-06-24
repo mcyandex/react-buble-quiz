@@ -164,8 +164,9 @@ export default function Main() {
       .sort((a, b) => 0.5 - Math.random());
     chapterId = chapters[0];
     setChapterOptions(
-      chapters.splice(0, getChapterCounts(chapterRange)).sort((a, b) => a - b)
+      chapters.slice(0, getChapterCounts(chapterRange)).sort((a, b) => a - b)
     );
+    // console.log("chapters: ", chapterRange, chapters);
 
     const randomChapterVerses = await GetRandomChapter(lang, bookId, chapterId);
     randomChapterVerses.sort((a, b) => 0.5 - Math.random());
@@ -386,7 +387,7 @@ export default function Main() {
                                 id={one.bookid}
                                 label={one.name}
                                 onChange={(_, e) => {
-                                  console.log("1111", one.bookid, bookId);
+                                  // console.log("1111", one.bookid, bookId);
                                   setSelectedOption(one.bookid);
                                 }}
                                 value={one.bookid}
@@ -438,7 +439,7 @@ export default function Main() {
                                 id={one}
                                 label={`Chapter ${one}`}
                                 onChange={() => {
-                                  console.log("2222", one, chapterId);
+                                  // console.log("2222", one, chapterId);
                                   setSelectedOption(one);
                                 }}
                                 value={one}
@@ -487,7 +488,7 @@ export default function Main() {
                                 id={one.verse}
                                 label={one.verse}
                                 onChange={() => {
-                                  console.log("333333", one.verse, verseId);
+                                  // console.log("333333", one.verse, verseId);
                                   setSelectedOption(one.verse);
                                 }}
                                 value={one.verse}

@@ -42,4 +42,18 @@ export const GetBooks = (lang) => {
   });
 };
 
+export const GetLanguages = () => {
+  return new Promise((resolve, reject) => {
+    instance
+      .get(`/static/bolls/app/views/languages.json`)
+      .then((res) => {
+        console.log("response: ", res.data);
+        resolve(res.data);
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+};
+
 export default instance;

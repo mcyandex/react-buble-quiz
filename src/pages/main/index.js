@@ -166,7 +166,6 @@ export default function Main() {
     setChapterOptions(
       chapters.slice(0, getChapterCounts(chapterRange)).sort((a, b) => a - b)
     );
-    // console.log("chapters: ", chapterRange, chapters);
 
     const randomChapterVerses = await GetRandomChapter(lang, bookId, chapterId);
     randomChapterVerses.sort((a, b) => 0.5 - Math.random());

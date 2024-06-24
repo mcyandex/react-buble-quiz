@@ -63,6 +63,7 @@ export default function Main() {
 
   const [chapterNum, setChapterNum] = useState(0);
   const [verseNum, setVerseNum] = useState(0);
+  const [bookNum, setBookNum] = useState(0);
 
   const handleNewModal = (icon, color, title) => {
     setModalColor(color);
@@ -143,6 +144,22 @@ export default function Main() {
   const getQuestion = async () => {
     bookRange = section.split("-").map((one) => +one);
     bookId = getRandomNumber(bookRange[0], bookRange[1]);
+
+    let versionRange = localStorage
+      .getItem("section-num")
+      .split("-")
+      .map((one) => +one);
+    let booksNum = Math.floor(
+      Math.random() * (versionRange[1] - versionRange[0] + 1) + versionRange[0]
+    );
+    let startPage = Math.max(
+      0,
+      Math.min(
+        bookId - Math.floor(booksNum * Math.random()),
+        bookRange[1] - booksNum
+      )
+    );
+    setBookNum([startPage, startPage + booksNum]);
     chapterRange = BooksData.find((one) => one.bookid == bookId).chapters;
     chapterId = getRandomNumber(1, +chapterRange);
     setChapterNum(getItemCounts(chapterRange));
@@ -251,7 +268,7 @@ export default function Main() {
   };
 
   const getItemCounts = (num) => {
-    let index = Math.floor(num / 5);
+    let index = Math.floor((num - 1) / 5);
     switch (index) {
       case 0:
         return num;
@@ -380,50 +397,52 @@ export default function Main() {
                       </div>
                       <MDBCardText>
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                          {bookOptions.map((one, index) => {
-                            return (
-                              <div
-                                key={index}
-                                className="p-2 rounded-lg border-[1px]"
-                              >
-                                <MDBRadio
-                                  key={one.bookid}
-                                  name="bookOption"
-                                  id={one.bookid}
-                                  label={one.name}
-                                  onChange={(_, e) => {
-                                    // console.log("1111", one.bookid, bookId);
-                                    setSelectedOption(one.bookid);
-                                  }}
-                                  value={one.bookid}
-                                  checked={one.bookid == selectedOption}
-                                  labelStyle={
-                                    questionType == 0 && answerStatus == 2
-                                      ? one.bookid === selectedOption
-                                        ? { textDecoration: "line-through" }
-                                        : one.bookid == bookId
-                                        ? {}
+                          {bookOptions
+                            .slice(bookNum[0], bookNum[1])
+                            .map((one, index) => {
+                              return (
+                                <div
+                                  key={index}
+                                  className="p-2 rounded-lg border-[1px]"
+                                >
+                                  <MDBRadio
+                                    key={one.bookid}
+                                    name="bookOption"
+                                    id={one.bookid}
+                                    label={one.name}
+                                    onChange={(_, e) => {
+                                      console.log("1111", one.bookid, bookId);
+                                      setSelectedOption(one.bookid);
+                                    }}
+                                    value={one.bookid}
+                                    checked={one.bookid == selectedOption}
+                                    labelStyle={
+                                      questionType == 0 && answerStatus == 2
+                                        ? one.bookid === selectedOption
+                                          ? { textDecoration: "line-through" }
+                                          : one.bookid == bookId
+                                          ? {}
+                                          : {}
                                         : {}
-                                      : {}
-                                  }
-                                  wrapperStyle={
-                                    questionType == 0 && answerStatus == 2
-                                      ? one.bookid == selectedOption
-                                        ? { color: "red" }
-                                        : one.bookid == bookId
-                                        ? {
-                                            color: "green",
-                                            fontWeight: "bolder",
-                                          }
-                                        : { color: "black" }
-                                      : {}
-                                  }
-                                  wrapperClass="mb-0"
-                                  disabled={answerStatus}
-                                />
-                              </div>
-                            );
-                          })}
+                                    }
+                                    wrapperStyle={
+                                      questionType == 0 && answerStatus == 2
+                                        ? one.bookid == selectedOption
+                                          ? { color: "red" }
+                                          : one.bookid == bookId
+                                          ? {
+                                              color: "green",
+                                              fontWeight: "bolder",
+                                            }
+                                          : { color: "black" }
+                                        : {}
+                                    }
+                                    wrapperClass="mb-0"
+                                    disabled={answerStatus}
+                                  />
+                                </div>
+                              );
+                            })}
                         </div>
                       </MDBCardText>
                     </div>

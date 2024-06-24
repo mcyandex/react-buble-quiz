@@ -131,7 +131,8 @@ export default function Before(props) {
             onChange={(val) => {
               setSelectedSection(val);
               localStorage.setItem("section-value", val.value);
-              localStorage.setItem("section-label", val.label);
+              localStorage.setItem("section-label", val.bible);
+              localStorage.setItem("section-num", val.num);
             }}
           />
         </div>
@@ -154,8 +155,7 @@ export default function Before(props) {
               )
             }
           >
-            <SchoolSharpIcon />{" "}
-            <span className="text-md">Start Test</span>
+            <SchoolSharpIcon /> <span className="text-md">Start Test</span>
           </MDBBtn>
         </div>
       </div>

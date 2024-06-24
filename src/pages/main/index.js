@@ -158,7 +158,7 @@ export default function Main() {
       .map((one) => +one);
     let booksNum = getRandomNumber(versionRange[0], versionRange[1]);
     setBookOptions(
-      books.splice(0, booksNum).sort((a, b) => a.chronorder - b.chronorder)
+      books.splice(0, booksNum).sort((a, b) => a.bookid - b.bookid)
     );
 
     chapterRange = BooksData.find((one) => one.bookid == bookId).chapters;

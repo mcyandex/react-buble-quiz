@@ -149,17 +149,16 @@ export default function Main() {
       .getItem("section-num")
       .split("-")
       .map((one) => +one);
-    let booksNum = Math.floor(
-      Math.random() * (versionRange[1] - versionRange[0] + 1) + versionRange[0]
-    );
+    let booksNum = getRandomNumber(versionRange[0], versionRange[1]);
+
     let startPage = Math.max(
-      0,
+      bookRange[0],
       Math.min(
         bookId - Math.floor(booksNum * Math.random()),
         bookRange[1] - booksNum
       )
     );
-    setBookNum([startPage, startPage + booksNum]);
+    setBookNum([startPage, Math.min(bookRange[1], startPage + booksNum) + 1]);
     chapterRange = BooksData.find((one) => one.bookid == bookId).chapters;
     chapterId = getRandomNumber(1, +chapterRange);
     setChapterNum(getItemCounts(chapterRange));
@@ -167,6 +166,7 @@ export default function Main() {
     setIsLoading(true);
     const randomChapterVerses = await GetRandomChapter(lang, bookId, chapterId);
     // randomChapterVerses.sort((a, b) => 0.5 - Math.random());
+    // console.log("randomChapterVerses: ", randomChapterVerses);
     setVerseOptions(randomChapterVerses);
     verseId = getRandomNumber(0, randomChapterVerses.length - 1);
     setRandomVerse(randomChapterVerses[verseId]);
@@ -177,10 +177,12 @@ export default function Main() {
     const booksOfSection = allBooksSection.filter(
       (one) => one.bookid >= bookRange[0] && one.bookid <= bookRange[1]
     );
-    // booksOfSection.sort((a, b) => 0.5 - Math.random());
     setBookOptions(booksOfSection);
     setIsLoading(false);
-    console.log(chapterNum, verseNum);
+    // console.log(booksNum, "---------------------------: ", bookRange, "\n");
+    // console.log("books: ", startPage, bookId, startPage + booksNum);
+    // console.log("Answer: ", chapterId, verseId);
+    // console.log("Nums", chapterNum, verseNum);
   };
 
   const handleSubmitAnswer = () => {
@@ -398,7 +400,10 @@ export default function Main() {
                       <MDBCardText>
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                           {bookOptions
-                            .slice(bookNum[0], bookNum[1])
+                            .slice(
+                              bookNum[0] - bookRange[0],
+                              bookNum[1] - bookRange[0]
+                            )
                             .map((one, index) => {
                               return (
                                 <div
@@ -411,7 +416,7 @@ export default function Main() {
                                     id={one.bookid}
                                     label={one.name}
                                     onChange={(_, e) => {
-                                      console.log("1111", one.bookid, bookId);
+                                      // console.log("1111", one.bookid, bookId);
                                       setSelectedOption(one.bookid);
                                     }}
                                     value={one.bookid}
@@ -456,8 +461,9 @@ export default function Main() {
                           {Array(chapterRange)
                             .fill(0)
                             .slice(
-                              Math.floor(chapterId / chapterNum) * chapterNum,
-                              (Math.floor(chapterId / chapterNum) + 1) *
+                              Math.floor((chapterId - 1) / chapterNum) *
+                                chapterNum,
+                              (Math.floor((chapterId - 1) / chapterNum) + 1) *
                                 chapterNum
                             )
                             .map((one, i) => {
@@ -515,10 +521,8 @@ export default function Main() {
                       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                         {verseOptions
                           .slice(
-                            Math.floor(verseOptions.length / verseNum) *
-                              verseNum,
-                            (Math.floor(verseOptions.length / verseNum) + 1) *
-                              verseNum
+                            Math.floor((verseId - 1) / verseNum) * verseNum,
+                            Math.floor((verseId - 1) / verseNum) * verseNum + verseNum
                           )
                           .map((one, index) => {
                             return (

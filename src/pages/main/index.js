@@ -41,7 +41,7 @@ export default function Main() {
   const { lang, section } = useParams();
   const navigate = useNavigate();
 
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [cardLoading, setCardLoading] = useState(false);
 
   const [visibleModal, setVisibleModal] = useState(false);
@@ -61,10 +61,6 @@ export default function Main() {
   const [questionType, setQuestionType] = useState(0); // 0: book, 1: chapter, 2: verse
 
   const [selectedOption, setSelectedOption] = useState("");
-
-  const [chapterNum, setChapterNum] = useState(0);
-  const [verseNum, setVerseNum] = useState(0);
-  const [bookNum, setBookNum] = useState(0);
 
   const handleNewModal = (icon, color, title) => {
     setModalColor(color);
@@ -143,6 +139,7 @@ export default function Main() {
   };
 
   const getQuestion = async () => {
+    setIsLoading(true);
     bookRange = section.split("-").map((one) => +one);
 
     const allBooksSection = await GetBooks(lang);
@@ -170,7 +167,6 @@ export default function Main() {
       chapters.splice(0, getChapterCounts(chapterRange)).sort((a, b) => a - b)
     );
 
-    setIsLoading(true);
     const randomChapterVerses = await GetRandomChapter(lang, bookId, chapterId);
     randomChapterVerses.sort((a, b) => 0.5 - Math.random());
     setRandomVerse(randomChapterVerses[0]);
@@ -180,8 +176,9 @@ export default function Main() {
         .splice(0, getVerseCounts(randomChapterVerses.length))
         .sort((a, b) => a.verse - b.verse)
     );
-
-    setIsLoading(false);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 900);
   };
 
   const handleSubmitAnswer = () => {
@@ -557,12 +554,11 @@ export default function Main() {
           <CloseIcon />
         </IconButton>
         <DialogContent dividers>
-          <Typography
+          <div
             className={`p-10 w-[400px] text-center text-${modalColor}`}
-            gutterBottom
           >
             {modalTitle}
-          </Typography>
+          </div>
         </DialogContent>
         <DialogActions>
           <Button

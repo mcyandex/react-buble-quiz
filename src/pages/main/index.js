@@ -173,7 +173,7 @@ export default function Main() {
     verseId = randomChapterVerses[0].verse;
     setVerseOptions(
       randomChapterVerses
-        .splice(0, getVerseCounts(randomChapterVerses.length))
+        .slice(0, getVerseCounts(randomChapterVerses.length))
         .sort((a, b) => a.verse - b.verse)
     );
     setTimeout(() => {
@@ -386,7 +386,7 @@ export default function Main() {
                                 id={one.bookid}
                                 label={one.name}
                                 onChange={(_, e) => {
-                                  // console.log("1111", one.bookid, bookId);
+                                  console.log("1111", one.bookid, bookId);
                                   setSelectedOption(one.bookid);
                                 }}
                                 value={one.bookid}
@@ -438,7 +438,7 @@ export default function Main() {
                                 id={one}
                                 label={`Chapter ${one}`}
                                 onChange={() => {
-                                  // console.log("2222", one, chapterId);
+                                  console.log("2222", one, chapterId);
                                   setSelectedOption(one);
                                 }}
                                 value={one}
@@ -487,7 +487,7 @@ export default function Main() {
                                 id={one.verse}
                                 label={one.verse}
                                 onChange={() => {
-                                  // console.log("333333", one.verse, verseId);
+                                  console.log("333333", one.verse, verseId);
                                   setSelectedOption(one.verse);
                                 }}
                                 value={one.verse}

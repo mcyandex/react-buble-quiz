@@ -18,7 +18,7 @@ export const getVerseCounts = (range) => {
   let result = 5;
   VERSE.map((item) => {
     let node = item.value.split("-").map((one) => +one);
-    if (range > node[0] && range < node[1]) {
+    if (range >= node[0] && range <= node[1]) {
       let outrange = item.num.split("-").map((one) => +one);
       result = Math.min(range, getRandomNumber(outrange[0], outrange[1]));
     }

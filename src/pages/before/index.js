@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import Alert from "@mui/material/Alert";
 
 import LANG_DATA from "../../consts/LanguagesData.json";
-import SECTION_DATA from "../../consts/SectionsData.json";
+import SECTION_DATA from "../../consts/BooksSetting.json";
 
 import "./styles.css";
 import SchoolSharpIcon from "@mui/icons-material/SchoolSharp";

@@ -30,6 +30,7 @@ import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import TelegramIcon from "@mui/icons-material/Telegram";
 import NextPlanIcon from "@mui/icons-material/NextPlan";
 import CancelIcon from "@mui/icons-material/Cancel";
+import { getChapterCounts, getVerseCounts } from "../../libs/getItemCount";
 
 let bookRange = [];
 let bookId, chapterRange, chapterId, verseId;
@@ -142,17 +143,6 @@ export default function Main() {
   };
 
   const getQuestion = async () => {
-    // input
-
-    // bookRange, versionRange,
-    // BooksData(json)
-
-    // output
-
-    // bookId, chapterId, verseId
-    // bookOptions, ChapterOptions, verseOptions
-    // bookNum=[st, ed], chapterNum, verseNum
-    // randomVerse
     bookRange = section.split("-").map((one) => +one);
 
     const allBooksSection = await GetBooks(lang);
@@ -170,38 +160,28 @@ export default function Main() {
     setBookOptions(
       books.splice(0, booksNum).sort((a, b) => a.chronorder - b.chronorder)
     );
-    // setBookNum([startPage, Math.min(bookRange[1], startPage + booksNum) + 1]);
 
     chapterRange = BooksData.find((one) => one.bookid == bookId).chapters;
     let chapters = [...new Array(chapterRange)]
       .map((_, i) => i + 1)
       .sort((a, b) => 0.5 - Math.random());
-    // console.log(chapterRange, chapters);
     chapterId = chapters[0];
     setChapterOptions(
-      chapters.splice(0, getItemCounts(chapterRange)).sort((a, b) => a - b)
+      chapters.splice(0, getChapterCounts(chapterRange)).sort((a, b) => a - b)
     );
-    // console.log("chapterOptions: ", chapterOptions);
-    // setChapterNum(getItemCounts(chapterRange));
 
     setIsLoading(true);
     const randomChapterVerses = await GetRandomChapter(lang, bookId, chapterId);
     randomChapterVerses.sort((a, b) => 0.5 - Math.random());
-    // console.log("randomVerses: ", randomChapterVerses);
     setRandomVerse(randomChapterVerses[0]);
     verseId = randomChapterVerses[0].verse;
     setVerseOptions(
       randomChapterVerses
-        .splice(0, getItemCounts(randomChapterVerses.length))
+        .splice(0, getVerseCounts(randomChapterVerses.length))
         .sort((a, b) => a.verse - b.verse)
     );
-    // setVerseNum(getItemCounts(randomChapterVerses.length));
 
     setIsLoading(false);
-    // console.log(booksNum, "---------------------------: ", bookRange, "\n");
-    // console.log("books: ", startPage, bookId, startPage + booksNum);
-    // console.log("Answer: ", chapterId, verseId);
-    // console.log("Nums", chapterNum, verseNum);
   };
 
   const handleSubmitAnswer = () => {
@@ -286,26 +266,6 @@ export default function Main() {
 
   const toggleModal = () => {
     setVisibleModal(!visibleModal);
-  };
-
-  const getItemCounts = (num) => {
-    let index = Math.floor((num - 1) / 5);
-    switch (index) {
-      case 0:
-        return num;
-      case 1:
-        return 5 + Math.ceil(Math.random() * 2);
-      case 2:
-        return 7 + Math.ceil(Math.random() * 2);
-      case 3:
-        return 9 + Math.ceil(Math.random() * 2);
-      case 4:
-        return 10 + Math.ceil(Math.random() * 3);
-      case 5:
-        return 13 + Math.ceil(Math.random() * 3);
-      default:
-        return 15 + Math.ceil(Math.random() * 6);
-    }
   };
 
   useEffect(() => {

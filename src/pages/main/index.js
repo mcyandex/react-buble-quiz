@@ -202,7 +202,7 @@ export default function Main() {
 
     setIsLoading(false);
     // console.log(booksNum, "---------------------------: ", bookRange, "\n");
-    console.log("books: ", startPage, bookId, startPage + booksNum);
+    // console.log("books: ", startPage, bookId, startPage + booksNum);
     // console.log("Answer: ", chapterId, verseId);
     // console.log("Nums", chapterNum, verseNum);
   };

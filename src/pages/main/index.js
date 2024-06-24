@@ -51,6 +51,7 @@ export default function Main() {
   const [randomVerse, setRandomVerse] = useState([]);
 
   const [bookOptions, setBookOptions] = useState([]);
+  const [chapterOptions, setChapterOptions] = useState([]);
   const [verseOptions, setVerseOptions] = useState([]);
 
   const [totalPoints, setTotalPoints] = useState(0);
@@ -142,45 +143,66 @@ export default function Main() {
   };
 
   const getQuestion = async () => {
+    // input
+
+    // bookRange, versionRange,
+    // BooksData(json)
+
+    // output
+
+    // bookId, chapterId, verseId
+    // bookOptions, ChapterOptions, verseOptions
+    // bookNum=[st, ed], chapterNum, verseNum
+    // randomVerse
     bookRange = section.split("-").map((one) => +one);
-    bookId = getRandomNumber(bookRange[0], bookRange[1]);
+
+    const allBooksSection = await GetBooks(lang);
+    const booksOfSection = allBooksSection.filter(
+      (one) => one.bookid >= bookRange[0] && one.bookid <= bookRange[1]
+    );
+    const books = booksOfSection.sort((a, b) => 0.5 - Math.random());
+    bookId = books[0].bookid;
 
     let versionRange = localStorage
       .getItem("section-num")
       .split("-")
       .map((one) => +one);
     let booksNum = getRandomNumber(versionRange[0], versionRange[1]);
-
-    let startPage = Math.max(
-      bookRange[0],
-      Math.min(
-        bookId - Math.floor(booksNum * Math.random()),
-        bookRange[1] - booksNum
-      )
+    setBookOptions(
+      books.splice(0, booksNum).sort((a, b) => 0.5 - Math.random())
     );
-    setBookNum([startPage, Math.min(bookRange[1], startPage + booksNum) + 1]);
+    // setBookNum([startPage, Math.min(bookRange[1], startPage + booksNum) + 1]);
+
     chapterRange = BooksData.find((one) => one.bookid == bookId).chapters;
-    chapterId = getRandomNumber(1, +chapterRange);
-    setChapterNum(getItemCounts(chapterRange));
+    let chapters = [...new Array(chapterRange)]
+      .map((_, i) => i + 1)
+      .sort((a, b) => 0.5 - Math.random());
+    // console.log(chapterRange, chapters);
+    chapterId = chapters[0];
+    setChapterOptions(
+      chapters
+        .splice(0, getItemCounts(chapterRange))
+        .sort((a, b) => 0.5 - Math.random())
+    );
+    // console.log("chapterOptions: ", chapterOptions);
+    // setChapterNum(getItemCounts(chapterRange));
 
     setIsLoading(true);
     const randomChapterVerses = await GetRandomChapter(lang, bookId, chapterId);
-    // randomChapterVerses.sort((a, b) => 0.5 - Math.random());
-    // console.log("randomChapterVerses: ", randomChapterVerses);
-    setVerseOptions(randomChapterVerses);
-    verseId = getRandomNumber(0, randomChapterVerses.length - 1);
-    setRandomVerse(randomChapterVerses[verseId]);
-    verseId = randomChapterVerses[verseId].verse;
-    setVerseNum(getItemCounts(randomChapterVerses.length));
-
-    const allBooksSection = await GetBooks(lang);
-    const booksOfSection = allBooksSection.filter(
-      (one) => one.bookid >= bookRange[0] && one.bookid <= bookRange[1]
+    randomChapterVerses.sort((a, b) => 0.5 - Math.random());
+    // console.log("randomVerses: ", randomChapterVerses);
+    setRandomVerse(randomChapterVerses[0]);
+    verseId = randomChapterVerses[0].verse;
+    setVerseOptions(
+      randomChapterVerses
+        .splice(0, getItemCounts(randomChapterVerses.length))
+        .sort((a, b) => 0.5 - Math.random())
     );
-    setBookOptions(booksOfSection);
+    // setVerseNum(getItemCounts(randomChapterVerses.length));
+
     setIsLoading(false);
     // console.log(booksNum, "---------------------------: ", bookRange, "\n");
-    // console.log("books: ", startPage, bookId, startPage + booksNum);
+    console.log("books: ", startPage, bookId, startPage + booksNum);
     // console.log("Answer: ", chapterId, verseId);
     // console.log("Nums", chapterNum, verseNum);
   };
@@ -399,55 +421,50 @@ export default function Main() {
                       </div>
                       <MDBCardText>
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                          {bookOptions
-                            .slice(
-                              bookNum[0] - bookRange[0],
-                              bookNum[1] - bookRange[0]
-                            )
-                            .map((one, index) => {
-                              return (
-                                <div
-                                  key={index}
-                                  className="p-2 rounded-lg border-[1px]"
-                                >
-                                  <MDBRadio
-                                    key={one.bookid}
-                                    name="bookOption"
-                                    id={one.bookid}
-                                    label={one.name}
-                                    onChange={(_, e) => {
-                                      // console.log("1111", one.bookid, bookId);
-                                      setSelectedOption(one.bookid);
-                                    }}
-                                    value={one.bookid}
-                                    checked={one.bookid == selectedOption}
-                                    labelStyle={
-                                      questionType == 0 && answerStatus == 2
-                                        ? one.bookid === selectedOption
-                                          ? { textDecoration: "line-through" }
-                                          : one.bookid == bookId
-                                          ? {}
-                                          : {}
+                          {bookOptions.map((one, index) => {
+                            return (
+                              <div
+                                key={index}
+                                className="p-2 rounded-lg border-[1px]"
+                              >
+                                <MDBRadio
+                                  key={one.bookid}
+                                  name="bookOption"
+                                  id={one.bookid}
+                                  label={one.name}
+                                  onChange={(_, e) => {
+                                    // console.log("1111", one.bookid, bookId);
+                                    setSelectedOption(one.bookid);
+                                  }}
+                                  value={one.bookid}
+                                  checked={one.bookid == selectedOption}
+                                  labelStyle={
+                                    questionType == 0 && answerStatus == 2
+                                      ? one.bookid === selectedOption
+                                        ? { textDecoration: "line-through" }
+                                        : one.bookid == bookId
+                                        ? {}
                                         : {}
-                                    }
-                                    wrapperStyle={
-                                      questionType == 0 && answerStatus == 2
-                                        ? one.bookid == selectedOption
-                                          ? { color: "red" }
-                                          : one.bookid == bookId
-                                          ? {
-                                              color: "green",
-                                              fontWeight: "bolder",
-                                            }
-                                          : { color: "black" }
-                                        : {}
-                                    }
-                                    wrapperClass="mb-0"
-                                    disabled={answerStatus}
-                                  />
-                                </div>
-                              );
-                            })}
+                                      : {}
+                                  }
+                                  wrapperStyle={
+                                    questionType == 0 && answerStatus == 2
+                                      ? one.bookid == selectedOption
+                                        ? { color: "red" }
+                                        : one.bookid == bookId
+                                        ? {
+                                            color: "green",
+                                            fontWeight: "bolder",
+                                          }
+                                        : { color: "black" }
+                                      : {}
+                                  }
+                                  wrapperClass="mb-0"
+                                  disabled={answerStatus}
+                                />
+                              </div>
+                            );
+                          })}
                         </div>
                       </MDBCardText>
                     </div>
@@ -458,48 +475,39 @@ export default function Main() {
                       </div>
                       <MDBCardText>
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                          {Array(chapterRange)
-                            .fill(0)
-                            .slice(
-                              Math.floor((chapterId - 1) / chapterNum) *
-                                chapterNum,
-                              (Math.floor((chapterId - 1) / chapterNum) + 1) *
-                                chapterNum
-                            )
+                          {chapterOptions
+                            .sort((a, b) => a - b)
                             .map((one, i) => {
-                              let index =
-                                i +
-                                Math.floor(chapterId / chapterNum) * chapterNum;
                               return (
                                 <div
-                                  key={index}
+                                  key={i}
                                   className="p-2 rounded-lg border-[1px]"
                                 >
                                   <MDBRadio
-                                    key={index + 1}
+                                    key={one}
                                     name="bookOption"
-                                    id={index + 1}
-                                    label={`Chapter ${index + 1}`}
+                                    id={one}
+                                    label={`Chapter ${one}`}
                                     onChange={() => {
-                                      // console.log("2222", index + 1, chapterId);
-                                      setSelectedOption(index + 1);
+                                      // console.log("2222", one, chapterId);
+                                      setSelectedOption(one);
                                     }}
-                                    value={index + 1}
-                                    checked={index + 1 == selectedOption}
+                                    value={one}
+                                    checked={one == selectedOption}
                                     labelStyle={
                                       questionType == 1 && answerStatus == 2
-                                        ? index + 1 === selectedOption
+                                        ? one === selectedOption
                                           ? { textDecoration: "line-through" }
-                                          : index + 1 == chapterId
+                                          : one == chapterId
                                           ? {}
                                           : {}
                                         : {}
                                     }
                                     wrapperStyle={
                                       questionType == 1 && answerStatus == 2
-                                        ? index + 1 == selectedOption
+                                        ? one == selectedOption
                                           ? { color: "red" }
-                                          : index + 1 == chapterId
+                                          : one == chapterId
                                           ? {
                                               color: "green",
                                               fontWeight: "bolder",
@@ -520,10 +528,7 @@ export default function Main() {
                       <div className="my-3 mx-0">Select the correct Verse.</div>
                       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                         {verseOptions
-                          .slice(
-                            Math.floor((verseId - 1) / verseNum) * verseNum,
-                            Math.floor((verseId - 1) / verseNum) * verseNum + verseNum
-                          )
+                          .sort((a, b) => a.verse - b.verse)
                           .map((one, index) => {
                             return (
                               <div

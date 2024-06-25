@@ -48,7 +48,7 @@ export default function Before(props) {
   };
 
   return (
-    <div className="before-page h-screen bg-gradient-to-b from-emerald-200 flex flex-col md:flex-row md:gap-40 lg:gap-48 md:items-center">
+    <div className="before-page h-screen flex flex-col md:flex-row md:gap-40 lg:gap-48 md:items-center">
       <MDBTypography className="font-sans font-bold text-center text-2xl  sm:text-3xl py-6 md:w-1/4 xl:text-5xl">
         Configure Settings
       </MDBTypography>

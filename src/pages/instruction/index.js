@@ -12,14 +12,14 @@ import { Button } from "@mui/material";
 
 export default () => {
   return (
-    <div className="bg-gradient-to-b h-screen from-emerald-200 flex justify-center items-center">
+    <div className="h-screen flex justify-center items-center">
       <MDBContainer className="">
         <MDBCard className="">
           <MDBCardBody className="md:text-xl lg:text-2xl">
             You will have 10 verses lined up for you to select the book and
             chapter. For each question, a correct verse of book as well as
-            chapter, you will score 1 point, and a correct verse of the
-            verse will yield an additional point.
+            chapter, you will score 1 point, and a correct verse of the verse
+            will yield an additional point.
           </MDBCardBody>
         </MDBCard>
         <div className="text-end mt-2">
@@ -30,7 +30,7 @@ export default () => {
               color="info"
             >
               <ArrowCircleLeftRoundedIcon />
-             BACK
+              BACK
             </Button>
           </Link>
         </div>

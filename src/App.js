@@ -2,44 +2,32 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import "./App.css";
-import { Button } from "@mui/material";
-import MenuBookIcon from "@mui/icons-material/MenuBook";
-import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 
 export default function App() {
   return (
     <>
-      <div>
-        <div className="flex w-full h-screen pt-28 bg-gradient-to-b from-emerald-200">
-          <div className="w-full">
-            <div className="text-red-500 text-3xl md:text-6xl text-center py-32 md:py-48">
-              Bible Verse Master
+      <div className="flex flex-col gap-10 md:gap-14 xl:gap-16 justify-center h-screen items-center text-center pt-40">
+        <div className="font-serif tracking-widest flex flex-col gap-4 text-5xl md:text-7xl md:gap-8 xl:text-8xl xl:gap-12 text-center text-zinc-700">
+          <div>BIBLE</div>
+          <div>VERSE</div>
+          <div>MASTER</div>
+        </div>
+        <div className="flex flex-col justify-center gap-2">
+          <Link to="/before">
+            <div className="text-2xl font-bold md:text-4xl xl:text-5 text-black">
+              START
             </div>
-            <div className="flex justify-around items-center w-full gap-5 flex-col sm:flex-row">
-              <Link to="/instruction">
-                <Button
-                  className="w-40 h-12 md:w-48 md:h-14 xl:w-56 xl:h-16 gap-4  "
-                  variant="contained"
-                  color="info"
-                >
-                  <div className="text-md md:text-lg xl:text-xl">
-                    Instruction
-                  </div>
-                  <MenuBookIcon />
-                </Button>
-              </Link>
-              <Link to="/before">
-                <Button
-                  className="w-40 h-12 md:w-48 md:h-14 xl:w-56 xl:h-16 gap-4"
-                  variant="contained"
-                  color="success"
-                >
-                  <div className="text-md md:text-lg xl:text-xl">Start</div>
-                  <PlayArrowIcon />
-                </Button>
-              </Link>
-            </div>
-          </div>
+          </Link>
+          <Link to="/instruction">
+            <div className="text-md md:text-2xl xl:text-3xl">Instruction</div>
+          </Link>
+        </div>
+        <div>
+          <img
+            src={`/assets/images/icon.png`}
+            alt="Bible"
+            className="w-14 xl:w-20"
+          />
         </div>
       </div>
     </>

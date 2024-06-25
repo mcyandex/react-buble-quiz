@@ -50,7 +50,7 @@ export default function Before(props) {
   return (
     <div className="before-page h-screen bg-gradient-to-b from-emerald-200 flex flex-col md:flex-row md:gap-40 lg:gap-48 md:items-center">
       <MDBTypography className="font-sans font-bold text-center text-2xl  sm:text-3xl py-6 md:w-1/4 xl:text-5xl">
-        Please select Language, Version of Bible, Verse of Bible.
+        Configure Settings
       </MDBTypography>
       <div className="mt-2 md:w-3/4">
         <div className="mt-1 w-full items-center">
@@ -77,11 +77,11 @@ export default function Before(props) {
             required
           />
         </div>
-        {!selectedLanguage.language && (
+        {/* {!selectedLanguage.language && (
           <Alert variant="outlined" color="info" severity="warning">
             Language must be input!
           </Alert>
-        )}
+        )} */}
 
         <div className="mt-4 w-full items-center">
           <div className="font-sans font-bold py-2 md:py-4 text-lg sm:text-xl  xl:mt-12 xl:text-3xl">
@@ -106,15 +106,15 @@ export default function Before(props) {
             required
           />
         </div>
-        {!selectedVersion.short_name && (
+        {/* {!selectedVersion.short_name && (
           <Alert variant="outlined" color="info" severity="warning">
             Version of Bible must be input!
           </Alert>
-        )}
+        )} */}
 
         <div className="mt-4 w-full items-center">
           <div className="font-sans font-bold py-2 text-lg sm:text-xl xl:mt-12 xl:text-3xl">
-            Verse:
+            Section of Bible:
           </div>
           <Select
             className="mb-1 sm:w-full"
@@ -135,11 +135,11 @@ export default function Before(props) {
             }}
           />
         </div>
-        {!selectedSection.value && (
+        {/* {!selectedSection.value && (
           <Alert variant="outlined" color="info" severity="warning">
             Verse of Bible must be input!
           </Alert>
-        )}
+        )} */}
 
         <div className="text-right">
           <MDBBtn
@@ -154,7 +154,7 @@ export default function Before(props) {
               )
             }
           >
-            <SchoolSharpIcon /> <span className="text-md">Start Test</span>
+            <SchoolSharpIcon /> <span className="text-md ms-2">Start</span>
           </MDBBtn>
         </div>
       </div>

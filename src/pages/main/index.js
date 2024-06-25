@@ -23,7 +23,6 @@ import {
   DialogTitle,
   IconButton,
   Slider,
-  Typography,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
@@ -35,7 +34,7 @@ import { getChapterCounts, getVerseCounts } from "../../libs/getItemCount";
 let bookRange = [];
 let bookId, chapterRange, chapterId, verseId;
 
-const PROBLEM_NUM = 10;
+const PROBLEM_NUM = 1;
 
 export default function Main() {
   const { lang, section } = useParams();
@@ -45,6 +44,7 @@ export default function Main() {
   const [cardLoading, setCardLoading] = useState(false);
 
   const [visibleModal, setVisibleModal] = useState(false);
+  const [modalSection, setModalSection] = useState("");
   const [modalTitle, setModalTitle] = useState("");
   const [modalColor, setModalColor] = useState("");
 
@@ -62,10 +62,10 @@ export default function Main() {
 
   const [selectedOption, setSelectedOption] = useState("");
 
-  const handleNewModal = (icon, color, title) => {
+  const handleNewModal = (section, color, title) => {
     setModalColor(color);
     setModalTitle(title);
-
+    setModalSection(section);
     setVisibleModal(true);
   };
 
@@ -183,7 +183,7 @@ export default function Main() {
 
   const handleSubmitAnswer = () => {
     if (!selectedOption) {
-      handleNewModal("exclamation-triangle", "warning", "Select the option!");
+      handleNewModal("WARNING", "warning", "Select the option!");
       return;
     }
     if (questionType == 0) {
@@ -198,7 +198,7 @@ export default function Main() {
       } else {
         setAnswerStatus(2);
         if (questionNumber == PROBLEM_NUM) {
-          handleNewModal("exclamation", "info", getScoreMessage(totalPoints));
+          handleNewModal("summary", "info", getScoreMessage(totalPoints));
           return;
         }
       }
@@ -208,7 +208,7 @@ export default function Main() {
         setSelectedOption("");
         setCardLoading(true);
 
-        handleNewModal("checked", "info", "You scored 1 point.");
+        handleNewModal("correct +1", "info", "You scored 1 point.");
 
         setTotalPoints(totalPoints + 1);
 
@@ -218,7 +218,7 @@ export default function Main() {
       } else {
         setAnswerStatus(2);
         if (questionNumber == PROBLEM_NUM) {
-          handleNewModal("exclamation", "info", getScoreMessage(totalPoints));
+          handleNewModal("summary", "info", getScoreMessage(totalPoints));
           return;
         }
       }
@@ -226,7 +226,7 @@ export default function Main() {
       if (selectedOption == verseId) {
         setQuestionType(2);
 
-        handleNewModal("checked", "info", "You scored additional 1 point.");
+        handleNewModal("correct +1", "info", "You scored additional 1 point.");
 
         setTotalPoints(totalPoints + 1);
 
@@ -234,7 +234,7 @@ export default function Main() {
 
         if (questionNumber == PROBLEM_NUM) {
           handleNewModal(
-            "exclamation",
+            "summary",
             "info",
             getScoreMessage(totalPoints + 1)
           );
@@ -243,7 +243,7 @@ export default function Main() {
       } else {
         setAnswerStatus(2);
         if (questionNumber == PROBLEM_NUM) {
-          handleNewModal("exclamation", "info", getScoreMessage(totalPoints));
+          handleNewModal("summary", "info", getScoreMessage(totalPoints));
           return;
         }
       }
@@ -251,7 +251,7 @@ export default function Main() {
   };
   const handleNext = () => {
     if (questionNumber == PROBLEM_NUM) {
-      handleNewModal("exclamation", "info", getScoreMessage(totalPoints));
+      handleNewModal("summary", "info", getScoreMessage(totalPoints));
       return;
     }
     getQuestion();
@@ -273,7 +273,7 @@ export default function Main() {
     <div className="main-page h-96 bg-gradient-to-b from-emerald-200 w-full pt-24 sm:pt-28 md:pt-32">
       <MDBTypography
         tag={"h2"}
-        className="text-center text-3xl md:text-5xl xl:text-6xl fw-bold m-4 text-emerald-500 "
+        className="font-serif text-center text-3xl md:text-5xl xl:text-6xl fw-bold m-4 text-emerald-500 "
       >
         Question {questionNumber}
       </MDBTypography>
@@ -306,10 +306,8 @@ export default function Main() {
           />
           <MDBCard>
             <MDBCardHeader className="flex justify-center">
-              <div className=" text-3xl m-1">Score : </div>
-              <big className=" text-4xl m-1">
-                <strong>{totalPoints}</strong>
-              </big>
+              <div className=" text-2xl m-1">Score : </div>
+              <strong className="m-0.5 text-3xl">{totalPoints}</strong>
             </MDBCardHeader>
             {cardLoading ? (
               <div className="text-center m-5">
@@ -379,18 +377,19 @@ export default function Main() {
                             <div
                               key={index}
                               className="p-2 rounded-lg border-[1px]"
+                              onClick={(_, e) => {
+                                console.log("1111", one.bookid, bookId);
+                                setSelectedOption(one.bookid);
+                              }}
                             >
                               <MDBRadio
                                 key={one.bookid}
                                 name="bookOption"
                                 id={one.bookid}
                                 label={one.name}
-                                onChange={(_, e) => {
-                                  // console.log("1111", one.bookid, bookId);
-                                  setSelectedOption(one.bookid);
-                                }}
                                 value={one.bookid}
                                 checked={one.bookid == selectedOption}
+                                readOnly
                                 labelStyle={
                                   questionType == 0 && answerStatus == 2
                                     ? one.bookid === selectedOption
@@ -431,18 +430,19 @@ export default function Main() {
                             <div
                               key={i}
                               className="p-2 rounded-lg border-[1px]"
+                              onClick={() => {
+                                console.log("2222", one, chapterId);
+                                setSelectedOption(one);
+                              }}
                             >
                               <MDBRadio
                                 key={one}
                                 name="bookOption"
                                 id={one}
                                 label={`Chapter ${one}`}
-                                onChange={() => {
-                                  // console.log("2222", one, chapterId);
-                                  setSelectedOption(one);
-                                }}
                                 value={one}
                                 checked={one == selectedOption}
+                                readOnly
                                 labelStyle={
                                   questionType == 1 && answerStatus == 2
                                     ? one === selectedOption
@@ -480,17 +480,18 @@ export default function Main() {
                             <div
                               key={index}
                               className="p-2 rounded-lg border-[1px]"
+                              onClick={() => {
+                                console.log("333333", one.verse, verseId);
+                                setSelectedOption(one.verse);
+                              }}
                             >
                               <MDBRadio
                                 key={one.pk}
                                 name="verseOption"
                                 id={one.verse}
                                 label={one.verse}
-                                onChange={() => {
-                                  // console.log("333333", one.verse, verseId);
-                                  setSelectedOption(one.verse);
-                                }}
                                 value={one.verse}
+                                readOnly
                                 checked={one.verse == selectedOption}
                                 labelStyle={
                                   questionType == 2 && answerStatus == 2
@@ -539,7 +540,7 @@ export default function Main() {
           id="customized-dialog-title"
           className={`text-${modalColor}`}
         >
-          {modalColor.toUpperCase()}
+          {modalSection.toUpperCase()}
         </DialogTitle>
         <IconButton
           aria-label="close"
@@ -555,22 +556,35 @@ export default function Main() {
         </IconButton>
         <DialogContent dividers>
           <div
-            className={`p-10 w-[400px] text-center text-${modalColor}`}
+            className={`p-10 w-[400px] text-center text-${modalColor} text-xl`}
           >
             {modalTitle}
           </div>
         </DialogContent>
         <DialogActions>
-          <Button
-            variant="contained"
-            color="error"
-            className="m-2"
-            onClick={toggleModal}
-          >
-            <div>
-              <CancelIcon /> Close
-            </div>
-          </Button>
+          {modalSection == "summary" ? (
+            <Button
+              variant="contained"
+              color="error"
+              className="m-2"
+              onClick={toggleModal}
+            >
+              <div>
+                <CancelIcon /> Close
+              </div>
+            </Button>
+          ) : (
+            <Button
+              variant="contained"
+              color="success"
+              className="m-2"
+              onClick={toggleModal}
+            >
+              <div>
+                Continue <NextPlanIcon />
+              </div>
+            </Button>
+          )}
         </DialogActions>
       </BootstrapDialog>
     </div>

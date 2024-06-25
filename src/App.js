@@ -17,12 +17,8 @@ export default function App() {
 
   return (
     <>
-      <div
-        className="d-flex align-items-center justify-content-center"
-        md={5}
-        sm={12}
-      >
-        <div className="flex justify-center items-center gap-10 sm:gap-16 md:gap-24 xl:gap-32 flex-col sm:flex-row w-full h-screen pt-96 bg-gradient-to-b from-emerald-200 ">
+      <div>
+        <div className="flex w-full h-screen pt-28 bg-gradient-to-b from-emerald-200">
           {loading ? (
             <div className="w-full flex justify-center h-screen items-center">
               <div className="loading-wave">
@@ -33,30 +29,35 @@ export default function App() {
               </div>
             </div>
           ) : (
-            <>
-              <Link to="/instruction">
-                <Button
-                  className="w-40 h-12 md:w-48 md:h-14 xl:w-56 xl:h-16 gap-4  "
-                  variant="contained"
-                  color="info"
-                >
-                  <div className="text-md md:text-lg xl:text-xl">
-                    Instruction
-                  </div>
-                  <MenuBookIcon />
-                </Button>
-              </Link>
-              <Link to="/before">
-                <Button
-                  className="w-40 h-12 md:w-48 md:h-14 xl:w-56 xl:h-16 gap-4"
-                  variant="contained"
-                  color="success"
-                >
-                  <div className="text-md md:text-lg xl:text-xl">Start</div>
-                  <PlayArrowIcon />
-                </Button>
-              </Link>
-            </>
+            <div className="w-full">
+              <div className="text-red-500 text-6xl text-center p-48">
+                Bible Verse Master
+              </div>
+              <div className="flex justify-around items-center w-full flex-col sm:flex-row">
+                <Link to="/instruction">
+                  <Button
+                    className="w-40 h-12 md:w-48 md:h-14 xl:w-56 xl:h-16 gap-4  "
+                    variant="contained"
+                    color="info"
+                  >
+                    <div className="text-md md:text-lg xl:text-xl">
+                      Instruction
+                    </div>
+                    <MenuBookIcon />
+                  </Button>
+                </Link>
+                <Link to="/before">
+                  <Button
+                    className="w-40 h-12 md:w-48 md:h-14 xl:w-56 xl:h-16 gap-4"
+                    variant="contained"
+                    color="success"
+                  >
+                    <div className="text-md md:text-lg xl:text-xl">Start</div>
+                    <PlayArrowIcon />
+                  </Button>
+                </Link>
+              </div>
+            </div>
           )}
         </div>
       </div>

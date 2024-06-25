@@ -34,7 +34,7 @@ import { getChapterCounts, getVerseCounts } from "../../libs/getItemCount";
 let bookRange = [];
 let bookId, chapterRange, chapterId, verseId;
 
-const PROBLEM_NUM = 1;
+const PROBLEM_NUM = 10;
 
 export default function Main() {
   const { lang, section } = useParams();

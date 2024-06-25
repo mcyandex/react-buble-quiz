@@ -248,7 +248,7 @@ export default function Main() {
           handleNewModal(
             "Wrong Answer",
             "warning",
-            `Correct: Chapter ${chapterId}`
+            `Wrong Answer`
           );
         }
       }
@@ -279,7 +279,7 @@ export default function Main() {
           handleNewModal(
             "Wrong Answer",
             "warning",
-            `Correct: Verse ${verseId}`
+            `Wrong Answer`
           );
         }
       }
@@ -306,17 +306,19 @@ export default function Main() {
   }, [lang, section]);
 
   useEffect(() => {
-    setIsSummaryLoading(true)
+    setIsSummaryLoading(true);
     console.log("QUIZ", quizInfo);
     let tmpArray = quizArray;
     tmpArray[questionNumber] = quizInfo;
     setQuizArray(tmpArray);
     console.log(tmpArray);
-    setTimeout(()=>{setIsSummaryLoading(false)}, 900)
+    setTimeout(() => {
+      setIsSummaryLoading(false);
+    }, 900);
   }, [quizInfo.selectedAns]);
 
   return (
-    <div className="main-page h-96 bg-gradient-to-b from-emerald-200 w-full pt-24 sm:pt-28 md:pt-32">
+    <div className="main-page h-96 w-full pt-24 sm:pt-28 md:pt-32">
       {questionNumber === PROBLEM_NUM &&
       (answerStatus === 2 || (answerStatus === 1 && questionType === 2)) ? (
         isSummaryLoading ? (
@@ -331,25 +333,25 @@ export default function Main() {
         ) : (
           <div className="w-3/4 m-auto transition duration-700">
             <div className="text-red-500 text-center text-5xl">Summary</div>
-            <div className="w-full border">
-              <div className="flex w-full">
-                <div className="border w-[18%] text-center">Questions</div>
-                <div className="border w-[65%] truncate text-ellipsis">
+            <div className="w-full border m-3">
+              <div className="hidden sm:flex w-full ">
+                <div className="border p-2 w-[19%] text-center">Questions</div>
+                <div className="border p-2 w-[64%] text-center truncate text-ellipsis">
                   Content
                 </div>
-                <div className="border w-[17%] text-center">Rate</div>
+                <div className="border p-2 w-[17%] text-center">Rate</div>
               </div>
               {quizArray.map((item, index) => {
                 if (!index) return <></>;
                 return (
-                  <div key={index} className="flex w-full">
-                    <div className="border w-[18%] text-center">
+                  <div key={index} className="border sm:flex w-full">
+                    <div className="sm:border p-2 sm:w-[19%] text-center">
                       Question {index}
                     </div>
-                    <div className="border w-[65%] truncate text-ellipsis">
+                    <div className="sm:border p-2 sm:w-[64%] truncate text-ellipsis">
                       {item.ans.text}
                     </div>
-                    <div className="border w-[17%] text-center">
+                    <div className="sm:border p-2 sm:w-[17%] text-center">
                       {item.selectedAns === "" ? (
                         <div className="text-green-500">Correct</div>
                       ) : (
@@ -361,6 +363,21 @@ export default function Main() {
                   </div>
                 );
               })}
+            </div>
+            <div className="text-center">
+              <Button
+                variant="contained"
+                className="m-3 w-0 md:w-40"
+                color="error"
+                onClick={() => {
+                  navigate("/before");
+                }}
+              >
+                <div className="flex flex-row items-center align-middle gap-1">
+                  <RestartAltIcon />
+                  <div className="hidden sm:block">Play Again</div>
+                </div>
+              </Button>
             </div>
           </div>
         )
@@ -472,18 +489,19 @@ export default function Main() {
                           <div className="my-3 mx-0">
                             Select the correct Book where this verse came from.
                           </div>
-                          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                          <div className="text-sm grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-1 sm:gap-4">
                             {bookOptions.map((one, index) => {
                               return (
                                 <div
                                   key={index}
-                                  className="p-2 rounded-lg border-[1px]"
+                                  className="p-1  sm:p-0 sm:p-1 rounded-lg border-[1px]"
                                   onClick={(_, e) => {
                                     console.log("1111", one.bookid, bookId);
                                     setSelectedOption(one.bookid);
                                   }}
                                 >
                                   <MDBRadio
+                                    className="scale-50 sm:scale-75 flex items-center"
                                     key={one.bookid}
                                     name="bookOption"
                                     id={one.bookid}
@@ -512,7 +530,7 @@ export default function Main() {
                                           : { color: "black" }
                                         : {}
                                     }
-                                    wrapperClass="mb-0"
+                                    wrapperClass="flex items-center"
                                     disabled={answerStatus}
                                   />
                                 </div>
@@ -526,18 +544,19 @@ export default function Main() {
                             Select the correct Chapter where this verse came
                             from.
                           </div>
-                          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                          <div className="text-sm grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-1 sm:gap-4">
                             {chapterOptions.map((one, i) => {
                               return (
                                 <div
                                   key={i}
-                                  className="p-2 rounded-lg border-[1px]"
+                                  className="p-0 sm:p-1 rounded-lg border-[1px]"
                                   onClick={() => {
                                     console.log("2222", one, chapterId);
                                     setSelectedOption(one);
                                   }}
                                 >
                                   <MDBRadio
+                                    className="scale-50 sm:scale-75 flex items-center"
                                     key={one}
                                     name="bookOption"
                                     id={one}
@@ -566,6 +585,7 @@ export default function Main() {
                                           : { color: "black" }
                                         : {}
                                     }
+                                    wrapperClass="flex items-center"
                                     disabled={answerStatus}
                                   />
                                 </div>
@@ -578,18 +598,19 @@ export default function Main() {
                           <div className="my-3 mx-0">
                             Select the correct Verse.
                           </div>
-                          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                          <div className="text-sm grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-1 sm:gap-4">
                             {verseOptions.map((one, index) => {
                               return (
                                 <div
                                   key={index}
-                                  className="p-2 rounded-lg border-[1px]"
+                                  className="p-0 sm:p-1 rounded-lg border-[1px]"
                                   onClick={() => {
                                     console.log("333333", one.verse, verseId);
                                     setSelectedOption(one.verse);
                                   }}
                                 >
                                   <MDBRadio
+                                    className="scale-50 sm:scale-75 flex items-center"
                                     key={one.pk}
                                     name="verseOption"
                                     id={one.verse}
@@ -618,6 +639,7 @@ export default function Main() {
                                           : { color: "black" }
                                         : {}
                                     }
+                                    wrapperClass="flex items-center"
                                     disabled={answerStatus}
                                   />
                                 </div>
@@ -640,28 +662,9 @@ export default function Main() {
         open={visibleModal}
         className="m-auto"
       >
-        <DialogTitle
-          sx={{ m: 0, p: 2 }}
-          id="customized-dialog-title"
-          className={`text-${modalColor} h-14`}
-        >
-          {modalSection.toUpperCase()}
-        </DialogTitle>
-        <IconButton
-          aria-label="close"
-          onClick={toggleModal}
-          sx={{
-            position: "absolute",
-            right: 8,
-            top: 8,
-            color: (theme) => theme.palette.grey[500],
-          }}
-        >
-          <CloseIcon />
-        </IconButton>
-        <DialogContent dividers>
+        <DialogContent>
           <div
-            className={`py-10 px-4 w-full sm:w-[400px] text-center text-${modalColor} text-xl`}
+            className={`pt-10 px-4 w-full sm:w-[400px] text-center text-${modalColor} text-xl`}
           >
             {modalTitle}
           </div>

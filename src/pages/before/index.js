@@ -2,7 +2,7 @@ import React, { useState, useEffect, version } from "react";
 import { MDBBtn, MDBTypography } from "mdb-react-ui-kit";
 import Select from "react-select";
 import { useNavigate } from "react-router-dom";
-import Alert from "@mui/material/Alert";
+// import Alert from "@mui/material/Alert";
 
 import LANG_DATA from "../../consts/LanguagesData.json";
 import SECTION_DATA from "../../consts/BooksSetting.json";
@@ -37,7 +37,7 @@ export default function Before(props) {
     if (localStorage.getItem("section-value")) {
       setSelectedSection({
         value: localStorage.getItem("section-value"),
-        label: localStorage.getItem("section-label"),
+        bible: localStorage.getItem("section-label"),
       });
     }
   }, []);

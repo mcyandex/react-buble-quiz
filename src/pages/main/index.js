@@ -208,7 +208,7 @@ export default function Main() {
         setSelectedOption("");
         setCardLoading(true);
 
-        handleNewModal("correct +1", "info", "You scored 1 point.");
+        handleNewModal("", "info", "CORRECT +1");
 
         setTotalPoints(totalPoints + 1);
 
@@ -220,24 +220,22 @@ export default function Main() {
         if (questionNumber == PROBLEM_NUM) {
           handleNewModal("summary", "info", getScoreMessage(totalPoints));
           return;
+        } else {
+          handleNewModal("Wrong Answer", "warning", `Correct: Chapter ${chapterId}`);
         }
       }
     } else {
       if (selectedOption == verseId) {
         setQuestionType(2);
 
-        handleNewModal("correct +1", "info", "You scored additional 1 point.");
+        handleNewModal("", "info", "Additional point +1");
 
         setTotalPoints(totalPoints + 1);
 
         setAnswerStatus(1);
 
         if (questionNumber == PROBLEM_NUM) {
-          handleNewModal(
-            "summary",
-            "info",
-            getScoreMessage(totalPoints + 1)
-          );
+          handleNewModal("summary", "info", getScoreMessage(totalPoints + 1));
           return;
         }
       } else {
@@ -245,6 +243,8 @@ export default function Main() {
         if (questionNumber == PROBLEM_NUM) {
           handleNewModal("summary", "info", getScoreMessage(totalPoints));
           return;
+        } else {
+          handleNewModal("Wrong Answer", "warning", `Correct: Verse ${verseId}`);
         }
       }
     }
@@ -538,7 +538,7 @@ export default function Main() {
         <DialogTitle
           sx={{ m: 0, p: 2 }}
           id="customized-dialog-title"
-          className={`text-${modalColor}`}
+          className={`text-${modalColor} h-14`}
         >
           {modalSection.toUpperCase()}
         </DialogTitle>
@@ -556,7 +556,7 @@ export default function Main() {
         </IconButton>
         <DialogContent dividers>
           <div
-            className={`p-10 w-[400px] text-center text-${modalColor} text-xl`}
+            className={`py-10 px-4 w-full sm:w-[400px] text-center text-${modalColor} text-xl`}
           >
             {modalTitle}
           </div>

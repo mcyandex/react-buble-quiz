@@ -30,10 +30,10 @@ export default function App() {
             </div>
           ) : (
             <div className="w-full">
-              <div className="text-red-500 text-6xl text-center p-48">
+              <div className="text-red-500 text-3xl md:text-6xl text-center py-32 md:py-48">
                 Bible Verse Master
               </div>
-              <div className="flex justify-around items-center w-full flex-col sm:flex-row">
+              <div className="flex justify-around items-center w-full gap-5 flex-col sm:flex-row">
                 <Link to="/instruction">
                   <Button
                     className="w-40 h-12 md:w-48 md:h-14 xl:w-56 xl:h-16 gap-4  "

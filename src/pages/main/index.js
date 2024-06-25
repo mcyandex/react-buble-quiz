@@ -244,12 +244,6 @@ export default function Main() {
         if (questionNumber == PROBLEM_NUM) {
           handleNewModal("summary", "info", getScoreMessage(totalPoints));
           return;
-        } else {
-          handleNewModal(
-            "Wrong Answer",
-            "warning",
-            `Wrong Answer`
-          );
         }
       }
     } else {
@@ -275,12 +269,6 @@ export default function Main() {
         if (questionNumber == PROBLEM_NUM) {
           handleNewModal("summary", "info", getScoreMessage(totalPoints));
           return;
-        } else {
-          handleNewModal(
-            "Wrong Answer",
-            "warning",
-            `Wrong Answer`
-          );
         }
       }
     }
@@ -489,7 +477,7 @@ export default function Main() {
                           <div className="my-3 mx-0">
                             Select the correct Book where this verse came from.
                           </div>
-                          <div className="text-sm grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-1 sm:gap-4">
+                          <div className="text-xs md:text-sm grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-1 sm:gap-4">
                             {bookOptions.map((one, index) => {
                               return (
                                 <div
@@ -544,7 +532,7 @@ export default function Main() {
                             Select the correct Chapter where this verse came
                             from.
                           </div>
-                          <div className="text-sm grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-1 sm:gap-4">
+                          <div className="text-xs md:text-sm grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-1 sm:gap-4">
                             {chapterOptions.map((one, i) => {
                               return (
                                 <div
@@ -598,7 +586,7 @@ export default function Main() {
                           <div className="my-3 mx-0">
                             Select the correct Verse.
                           </div>
-                          <div className="text-sm grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-1 sm:gap-4">
+                          <div className="text-xs md:text-sm grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-1 sm:gap-4">
                             {verseOptions.map((one, index) => {
                               return (
                                 <div

@@ -320,10 +320,10 @@ export default function Main() {
               </div>
             ) : (
               <div>
-                <div className="flex flex-col md:flex-row justify-between">
+                <div className="flex flex-row justify-between">
                   <Button
                     variant="contained"
-                    className="md:w-32 my-2 mx-4"
+                    className="m-3 w-0 md:w-32"
                     color="error"
                     onClick={() => {
                       navigate("/before");
@@ -331,12 +331,12 @@ export default function Main() {
                   >
                     <div className="flex flex-row items-center align-middle gap-1">
                       <RestartAltIcon />
-                      Restart
+                      <div className="hidden sm:block">Restart</div>
                     </div>
                   </Button>
                   <Button
                     variant="contained"
-                    className="md:w-32 my-2 mx-4"
+                    className="m-3 w-0 md:w-32"
                     color="info"
                     onClick={handleSubmitAnswer}
                     style={
@@ -345,12 +345,12 @@ export default function Main() {
                   >
                     <div className="flex flex-row items-center align-middle gap-1 justify-center">
                       <TelegramIcon />
-                      Submit
+                      <div className="hidden sm:block">Submit</div>
                     </div>
                   </Button>
                   <Button
                     variant="contained"
-                    className="md:w-32 my-2 mx-4"
+                    className="m-3 w-0 md:w-32"
                     color="success"
                     onClick={handleNext}
                     style={
@@ -361,7 +361,7 @@ export default function Main() {
                   >
                     <div className="flex flex-row items-center align-middle gap-1 justify-center">
                       <NextPlanIcon />
-                      Next
+                      <div className="hidden sm:block">Next</div>
                     </div>
                   </Button>
                 </div>

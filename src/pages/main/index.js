@@ -62,7 +62,27 @@ export default function Main() {
 
   const [selectedOption, setSelectedOption] = useState("");
 
+  const [quizInfo, setQuizInfo] = useState({
+    bookId: -1,
+    chapterId: -1,
+    verseId: -1,
+    bookOptions: [],
+    chapterOptions: [],
+    verseOptions: [],
+    selbook: -1,
+    selchapter: -1,
+    selverse: -1,
+  });
+
+  const [quizArray, setQuizArray] = useState([]);
+
   const handleNewModal = (section, color, title) => {
+    if (section === "summary") {
+      let tmpArray = quizArray;
+      tmpArray[questionNumber] = quizInfo;
+      setQuizArray(tmpArray);
+      console.log(tmpArray);
+    }
     setModalColor(color);
     setModalTitle(title);
     setModalSection(section);
@@ -139,6 +159,10 @@ export default function Main() {
   };
 
   const getQuestion = async () => {
+    let tmpArray = quizArray;
+    tmpArray[questionNumber] = quizInfo;
+    setQuizArray(tmpArray);
+    console.log(tmpArray);
     setIsLoading(true);
     bookRange = section.split("-").map((one) => +one);
 
@@ -155,7 +179,7 @@ export default function Main() {
       .map((one) => +one);
     let booksNum = getRandomNumber(versionRange[0], versionRange[1]);
     setBookOptions(
-      books.splice(0, booksNum).sort((a, b) => a.bookid - b.bookid)
+      books.slice(0, booksNum).sort((a, b) => a.bookid - b.bookid)
     );
 
     chapterRange = BooksData.find((one) => one.bookid == bookId).chapters;
@@ -176,6 +200,21 @@ export default function Main() {
         .slice(0, getVerseCounts(randomChapterVerses.length))
         .sort((a, b) => a.verse - b.verse)
     );
+    setQuizInfo({
+      bookId: bookId,
+      chapterId: chapterId,
+      verseId: verseId,
+      bookOptions: books.slice(0, booksNum).sort((a, b) => a.bookid - b.bookid),
+      chapterOptions: chapters
+        .slice(0, getChapterCounts(chapterRange))
+        .sort((a, b) => a - b),
+      verseOptions: randomChapterVerses
+        .slice(0, getVerseCounts(randomChapterVerses.length))
+        .sort((a, b) => a.verse - b.verse),
+      selbook: -1,
+      selchapter: -1,
+      selverse: -1,
+    });
     setTimeout(() => {
       setIsLoading(false);
     }, 900);
@@ -187,6 +226,10 @@ export default function Main() {
       return;
     }
     if (questionType == 0) {
+      setQuizInfo({
+        ...quizInfo,
+        selbook: selectedOption,
+      });
       if (selectedOption == bookId) {
         setQuestionType(1);
         setSelectedOption("");
@@ -203,6 +246,10 @@ export default function Main() {
         }
       }
     } else if (questionType == 1) {
+      setQuizInfo({
+        ...quizInfo,
+        selchapter: selectedOption,
+      });
       if (selectedOption == chapterId) {
         setQuestionType(2);
         setSelectedOption("");
@@ -221,10 +268,18 @@ export default function Main() {
           handleNewModal("summary", "info", getScoreMessage(totalPoints));
           return;
         } else {
-          handleNewModal("Wrong Answer", "warning", `Correct: Chapter ${chapterId}`);
+          handleNewModal(
+            "Wrong Answer",
+            "warning",
+            `Correct: Chapter ${chapterId}`
+          );
         }
       }
     } else {
+      setQuizInfo({
+        ...quizInfo,
+        selverse: selectedOption,
+      });
       if (selectedOption == verseId) {
         setQuestionType(2);
 
@@ -244,7 +299,11 @@ export default function Main() {
           handleNewModal("summary", "info", getScoreMessage(totalPoints));
           return;
         } else {
-          handleNewModal("Wrong Answer", "warning", `Correct: Verse ${verseId}`);
+          handleNewModal(
+            "Wrong Answer",
+            "warning",
+            `Correct: Verse ${verseId}`
+          );
         }
       }
     }
@@ -378,7 +437,7 @@ export default function Main() {
                               key={index}
                               className="p-2 rounded-lg border-[1px]"
                               onClick={(_, e) => {
-                                // console.log("1111", one.bookid, bookId);
+                                console.log("1111", one.bookid, bookId);
                                 setSelectedOption(one.bookid);
                               }}
                             >
@@ -431,7 +490,7 @@ export default function Main() {
                               key={i}
                               className="p-2 rounded-lg border-[1px]"
                               onClick={() => {
-                                // console.log("2222", one, chapterId);
+                                console.log("2222", one, chapterId);
                                 setSelectedOption(one);
                               }}
                             >
@@ -481,7 +540,7 @@ export default function Main() {
                               key={index}
                               className="p-2 rounded-lg border-[1px]"
                               onClick={() => {
-                                // console.log("333333", one.verse, verseId);
+                                console.log("333333", one.verse, verseId);
                                 setSelectedOption(one.verse);
                               }}
                             >

@@ -378,7 +378,7 @@ export default function Main() {
                               key={index}
                               className="p-2 rounded-lg border-[1px]"
                               onClick={(_, e) => {
-                                console.log("1111", one.bookid, bookId);
+                                // console.log("1111", one.bookid, bookId);
                                 setSelectedOption(one.bookid);
                               }}
                             >
@@ -431,7 +431,7 @@ export default function Main() {
                               key={i}
                               className="p-2 rounded-lg border-[1px]"
                               onClick={() => {
-                                console.log("2222", one, chapterId);
+                                // console.log("2222", one, chapterId);
                                 setSelectedOption(one);
                               }}
                             >
@@ -481,7 +481,7 @@ export default function Main() {
                               key={index}
                               className="p-2 rounded-lg border-[1px]"
                               onClick={() => {
-                                console.log("333333", one.verse, verseId);
+                                // console.log("333333", one.verse, verseId);
                                 setSelectedOption(one.verse);
                               }}
                             >

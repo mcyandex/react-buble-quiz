@@ -32,7 +32,7 @@ import Navbar from "../../components/Navbar";
 let bookRange = [];
 let bookId, chapterRange, chapterId, verseId;
 
-const PROBLEM_NUM = 2;
+const PROBLEM_NUM = 10;
 
 export default function Main() {
   const { lang, section } = useParams();

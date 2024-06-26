@@ -82,62 +82,44 @@ export default function Main() {
       case 0:
         message = (
           <div>
-            Your Total Score is {score}.<br /> <br /> Maybe just a little more
-            study to get you off the mark!
+            Total score: {score} - Maybe just a little more study to get you off
+            the mark!
           </div>
         );
         break;
       case 1:
         message = (
-          <div>
-            Your Total Score is {score}. <br /> <br />
-            You're off the mark, nice job!
-          </div>
+          <div>Total score: {score} - You're off the mark, nice job!</div>
         );
         break;
       case 2:
         message = (
-          <div>
-            Your Total Score is {score}. <br /> <br /> 2's no fluke, keep'em
-            coming
-          </div>
+          <div>Total score: {score} - 2's no fluke, keep'em coming</div>
         );
         break;
       case 3:
         message = (
           <div>
-            Your Total Score is {score}. <br /> <br /> Yes, yes, some more
-            studying to take you higher
+            Total score: {score} - Yes, yes, some more studying to take you
+            higher
           </div>
         );
         break;
       case 4:
         message = (
-          <div>
-            Your Total Score is {score}. <br /> <br /> You're getting the hang
-            of it
-          </div>
+          <div>Total score: {score} - You're getting the hang of it</div>
         );
         break;
       case 5:
-        message = (
-          <div>
-            Your Total Score is {score}. <br /> <br /> oh on FIRE!
-          </div>
-        );
+        message = <div>Total score: {score} - oh on FIRE!</div>;
         break;
       case 6:
-        message = (
-          <div>
-            Your Total Score is {score}. <br /> <br /> This is incredible...!
-          </div>
-        );
+        message = <div>Total score: {score} - This is incredible...!</div>;
         break;
       default:
         message = (
           <div>
-            Your Total Score is {score}. <br /> <br /> You're invincible! A true
-            Bible Verse Master!
+            Total score: {score} - You're invincible! A true Bible Verse Master!
           </div>
         );
         break;
@@ -323,19 +305,19 @@ export default function Main() {
               Summary
             </div>
             <div className="w-full border m-3">
-              <div className="hidden sm:flex w-full ">
+              {/* <div className="hidden sm:flex w-full ">
                 <div className="border p-2 w-[19%] text-center">Questions</div>
                 <div className="border p-2 w-[64%] text-center truncate text-ellipsis">
                   Content
                 </div>
                 <div className="border p-2 w-[17%] text-center">Rate</div>
-              </div>
+              </div> */}
               {quizArray.map((item, index) => {
                 if (!index) return <></>;
                 return (
                   <div key={index} className="border sm:flex w-full">
                     <div className="sm:border p-2 sm:w-[19%] text-center">
-                      Question {index}
+                      {`Q${index}`}
                     </div>
                     <div className="sm:border p-2 sm:w-[64%] truncate text-ellipsis">
                       {item.ans.text}

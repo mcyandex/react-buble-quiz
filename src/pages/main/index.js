@@ -32,7 +32,7 @@ import Navbar from "../../components/Navbar";
 let bookRange = [];
 let bookId, chapterRange, chapterId, verseId;
 
-const PROBLEM_NUM = 10;
+const PROBLEM_NUM = 2;
 
 export default function Main() {
   const { lang, section } = useParams();
@@ -69,6 +69,7 @@ export default function Main() {
   const [quizArray, setQuizArray] = useState([]);
 
   const handleNewModal = (section, color, title) => {
+    if (section === "summary") return;
     setModalColor(color);
     setModalTitle(title);
     setModalSection(section);
@@ -373,7 +374,7 @@ export default function Main() {
         <div className="animate-[fadeInAnimation_1s_ease]">
           <MDBTypography
             tag={"h2"}
-            className="font-serif text-center text-3xl md:text-5xl xl:text-6xl fw-bold m-4 text-emerald-500 "
+            className="font-serif text-center text-3xl md:text-5xl xl:text-6xl fw-bold m-4 text-[#458258] "
           >
             Question {questionNumber}
           </MDBTypography>
@@ -384,7 +385,7 @@ export default function Main() {
               marks
               min={0}
               max={PROBLEM_NUM}
-              className="text-emerald-500"
+              className="text-[#458258]"
               color="p"
             />
           </div>
@@ -430,7 +431,7 @@ export default function Main() {
                         className="m-3 w-0 sm:w-32"
                         color="error"
                         onClick={() => {
-                          navigate("/before");
+                          navigate("/");
                         }}
                       >
                         <div className="flex flex-row items-center align-middle gap-1">
@@ -477,7 +478,7 @@ export default function Main() {
                           <div className="my-3 mx-0 text-sm sm:text-md xl:text-xl">
                             Select the correct Book where this verse came from.
                           </div>
-                          <div className="text-xs md:text-sm xl:text-lg grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-1 sm:gap-4">
+                          <div className="text-xs md:text-sm xl:text-lg grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-1 sm:gap-4">
                             {bookOptions.map((one, index) => {
                               return (
                                 <div
@@ -485,7 +486,8 @@ export default function Main() {
                                   className="p-0 sm:p-1 rounded-lg border-[1px]"
                                   onClick={(_, e) => {
                                     console.log("1111", one.bookid, bookId);
-                                    setSelectedOption(one.bookid);
+                                    if (answerStatus == 0)
+                                      setSelectedOption(one.bookid);
                                   }}
                                 >
                                   <MDBRadio
@@ -540,7 +542,8 @@ export default function Main() {
                                   className="p-0 sm:p-1 rounded-lg border-[1px]"
                                   onClick={() => {
                                     console.log("2222", one, chapterId);
-                                    setSelectedOption(one);
+                                    if (answerStatus == 0)
+                                      setSelectedOption(one);
                                   }}
                                 >
                                   <MDBRadio
@@ -594,7 +597,8 @@ export default function Main() {
                                   className="p-0 sm:p-1 rounded-lg border-[1px]"
                                   onClick={() => {
                                     console.log("333333", one.verse, verseId);
-                                    setSelectedOption(one.verse);
+                                    if (answerStatus == 0)
+                                      setSelectedOption(one.verse);
                                   }}
                                 >
                                   <MDBRadio

@@ -7,7 +7,7 @@ import { Button } from "@mui/material";
 export default () => {
   return (
     <div className="h-screen flex justify-center items-center animate-[fadeInAnimation_1s_ease]">
-      <MDBContainer>
+      <MDBContainer className="md:w-3/4 xl:w-1/2">
         <MDBCard>
           <MDBCardBody className="md:text-xl lg:text-2xl">
             You will have 10 verses lined up for you to select the book and

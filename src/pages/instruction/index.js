@@ -1,20 +1,14 @@
 import React from "react";
-import {
-  MDBContainer,
-  MDBCard,
-  MDBCardBody,
-  MDBBtn,
-  MDBIcon,
-} from "mdb-react-ui-kit";
+import { MDBContainer, MDBCard, MDBCardBody } from "mdb-react-ui-kit";
 import { Link } from "react-router-dom";
 import ArrowCircleLeftRoundedIcon from "@mui/icons-material/ArrowCircleLeftRounded";
 import { Button } from "@mui/material";
 
 export default () => {
   return (
-    <div className="h-screen flex justify-center items-center">
-      <MDBContainer className="">
-        <MDBCard className="">
+    <div className="h-screen flex justify-center items-center animate-[fadeInAnimation_1s_ease]">
+      <MDBContainer>
+        <MDBCard>
           <MDBCardBody className="md:text-xl lg:text-2xl">
             You will have 10 verses lined up for you to select the book and
             chapter. For each question, a correct verse of book as well as

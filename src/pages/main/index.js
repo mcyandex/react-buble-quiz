@@ -370,7 +370,7 @@ export default function Main() {
           </div>
         )
       ) : (
-        <>
+        <div className="animate-[fadeInAnimation_1s_ease]">
           <MDBTypography
             tag={"h2"}
             className="font-serif text-center text-3xl md:text-5xl xl:text-6xl fw-bold m-4 text-emerald-500 "
@@ -389,7 +389,7 @@ export default function Main() {
             />
           </div>
           {isLoading ? (
-            <div className="w-full flex justify-center h-full items-center">
+            <div className="w-full flex justify-center h-full items-center mt-20">
               <div className="loading-wave">
                 <div className="loading-bar"></div>
                 <div className="loading-bar"></div>
@@ -398,7 +398,7 @@ export default function Main() {
               </div>
             </div>
           ) : (
-            <div className="w-3/4 m-auto">
+            <div className="w-3/4 m-auto animate-[fadeInAnimation_1s_ease]">
               <MDBTypography
                 tag={"h4"}
                 className="text-center text-md sm:text-xl m-3"
@@ -642,7 +642,7 @@ export default function Main() {
               </MDBCard>
             </div>
           )}
-        </>
+        </div>
       )}
       <BootstrapDialog
         onClose={toggleModal}

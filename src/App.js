@@ -7,7 +7,7 @@ export default function App() {
   return (
     <>
       <div className="flex flex-col gap-10 md:gap-14 xl:gap-16 justify-center h-screen items-center text-center pt-40">
-        <div className="font-serif tracking-widest flex flex-col gap-4 text-5xl md:text-7xl md:gap-8 xl:text-8xl xl:gap-12 text-center text-zinc-700">
+        <div className="font-title tracking-widest flex flex-col gap-4 text-5xl md:text-7xl md:gap-8 xl:text-8xl xl:gap-12 text-center text-zinc-700">
           <div>BIBLE</div>
           <div>VERSE</div>
           <div>MASTER</div>

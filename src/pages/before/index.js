@@ -58,6 +58,8 @@ export default function Before(props) {
             Language:
           </div>
           <Select
+            readOnly
+            isSearchable={false}
             className="mb-1 sm:w-full"
             placeholder={"Enter language..."}
             options={LANG_DATA}
@@ -88,6 +90,8 @@ export default function Before(props) {
             Version:
           </div>
           <Select
+            readOnly
+            isSearchable={false}
             className="mb-1 sm:w-full"
             placeholder={"Enter version of Bible..."}
             options={versionOptions}
@@ -117,6 +121,8 @@ export default function Before(props) {
             Section of Bible:
           </div>
           <Select
+            readOnly
+            isSearchable={false}
             className="mb-1 sm:w-full"
             placeholder={"Enter verse of Bible..."}
             options={SECTION_DATA}

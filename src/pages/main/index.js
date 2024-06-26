@@ -20,16 +20,14 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogTitle,
-  IconButton,
   Slider,
 } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import TelegramIcon from "@mui/icons-material/Telegram";
 import NextPlanIcon from "@mui/icons-material/NextPlan";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { getChapterCounts, getVerseCounts } from "../../libs/getItemCount";
+import Navbar from "../../components/Navbar";
 
 let bookRange = [];
 let bookId, chapterRange, chapterId, verseId;
@@ -306,7 +304,7 @@ export default function Main() {
   }, [quizInfo.selectedAns]);
 
   return (
-    <div className="main-page h-96 w-full pt-24 sm:pt-28 md:pt-32">
+    <div className="main-page h-96 w-full pt-12 sm:pt-28 md:pt-32">
       {questionNumber === PROBLEM_NUM &&
       (answerStatus === 2 || (answerStatus === 1 && questionType === 2)) ? (
         isSummaryLoading ? (
@@ -320,7 +318,9 @@ export default function Main() {
           </div>
         ) : (
           <div className="w-3/4 m-auto transition duration-700">
-            <div className="text-red-500 text-center text-5xl">Summary</div>
+            <div className="text-red-500 text-center text-3xl md:text-5xl">
+              Summary
+            </div>
             <div className="w-full border m-3">
               <div className="hidden sm:flex w-full ">
                 <div className="border p-2 w-[19%] text-center">Questions</div>
@@ -383,7 +383,7 @@ export default function Main() {
               step={1}
               marks
               min={0}
-              max={10}
+              max={PROBLEM_NUM}
               className="text-emerald-500"
               color="p"
             />
@@ -401,7 +401,7 @@ export default function Main() {
             <div className="w-3/4 m-auto">
               <MDBTypography
                 tag={"h4"}
-                className="text-center text-xl m-3"
+                className="text-center text-md sm:text-xl m-3"
                 dangerouslySetInnerHTML={{ __html: randomVerse.text }}
               />
               <MDBCard>
@@ -427,7 +427,7 @@ export default function Main() {
                     <div className="flex flex-row justify-between">
                       <Button
                         variant="contained"
-                        className="m-3 w-0 md:w-32"
+                        className="m-3 w-0 sm:w-32"
                         color="error"
                         onClick={() => {
                           navigate("/before");
@@ -440,7 +440,7 @@ export default function Main() {
                       </Button>
                       <Button
                         variant="contained"
-                        className="m-3 w-0 md:w-32"
+                        className="m-3 w-0 sm:w-32"
                         color="info"
                         onClick={handleSubmitAnswer}
                         style={
@@ -474,7 +474,7 @@ export default function Main() {
                     <MDBCardFooter>
                       {questionType === 0 ? (
                         <div>
-                          <div className="my-3 mx-0">
+                          <div className="my-3 mx-0 text-sm sm: text-md">
                             Select the correct Book where this verse came from.
                           </div>
                           <div className="text-xs md:text-sm grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-1 sm:gap-4">
@@ -482,7 +482,7 @@ export default function Main() {
                               return (
                                 <div
                                   key={index}
-                                  className="p-1  sm:p-0 sm:p-1 rounded-lg border-[1px]"
+                                  className="p-0 sm:p-1 rounded-lg border-[1px]"
                                   onClick={(_, e) => {
                                     console.log("1111", one.bookid, bookId);
                                     setSelectedOption(one.bookid);
@@ -683,6 +683,7 @@ export default function Main() {
           )}
         </DialogActions>
       </BootstrapDialog>
+      <Navbar />
     </div>
   );
 }

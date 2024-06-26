@@ -474,10 +474,10 @@ export default function Main() {
                     <MDBCardFooter>
                       {questionType === 0 ? (
                         <div>
-                          <div className="my-3 mx-0 text-sm sm: text-md">
+                          <div className="my-3 mx-0 text-sm sm:text-md xl:text-xl">
                             Select the correct Book where this verse came from.
                           </div>
-                          <div className="text-xs md:text-sm grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-1 sm:gap-4">
+                          <div className="text-xs md:text-sm xl:text-lg grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-1 sm:gap-4">
                             {bookOptions.map((one, index) => {
                               return (
                                 <div
@@ -489,7 +489,7 @@ export default function Main() {
                                   }}
                                 >
                                   <MDBRadio
-                                    className="scale-50 sm:scale-75 flex items-center"
+                                    className="scale-50 sm:scale-75 xl:scale-100 flex items-center"
                                     key={one.bookid}
                                     name="bookOption"
                                     id={one.bookid}
@@ -518,7 +518,7 @@ export default function Main() {
                                           : { color: "black" }
                                         : {}
                                     }
-                                    wrapperClass="flex items-center"
+                                    wrapperClass="xl:m-2 flex items-center"
                                     disabled={answerStatus}
                                   />
                                 </div>
@@ -528,11 +528,11 @@ export default function Main() {
                         </div>
                       ) : questionType === 1 ? (
                         <div>
-                          <div className="my-3 mx-0">
+                          <div className="my-3 mx-0 text-sm sm:text-md xl:text-xl">
                             Select the correct Chapter where this verse came
                             from.
                           </div>
-                          <div className="text-xs md:text-sm grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-1 sm:gap-4">
+                          <div className="text-xs md:text-sm xl:text-lg grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-1 sm:gap-4">
                             {chapterOptions.map((one, i) => {
                               return (
                                 <div
@@ -544,7 +544,7 @@ export default function Main() {
                                   }}
                                 >
                                   <MDBRadio
-                                    className="scale-50 sm:scale-75 flex items-center"
+                                    className="scale-50 sm:scale-75 xl:scale-100 flex items-center"
                                     key={one}
                                     name="bookOption"
                                     id={one}
@@ -573,7 +573,7 @@ export default function Main() {
                                           : { color: "black" }
                                         : {}
                                     }
-                                    wrapperClass="flex items-center"
+                                    wrapperClass="xl:m-2 flex items-center"
                                     disabled={answerStatus}
                                   />
                                 </div>
@@ -583,10 +583,10 @@ export default function Main() {
                         </div>
                       ) : (
                         <div>
-                          <div className="my-3 mx-0">
+                          <div className="my-3 mx-0 text-sm sm:text-md xl:text-xl">
                             Select the correct Verse.
                           </div>
-                          <div className="text-xs md:text-sm grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-1 sm:gap-4">
+                          <div className="text-xs md:text-sm xl:text-lg grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-1 sm:gap-4">
                             {verseOptions.map((one, index) => {
                               return (
                                 <div
@@ -598,7 +598,7 @@ export default function Main() {
                                   }}
                                 >
                                   <MDBRadio
-                                    className="scale-50 sm:scale-75 flex items-center"
+                                    className="scale-50 sm:scale-75 xl:scale-100 flex items-center"
                                     key={one.pk}
                                     name="verseOption"
                                     id={one.verse}
@@ -627,7 +627,7 @@ export default function Main() {
                                           : { color: "black" }
                                         : {}
                                     }
-                                    wrapperClass="flex items-center"
+                                    wrapperClass="xl:m-2 flex items-center"
                                     disabled={answerStatus}
                                   />
                                 </div>

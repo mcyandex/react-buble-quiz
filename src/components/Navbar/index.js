@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export default function Navbar() {
   return (
-    <div className="fixed top-14 m-3 sm:left-10">
+    <div className="absolute top-14 m-3 sm:left-10">
       <Link to="/">
         <div>
           <img

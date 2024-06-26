@@ -61,8 +61,11 @@ export default function Main() {
 
   const [selectedOption, setSelectedOption] = useState("");
 
+  const [messages, setMessages] = useState("");
+
   const [quizInfo, setQuizInfo] = useState({
-    selectedAns: "",
+    success: "",
+    error: "",
     ans: {},
   });
 
@@ -124,6 +127,7 @@ export default function Main() {
         );
         break;
     }
+    setMessages(message);
     return message;
   };
 
@@ -137,6 +141,7 @@ export default function Main() {
     );
     const books = booksOfSection.sort((a, b) => 0.5 - Math.random());
     bookId = books[0].bookid;
+    let bookAns = books[0];
 
     let versionRange = localStorage
       .getItem("section-num")
@@ -161,8 +166,9 @@ export default function Main() {
     setRandomVerse(randomChapterVerses[0]);
     verseId = randomChapterVerses[0].verse;
     setQuizInfo({
-      selectedAns: "",
-      ans: randomChapterVerses[0],
+      success: "",
+      error: "",
+      ans: { ...randomChapterVerses[0], chapter: chapterId, book: bookAns },
     });
     setVerseOptions(
       randomChapterVerses
@@ -180,31 +186,38 @@ export default function Main() {
       return;
     }
     if (questionType == 0) {
+      let selectedBook = await bookOptions.find(
+        (item) => item.bookid === selectedOption
+      ).name;
       if (selectedOption == bookId) {
         setQuestionType(1);
         setSelectedOption("");
         setCardLoading(true);
+        setQuizInfo({
+          ...quizInfo,
+          success: selectedBook,
+        });
 
         setTimeout(() => {
           setCardLoading(false);
         }, 1000);
       } else {
-        let selectedBook = await bookOptions.find(
-          (item) => item.bookid === selectedOption
-        ).name;
-        console.log("wrong:", selectedBook, ">");
         setQuizInfo({
           ...quizInfo,
-          selectedAns: selectedBook,
+          error: selectedBook,
         });
         setAnswerStatus(2);
-        if (questionNumber == PROBLEM_NUM) {
+        if (questionNumber >= PROBLEM_NUM) {
           handleNewModal("summary", "info", getScoreMessage(totalPoints));
           return;
         }
       }
     } else if (questionType == 1) {
       if (selectedOption == chapterId) {
+        setQuizInfo({
+          ...quizInfo,
+          success: `${quizInfo.success} Chapter ${selectedOption}`,
+        });
         setQuestionType(2);
         setSelectedOption("");
         setCardLoading(true);
@@ -219,16 +232,20 @@ export default function Main() {
       } else {
         setQuizInfo({
           ...quizInfo,
-          selectedAns: `Chapter ${selectedOption}`,
+          error: `Chapter ${selectedOption}`,
         });
         setAnswerStatus(2);
-        if (questionNumber == PROBLEM_NUM) {
+        if (questionNumber >= PROBLEM_NUM) {
           handleNewModal("summary", "info", getScoreMessage(totalPoints));
           return;
         }
       }
     } else {
       if (selectedOption == verseId) {
+        setQuizInfo({
+          ...quizInfo,
+          success: `All Correct +2`,
+        });
         setQuestionType(2);
 
         handleNewModal("", "info", "Additional point +1");
@@ -237,25 +254,27 @@ export default function Main() {
 
         setAnswerStatus(1);
 
-        if (questionNumber == PROBLEM_NUM) {
+        if (questionNumber >= PROBLEM_NUM) {
           handleNewModal("summary", "info", getScoreMessage(totalPoints + 1));
           return;
         }
       } else {
         setQuizInfo({
           ...quizInfo,
-          selectedAns: `Verse ${selectedOption}`,
+          success: `Chapter Correct +1`,
+          error: ``,
         });
         setAnswerStatus(2);
-        if (questionNumber == PROBLEM_NUM) {
+        if (questionNumber >= PROBLEM_NUM) {
           handleNewModal("summary", "info", getScoreMessage(totalPoints));
           return;
         }
       }
     }
   };
+
   const handleNext = () => {
-    if (questionNumber == PROBLEM_NUM) {
+    if (questionNumber >= PROBLEM_NUM) {
       handleNewModal("summary", "info", getScoreMessage(totalPoints));
       return;
     }
@@ -276,15 +295,14 @@ export default function Main() {
 
   useEffect(() => {
     setIsSummaryLoading(true);
-    console.log("QUIZ", quizInfo);
     let tmpArray = quizArray;
     tmpArray[questionNumber] = quizInfo;
-    setQuizArray(tmpArray);
     console.log(tmpArray);
+    setQuizArray(tmpArray);
     setTimeout(() => {
       setIsSummaryLoading(false);
     }, 900);
-  }, [quizInfo.selectedAns]);
+  }, [quizInfo.success, quizInfo.error]);
 
   return (
     <div className="main-page h-96 w-full pt-12 sm:pt-28 md:pt-32">
@@ -316,25 +334,23 @@ export default function Main() {
                 if (!index) return <></>;
                 return (
                   <div key={index} className="border sm:flex w-full">
-                    <div className="sm:border p-2 sm:w-[19%] text-center">
-                      {`Q${index}`}
+                    <div className="sm:border p-2 sm:w-[19%] ps-3">
+                      {`Q${index}. ${item.ans.book.name} ${item.ans.chapter}:${item.ans.verse}`}
                     </div>
                     <div className="sm:border p-2 sm:w-[64%] truncate text-ellipsis">
                       {item.ans.text}
                     </div>
-                    <div className="sm:border p-2 sm:w-[17%] text-center">
-                      {item.selectedAns === "" ? (
-                        <div className="text-green-500">Correct</div>
-                      ) : (
-                        <div className="text-red-500 line-through">
-                          {item.selectedAns}
-                        </div>
-                      )}
+                    <div className="sm:border p-2 sm:w-[17%] text-center flex">
+                      <div className="text-green-500">{item.success}</div>
+                      <div className="text-red-500 line-through">
+                        {item.error}
+                      </div>
                     </div>
                   </div>
                 );
               })}
             </div>
+            <div className="text-center lg:text-2xl text-cyan-500">{messages}</div>
             <div className="text-center">
               <Button
                 variant="contained"

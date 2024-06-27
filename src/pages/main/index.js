@@ -85,44 +85,64 @@ export default function Main() {
       case 0:
         message = (
           <div>
-            Total score: {score} - Maybe just a little more study to get you off
-            the mark!
+            <div className="font-bold inline">Total score: {score}</div> - Maybe
+            just a little more study to get you off the mark!
           </div>
         );
         break;
       case 1:
         message = (
-          <div>Total score: {score} - You're off the mark, nice job!</div>
+          <div>
+            <div className="font-bold inline">Total score: {score}</div> -
+            You're off the mark, nice job!
+          </div>
         );
         break;
       case 2:
         message = (
-          <div>Total score: {score} - 2's no fluke, keep'em coming</div>
+          <div>
+            <div className="font-bold inline">Total score: {score}</div> - 2's
+            no fluke, keep'em coming
+          </div>
         );
         break;
       case 3:
         message = (
           <div>
-            Total score: {score} - Yes, yes, some more studying to take you
-            higher
+            <div className="font-bold inline">Total score: {score}</div> - Yes,
+            yes, some more studying to take you higher
           </div>
         );
         break;
       case 4:
         message = (
-          <div>Total score: {score} - You're getting the hang of it</div>
+          <div>
+            <div className="font-bold inline">Total score: {score}</div> -
+            You're getting the hang of it
+          </div>
         );
         break;
       case 5:
-        message = <div>Total score: {score} - oh on FIRE!</div>;
+        message = (
+          <div>
+            <div className="font-bold inline">Total score: {score}</div> - oh on
+            FIRE!
+          </div>
+        );
         break;
       case 6:
-        message = <div>Total score: {score} - This is incredible...!</div>;
+        message = (
+          <div>
+            <div className="font-bold inline">Total score: {score}</div> - This
+            is incredible...!
+          </div>
+        );
         break;
       default:
         message = (
           <div>
-            Total score: {score} - You're invincible! A true Bible Verse Master!
+            <div className="font-bold inline">Total score: {score}</div> -
+            You're invincible! A true Bible Verse Master!
           </div>
         );
         break;
@@ -132,6 +152,7 @@ export default function Main() {
   };
 
   const getQuestion = async () => {
+    if (questionNumber > PROBLEM_NUM) return;
     setIsLoading(true);
     bookRange = section.split("-").map((one) => +one);
 
@@ -139,8 +160,12 @@ export default function Main() {
     const booksOfSection = allBooksSection.filter(
       (one) => one.bookid >= bookRange[0] && one.bookid <= bookRange[1]
     );
-    const books = booksOfSection.sort((a, b) => 0.5 - Math.random());
+    let books = [];
+    books = booksOfSection.sort((a, b) => 0.5 - Math.random());
+    while (books[0].chapter < 4)
+      books = booksOfSection.sort((a, b) => 0.5 - Math.random());
     bookId = books[0].bookid;
+
     let bookAns = books[0];
 
     let versionRange = localStorage
@@ -181,6 +206,7 @@ export default function Main() {
   };
 
   const handleSubmitAnswer = async () => {
+    if (questionNumber > PROBLEM_NUM) return;
     if (!selectedOption) {
       handleNewModal("WARNING", "warning", "Select the option!");
       return;
@@ -207,10 +233,10 @@ export default function Main() {
           error: selectedBook,
         });
         setAnswerStatus(2);
-        if (questionNumber >= PROBLEM_NUM) {
-          handleNewModal("summary", "info", getScoreMessage(totalPoints));
-          return;
-        }
+        // if (questionNumber >= PROBLEM_NUM) {
+        //   handleNewModal("summary", "info", getScoreMessage(totalPoints));
+        //   return;
+        // }
       }
     } else if (questionType == 1) {
       if (selectedOption == chapterId) {
@@ -235,10 +261,10 @@ export default function Main() {
           error: `Chapter ${selectedOption}`,
         });
         setAnswerStatus(2);
-        if (questionNumber >= PROBLEM_NUM) {
-          handleNewModal("summary", "info", getScoreMessage(totalPoints));
-          return;
-        }
+        // if (questionNumber >= PROBLEM_NUM) {
+        //   handleNewModal("summary", "info", getScoreMessage(totalPoints));
+        //   return;
+        // }
       }
     } else {
       if (selectedOption == verseId) {
@@ -254,10 +280,10 @@ export default function Main() {
 
         setAnswerStatus(1);
 
-        if (questionNumber >= PROBLEM_NUM) {
-          handleNewModal("summary", "info", getScoreMessage(totalPoints + 1));
-          return;
-        }
+        // if (questionNumber >= PROBLEM_NUM) {
+        //   handleNewModal("summary", "info", getScoreMessage(totalPoints + 1));
+        //   return;
+        // }
       } else {
         setQuizInfo({
           ...quizInfo,
@@ -265,10 +291,10 @@ export default function Main() {
           error: ``,
         });
         setAnswerStatus(2);
-        if (questionNumber >= PROBLEM_NUM) {
-          handleNewModal("summary", "info", getScoreMessage(totalPoints));
-          return;
-        }
+        // if (questionNumber >= PROBLEM_NUM) {
+        //   handleNewModal("summary", "info", getScoreMessage(totalPoints));
+        //   return;
+        // }
       }
     }
   };
@@ -276,7 +302,7 @@ export default function Main() {
   const handleNext = () => {
     if (questionNumber >= PROBLEM_NUM) {
       handleNewModal("summary", "info", getScoreMessage(totalPoints));
-      return;
+      // return;
     }
     getQuestion();
     setQuestionNumber(questionNumber + 1);
@@ -294,6 +320,7 @@ export default function Main() {
   }, [lang, section]);
 
   useEffect(() => {
+    if (questionNumber > PROBLEM_NUM) return;
     setIsSummaryLoading(true);
     let tmpArray = quizArray;
     tmpArray[questionNumber] = quizInfo;
@@ -306,8 +333,7 @@ export default function Main() {
 
   return (
     <div className="main-page h-96 w-full pt-12 sm:pt-28 md:pt-32">
-      {questionNumber === PROBLEM_NUM &&
-      (answerStatus === 2 || (answerStatus === 1 && questionType === 2)) ? (
+      {questionNumber > PROBLEM_NUM ? (
         isSummaryLoading ? (
           <div className="w-full flex justify-center h-full items-center">
             <div className="loading-wave">
@@ -319,7 +345,8 @@ export default function Main() {
           </div>
         ) : (
           <div className="w-3/4 m-auto transition duration-700">
-            <div className="text-red-500 text-center text-3xl md:text-5xl">
+            <div className="text-center text-3xl md:text-5xl flex justify-center gap-3">
+              <img src={`/assets/images/icon.png`} className="w-8 h-8" />
               Summary
             </div>
             <div className="w-full border m-3">
@@ -334,14 +361,14 @@ export default function Main() {
                 if (!index) return <></>;
                 return (
                   <div key={index} className="border sm:flex w-full">
-                    <div className="sm:border p-2 sm:w-[19%] ps-3">
+                    <div className="sm:border p-2 sm:w-[19%] ps-3 underline">
                       {`Q${index}. ${item.ans.book.name} ${item.ans.chapter}:${item.ans.verse}`}
                     </div>
                     <div className="sm:border p-2 sm:w-[64%] truncate text-ellipsis">
                       {item.ans.text}
                     </div>
-                    <div className="sm:border p-2 sm:w-[17%] text-center flex">
-                      <div className="text-green-500">{item.success}</div>
+                    <div className="sm:border p-2 sm:w-[17%] text-center block lg:flex">
+                      <div className="text-[#458258] me-1">{item.success}</div>
                       <div className="text-red-500 line-through">
                         {item.error}
                       </div>
@@ -350,7 +377,9 @@ export default function Main() {
                 );
               })}
             </div>
-            <div className="text-center lg:text-2xl text-cyan-500">{messages}</div>
+            <div className="text-center lg:text-2xl text-blue-500">
+              {messages}
+            </div>
             <div className="text-center">
               <Button
                 variant="contained"
@@ -372,9 +401,10 @@ export default function Main() {
         <div className="animate-[fadeInAnimation_1s_ease]">
           <MDBTypography
             tag={"h2"}
-            className="font-serif text-center text-3xl md:text-5xl xl:text-6xl fw-bold m-4 text-[#458258] "
+            className="font-serif text-center text-3xl md:text-5xl xl:text-6xl fw-bold m-4 text-[#458258] flex justify-center gap-3"
           >
-            Question {questionNumber}
+              <img src={`/assets/images/icon.png`} className="w-8 h-8 md:w-12 md:h-12 xl:w-16 xl:h-16" />
+              Question {questionNumber}
           </MDBTypography>
           <div className="w-2/3 m-auto md:w-1/2 xl:w-1/3">
             <Slider
@@ -459,7 +489,7 @@ export default function Main() {
                         color="success"
                         onClick={handleNext}
                         style={
-                          answerStatus && questionNumber != PROBLEM_NUM
+                          answerStatus
                             ? { display: "block" }
                             : { display: "none" }
                         }
@@ -518,7 +548,7 @@ export default function Main() {
                                           : { color: "black" }
                                         : {}
                                     }
-                                    wrapperClass="xl:m-2 flex items-center"
+                                    wrapperClass="xl:m-2 flex items-center truncate text-ellipsis"
                                     disabled={answerStatus}
                                   />
                                 </div>
@@ -685,7 +715,6 @@ export default function Main() {
           )}
         </DialogActions>
       </BootstrapDialog>
-      <Navbar />
     </div>
   );
 }

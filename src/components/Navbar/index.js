@@ -9,7 +9,7 @@ export default function Navbar() {
   const navigate = useNavigate();
 
   return (
-    <div className="absolute top-14 m-3 sm:left-10">
+    <div className="absolute top-7 m-5 ms-4 sm:left-10">
       <div onClick={handleOpen}>
         <img
           src={`/assets/images/icon.png`}

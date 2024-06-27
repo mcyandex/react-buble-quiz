@@ -27,7 +27,6 @@ import TelegramIcon from "@mui/icons-material/Telegram";
 import NextPlanIcon from "@mui/icons-material/NextPlan";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { getChapterCounts, getVerseCounts } from "../../libs/getItemCount";
-import Navbar from "../../components/Navbar";
 
 let bookRange = [];
 let bookId, chapterRange, chapterId, verseId;
@@ -186,8 +185,13 @@ export default function Main() {
       chapters.slice(0, getChapterCounts(chapterRange)).sort((a, b) => a - b)
     );
 
-    const randomChapterVerses = await GetRandomChapter(lang, bookId, chapterId);
-    randomChapterVerses.sort((a, b) => 0.5 - Math.random());
+    let randomChapterVerses;
+
+    do {
+      randomChapterVerses = await GetRandomChapter(lang, bookId, chapterId);
+      randomChapterVerses.sort((a, b) => 0.5 - Math.random());
+    } while (randomChapterVerses[0].text.length < 4);
+    
     setRandomVerse(randomChapterVerses[0]);
     verseId = randomChapterVerses[0].verse;
     setQuizInfo({
@@ -346,7 +350,10 @@ export default function Main() {
         ) : (
           <div className="w-3/4 m-auto transition duration-700">
             <div className="text-center text-3xl md:text-5xl flex justify-center gap-3">
-              <img src={`/assets/images/icon.png`} className="w-8 h-8 md:w-10 md:h-10" />
+              <img
+                src={`/assets/images/icon.png`}
+                className="w-8 h-8 md:w-10 md:h-10"
+              />
               Summary
             </div>
             <div className="w-full border m-3">

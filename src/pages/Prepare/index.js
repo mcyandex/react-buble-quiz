@@ -61,7 +61,7 @@ export default function PreparePage(props) {
             readOnly
             isSearchable={false}
             className="mb-1 sm:w-full"
-            placeholder={"Enter language..."}
+            placeholder={"Select language"}
             options={LANG_DATA}
             getOptionLabel={(option) => option.language}
             getOptionValue={(option) => option.language}
@@ -79,11 +79,6 @@ export default function PreparePage(props) {
             required
           />
         </div>
-        {!selectedLanguage.language && (
-          <Alert variant="outlined" color="info" severity="none">
-            Select language
-          </Alert>
-        )}
 
         <div className="mt-4 w-full items-center">
           <div className="font-sans font-bold py-2 md:py-4 text-lg sm:text-xl xl:mt-12 xl:text-3xl">
@@ -93,7 +88,7 @@ export default function PreparePage(props) {
             readOnly
             isSearchable={false}
             className="mb-1 sm:w-full"
-            placeholder={"Enter version of Bible..."}
+            placeholder={"Select version"}
             options={versionOptions}
             getOptionLabel={(option) =>
               option.short_name && `${option.short_name} - ${option.full_name}`
@@ -110,11 +105,6 @@ export default function PreparePage(props) {
             required
           />
         </div>
-        {!selectedVersion.short_name && (
-          <Alert variant="outlined" color="info" severity="none">
-            Select version
-          </Alert>
-        )}
 
         <div className="mt-4 w-full items-center">
           <div className="font-sans font-bold py-2 text-lg sm:text-xl xl:mt-12 xl:text-3xl">
@@ -124,7 +114,7 @@ export default function PreparePage(props) {
             readOnly
             isSearchable={false}
             className="mb-1 sm:w-full"
-            placeholder={"Enter verse of Bible..."}
+            placeholder={"Select section"}
             options={SECTION_DATA}
             getOptionLabel={(option) => option.bible}
             getOptionValue={(option) => option.bible}
@@ -141,11 +131,6 @@ export default function PreparePage(props) {
             }}
           />
         </div>
-        {!selectedSection.value && (
-          <Alert variant="outlined" color="info" severity="none">
-            Select section
-          </Alert>
-        )}
 
         <div className="text-right">
           <MDBBtn

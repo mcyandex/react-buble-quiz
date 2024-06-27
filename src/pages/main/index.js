@@ -32,7 +32,7 @@ import Navbar from "../../components/Navbar";
 let bookRange = [];
 let bookId, chapterRange, chapterId, verseId;
 
-const PROBLEM_NUM = 1;
+const PROBLEM_NUM = 10;
 
 export default function Main() {
   const { lang, section } = useParams();
@@ -346,7 +346,7 @@ export default function Main() {
         ) : (
           <div className="w-3/4 m-auto transition duration-700">
             <div className="text-center text-3xl md:text-5xl flex justify-center gap-3">
-              <img src={`/assets/images/icon.png`} className="w-8 h-8" />
+              <img src={`/assets/images/icon.png`} className="w-8 h-8 md:w-10 md:h-10" />
               Summary
             </div>
             <div className="w-full border m-3">

@@ -5,8 +5,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import App from "./App";
 
 import MainPage from "./pages/main";
-import InstructionPage from "./pages/Instruction";
 import PreparePage from "./pages/Prepare";
+import InstructionPage from "./pages/InstructionPage";
 
 const container = document.getElementById("root");
 const root = createRoot(container);

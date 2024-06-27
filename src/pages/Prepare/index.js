@@ -80,8 +80,8 @@ export default function PreparePage(props) {
           />
         </div>
         {!selectedLanguage.language && (
-          <Alert variant="outlined" color="info" severity="warning">
-            Enter language
+          <Alert variant="outlined" color="info" severity="none">
+            Select language
           </Alert>
         )}
 
@@ -111,8 +111,8 @@ export default function PreparePage(props) {
           />
         </div>
         {!selectedVersion.short_name && (
-          <Alert variant="outlined" color="info" severity="warning">
-            Enter version of Bible
+          <Alert variant="outlined" color="info" severity="none">
+            Select version
           </Alert>
         )}
 
@@ -142,8 +142,8 @@ export default function PreparePage(props) {
           />
         </div>
         {!selectedSection.value && (
-          <Alert variant="outlined" color="info" severity="warning">
-            Enter verse of Bible
+          <Alert variant="outlined" color="info" severity="none">
+            Select section
           </Alert>
         )}
 

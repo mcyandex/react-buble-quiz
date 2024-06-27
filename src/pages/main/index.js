@@ -385,8 +385,8 @@ export default function Main() {
             <div className="text-center">
               <Button
                 variant="contained"
-                className="m-3 w-0 sm:w-40"
-                color="error"
+                className="m-3 w-0 sm:w-40 bg-[#458258]"
+                color="success"
                 onClick={() => {
                   navigate("/");
                 }}

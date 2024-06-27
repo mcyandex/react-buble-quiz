@@ -32,4 +32,8 @@ To build this project run
 
 To change numbers of chatpters and verses you can use the following files
 
-  src/consts/BooksSetting.json,ChaptersSetting.json,VersesSetting.json
+```bash
+  src/consts/BooksSetting.json
+  src/consts/ChaptersSetting.json
+  src/consts/VersesSetting.json
+```

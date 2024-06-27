@@ -49,7 +49,7 @@ export default function PreparePage(props) {
 
   return (
     <div className="before-page h-screen flex flex-col md:flex-row md:gap-40 lg:gap-48 md:items-center">
-      <MDBTypography className="font-sans font-bold text-center text-2xl  sm:text-3xl py-6 md:w-1/4 xl:text-5xl">
+      <MDBTypography className="font-sans font-bold text-center text-2xl sm:text-3xl py-6 md:w-1/4 xl:text-5xl">
         Configure Settings
       </MDBTypography>
       <div className="mt-2 md:w-3/4">
@@ -86,7 +86,7 @@ export default function PreparePage(props) {
         )}
 
         <div className="mt-4 w-full items-center">
-          <div className="font-sans font-bold py-2 md:py-4 text-lg sm:text-xl  xl:mt-12 xl:text-3xl">
+          <div className="font-sans font-bold py-2 md:py-4 text-lg sm:text-xl xl:mt-12 xl:text-3xl">
             Version:
           </div>
           <Select

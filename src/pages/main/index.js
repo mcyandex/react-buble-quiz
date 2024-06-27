@@ -84,7 +84,7 @@ export default function Main() {
       case 0:
         message = (
           <div className="text-center">
-            <div className="font-extrabold md:font-bold">
+            <div className="font-extrabold lg:font-bold">
               Total score: {score}
             </div>
             <div>Maybe just a little more study to get you off the mark!</div>
@@ -94,7 +94,7 @@ export default function Main() {
       case 1:
         message = (
           <div className="text-center">
-            <div className="font-extrabold md:font-bold">
+            <div className="font-extrabold lg:font-bold">
               Total score: {score}
             </div>
             <div>You're off the mark, nice job!</div>
@@ -104,7 +104,7 @@ export default function Main() {
       case 2:
         message = (
           <div className="text-center">
-            <div className="font-extrabold md:font-bold">
+            <div className="font-extrabold lg:font-bold">
               Total score: {score}
             </div>
             <div>2's no fluke, keep'em coming</div>
@@ -114,7 +114,7 @@ export default function Main() {
       case 3:
         message = (
           <div className="text-center">
-            <div className="font-extrabold md:font-bold">
+            <div className="font-extrabold lg:font-bold">
               Total score: {score}
             </div>
             <div>Yes, yes, some more studying to take you higher</div>
@@ -124,7 +124,7 @@ export default function Main() {
       case 4:
         message = (
           <div className="text-center">
-            <div className="font-extrabold md:font-bold">
+            <div className="font-extrabold lg:font-bold">
               Total score: {score}
             </div>
             <div>You're getting the hang of it</div>
@@ -134,7 +134,7 @@ export default function Main() {
       case 5:
         message = (
           <div className="text-center">
-            <div className="font-extrabold md:font-bold">
+            <div className="font-extrabold lg:font-bold">
               Total score: {score}
             </div>
             <div>oh on FIRE!</div>
@@ -144,7 +144,7 @@ export default function Main() {
       case 6:
         message = (
           <div className="text-center">
-            <div className="font-extrabold md:font-bold">
+            <div className="font-extrabold lg:font-bold">
               Total score: {score}
             </div>
             <div>This is incredible...!</div>
@@ -154,7 +154,7 @@ export default function Main() {
       default:
         message = (
           <div className="text-center">
-            <div className="font-extrabold md:font-bold">
+            <div className="font-extrabold lg:font-bold">
               Total score: {score}
             </div>
             <div>You're invincible! A true Bible Verse Master!</div>
@@ -253,10 +253,6 @@ export default function Main() {
           error: selectedBook,
         });
         setAnswerStatus(2);
-        // if (questionNumber >= PROBLEM_NUM) {
-        //   handleNewModal("summary", "info", getScoreMessage(totalPoints));
-        //   return;
-        // }
       }
     } else if (questionType == 1) {
       if (selectedOption == chapterId) {
@@ -281,10 +277,6 @@ export default function Main() {
           error: `Chapter ${selectedOption}`,
         });
         setAnswerStatus(2);
-        // if (questionNumber >= PROBLEM_NUM) {
-        //   handleNewModal("summary", "info", getScoreMessage(totalPoints));
-        //   return;
-        // }
       }
     } else {
       if (selectedOption == verseId) {
@@ -299,11 +291,6 @@ export default function Main() {
         setTotalPoints(totalPoints + 1);
 
         setAnswerStatus(1);
-
-        // if (questionNumber >= PROBLEM_NUM) {
-        //   handleNewModal("summary", "info", getScoreMessage(totalPoints + 1));
-        //   return;
-        // }
       } else {
         setQuizInfo({
           ...quizInfo,
@@ -311,19 +298,14 @@ export default function Main() {
           error: ``,
         });
         setAnswerStatus(2);
-        // if (questionNumber >= PROBLEM_NUM) {
-        //   handleNewModal("summary", "info", getScoreMessage(totalPoints));
-        //   return;
-        // }
       }
     }
   };
 
   const handleNext = () => {
-    if (questionNumber >= PROBLEM_NUM) {
+    if (questionNumber >= PROBLEM_NUM)
       handleNewModal("summary", "info", getScoreMessage(totalPoints));
-      // return;
-    }
+
     getQuestion();
     setQuestionNumber(questionNumber + 1);
     setAnswerStatus(0);

@@ -47,7 +47,6 @@ export const GetLanguages = () => {
     instance
       .get(`/static/bolls/app/views/languages.json`)
       .then((res) => {
-        console.log("response: ", res.data);
         resolve(res.data);
       })
       .catch((err) => {

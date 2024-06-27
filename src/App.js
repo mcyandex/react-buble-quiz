@@ -13,7 +13,7 @@ export default function App() {
           <div>MASTER</div>
         </div>
         <div className="flex flex-col justify-center gap-2">
-          <Link to="/before">
+          <Link to="/prepare">
             <div className="font-start text-2xl font-bold md:text-4xl xl:text-5 text-black">
               START
             </div>

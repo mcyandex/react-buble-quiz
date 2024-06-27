@@ -2,7 +2,7 @@ import React, { useState, useEffect, version } from "react";
 import { MDBBtn, MDBTypography } from "mdb-react-ui-kit";
 import Select from "react-select";
 import { useNavigate } from "react-router-dom";
-// import Alert from "@mui/material/Alert";
+import Alert from "@mui/material/Alert";
 
 import LANG_DATA from "../../consts/LanguagesData.json";
 import SECTION_DATA from "../../consts/BooksSetting.json";
@@ -10,7 +10,7 @@ import SECTION_DATA from "../../consts/BooksSetting.json";
 import "./styles.css";
 import SchoolSharpIcon from "@mui/icons-material/SchoolSharp";
 
-export default function Before(props) {
+export default function PreparePage(props) {
   const [versionOptions, setVersionOptions] = useState([]);
 
   const [selectedLanguage, setSelectedLanguage] = useState({});
@@ -79,11 +79,11 @@ export default function Before(props) {
             required
           />
         </div>
-        {/* {!selectedLanguage.language && (
+        {!selectedLanguage.language && (
           <Alert variant="outlined" color="info" severity="warning">
-            Language must be input!
+            Enter language
           </Alert>
-        )} */}
+        )}
 
         <div className="mt-4 w-full items-center">
           <div className="font-sans font-bold py-2 md:py-4 text-lg sm:text-xl  xl:mt-12 xl:text-3xl">
@@ -110,11 +110,11 @@ export default function Before(props) {
             required
           />
         </div>
-        {/* {!selectedVersion.short_name && (
+        {!selectedVersion.short_name && (
           <Alert variant="outlined" color="info" severity="warning">
-            Version of Bible must be input!
+            Enter version of Bible
           </Alert>
-        )} */}
+        )}
 
         <div className="mt-4 w-full items-center">
           <div className="font-sans font-bold py-2 text-lg sm:text-xl xl:mt-12 xl:text-3xl">
@@ -141,11 +141,11 @@ export default function Before(props) {
             }}
           />
         </div>
-        {/* {!selectedSection.value && (
+        {!selectedSection.value && (
           <Alert variant="outlined" color="info" severity="warning">
-            Verse of Bible must be input!
+            Enter verse of Bible
           </Alert>
-        )} */}
+        )}
 
         <div className="text-right">
           <MDBBtn

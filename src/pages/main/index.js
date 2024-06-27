@@ -83,65 +83,81 @@ export default function Main() {
     switch (score) {
       case 0:
         message = (
-          <div>
-            <div className="font-bold inline">Total score: {score}</div> - Maybe
-            just a little more study to get you off the mark!
+          <div className="text-center">
+            <div className="font-extrabold md:font-bold">
+              Total score: {score}
+            </div>
+            <div>Maybe just a little more study to get you off the mark!</div>
           </div>
         );
         break;
       case 1:
         message = (
-          <div>
-            <div className="font-bold inline">Total score: {score}</div> -
-            You're off the mark, nice job!
+          <div className="text-center">
+            <div className="font-extrabold md:font-bold">
+              Total score: {score}
+            </div>
+            <div>You're off the mark, nice job!</div>
           </div>
         );
         break;
       case 2:
         message = (
-          <div>
-            <div className="font-bold inline">Total score: {score}</div> - 2's
-            no fluke, keep'em coming
+          <div className="text-center">
+            <div className="font-extrabold md:font-bold">
+              Total score: {score}
+            </div>
+            <div>2's no fluke, keep'em coming</div>
           </div>
         );
         break;
       case 3:
         message = (
-          <div>
-            <div className="font-bold inline">Total score: {score}</div> - Yes,
-            yes, some more studying to take you higher
+          <div className="text-center">
+            <div className="font-extrabold md:font-bold">
+              Total score: {score}
+            </div>
+            <div>Yes, yes, some more studying to take you higher</div>
           </div>
         );
         break;
       case 4:
         message = (
-          <div>
-            <div className="font-bold inline">Total score: {score}</div> -
-            You're getting the hang of it
+          <div className="text-center">
+            <div className="font-extrabold md:font-bold">
+              Total score: {score}
+            </div>
+            <div>You're getting the hang of it</div>
           </div>
         );
         break;
       case 5:
         message = (
-          <div>
-            <div className="font-bold inline">Total score: {score}</div> - oh on
-            FIRE!
+          <div className="text-center">
+            <div className="font-extrabold md:font-bold">
+              Total score: {score}
+            </div>
+            <div>oh on FIRE!</div>
           </div>
         );
         break;
       case 6:
         message = (
-          <div>
-            <div className="font-bold inline">Total score: {score}</div> - This
-            is incredible...!
+          <div className="text-center">
+            <div className="font-extrabold md:font-bold">
+              Total score: {score}
+            </div>
+            <div>This is incredible...!</div>
           </div>
         );
         break;
       default:
         message = (
-          <div>
-            <div className="font-bold inline">Total score: {score}</div> -
-            You're invincible! A true Bible Verse Master!
+          <div className="text-center">
+            <div className="font-extrabold md:font-bold">
+              Total score: {score}
+            </div>
+            <div>You're invincible! A true Bible Verse Master!</div>
           </div>
         );
         break;
@@ -191,7 +207,7 @@ export default function Main() {
       randomChapterVerses = await GetRandomChapter(lang, bookId, chapterId);
       randomChapterVerses.sort((a, b) => 0.5 - Math.random());
     } while (randomChapterVerses[0].text.length < 4);
-    
+
     setRandomVerse(randomChapterVerses[0]);
     verseId = randomChapterVerses[0].verse;
     setQuizInfo({
@@ -328,7 +344,6 @@ export default function Main() {
     setIsSummaryLoading(true);
     let tmpArray = quizArray;
     tmpArray[questionNumber] = quizInfo;
-    console.log(tmpArray);
     setQuizArray(tmpArray);
     setTimeout(() => {
       setIsSummaryLoading(false);
@@ -356,34 +371,28 @@ export default function Main() {
               />
               Summary
             </div>
-            <div className="w-full border m-3">
-              {/* <div className="hidden sm:flex w-full ">
-                <div className="border p-2 w-[19%] text-center">Questions</div>
-                <div className="border p-2 w-[64%] text-center truncate text-ellipsis">
-                  Content
-                </div>
-                <div className="border p-2 w-[17%] text-center">Rate</div>
-              </div> */}
+            <div className="w-full m-3">
               {quizArray.map((item, index) => {
                 if (!index) return <></>;
                 return (
-                  <div key={index} className="border sm:flex w-full">
-                    <div className="sm:border p-2 sm:w-[19%] ps-3 underline">
+                  <div key={index} className="block my-2 sm:flex w-full">
+                    <div className="p-2 sm:w-[19%] ps-3 underline inline">
                       {`Q${index}. ${item.ans.book.name} ${item.ans.chapter}:${item.ans.verse}`}
                     </div>
-                    <div className="sm:border p-2 sm:w-[64%] truncate text-ellipsis flex items-center">
-                      {item.ans.text}
+                    <div className="p-2 sm:w-[64%] inline sm:flex items-center italic">
+                      {item.ans.text.split(" ").slice(0, 16).join(" ")}
+                      {item.ans.text.split(" ").length > 16 && "..."}
                     </div>
-                    <div className="sm:border p-2 sm:w-[17%] text-center flex items-center">
-                      <div className="m-auto flex md:block lg:flex">
-                        <div className="text-[#458258] me-1">
+                    <span className="p-2 sm:w-[17%] text-center inline sm:flex items-center">
+                      <span className="m-auto inline sm:flex md:block lg:flex">
+                        <span className="text-[#458258] me-1">
                           {item.success}
-                        </div>
-                        <div className="text-red-500 line-through">
+                        </span>
+                        <span className="text-red-500 inline line-through">
                           {item.error}
-                        </div>
-                      </div>
-                    </div>
+                        </span>
+                      </span>
+                    </span>
                   </div>
                 );
               })}
@@ -397,7 +406,7 @@ export default function Main() {
                 className="m-3 w-0 sm:w-40"
                 color="error"
                 onClick={() => {
-                  navigate("/before");
+                  navigate("/");
                 }}
               >
                 <div className="flex flex-row items-center align-middle gap-1">
@@ -527,7 +536,6 @@ export default function Main() {
                                   key={index}
                                   className="p-0 sm:p-1 rounded-lg border-[1px]"
                                   onClick={(_, e) => {
-                                    console.log("1111", one.bookid, bookId);
                                     if (answerStatus == 0)
                                       setSelectedOption(one.bookid);
                                   }}
@@ -583,7 +591,6 @@ export default function Main() {
                                   key={i}
                                   className="p-0 sm:p-1 rounded-lg border-[1px]"
                                   onClick={() => {
-                                    console.log("2222", one, chapterId);
                                     if (answerStatus == 0)
                                       setSelectedOption(one);
                                   }}
@@ -638,7 +645,6 @@ export default function Main() {
                                   key={index}
                                   className="p-0 sm:p-1 rounded-lg border-[1px]"
                                   onClick={() => {
-                                    console.log("333333", one.verse, verseId);
                                     if (answerStatus == 0)
                                       setSelectedOption(one.verse);
                                   }}

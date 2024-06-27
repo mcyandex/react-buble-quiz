@@ -32,7 +32,7 @@ import Navbar from "../../components/Navbar";
 let bookRange = [];
 let bookId, chapterRange, chapterId, verseId;
 
-const PROBLEM_NUM = 10;
+const PROBLEM_NUM = 1;
 
 export default function Main() {
   const { lang, section } = useParams();
@@ -364,13 +364,17 @@ export default function Main() {
                     <div className="sm:border p-2 sm:w-[19%] ps-3 underline">
                       {`Q${index}. ${item.ans.book.name} ${item.ans.chapter}:${item.ans.verse}`}
                     </div>
-                    <div className="sm:border p-2 sm:w-[64%] truncate text-ellipsis">
+                    <div className="sm:border p-2 sm:w-[64%] truncate text-ellipsis flex items-center">
                       {item.ans.text}
                     </div>
-                    <div className="sm:border p-2 sm:w-[17%] text-center block lg:flex">
-                      <div className="text-[#458258] me-1">{item.success}</div>
-                      <div className="text-red-500 line-through">
-                        {item.error}
+                    <div className="sm:border p-2 sm:w-[17%] text-center flex items-center">
+                      <div className="m-auto flex md:block lg:flex">
+                        <div className="text-[#458258] me-1">
+                          {item.success}
+                        </div>
+                        <div className="text-red-500 line-through">
+                          {item.error}
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -383,7 +387,7 @@ export default function Main() {
             <div className="text-center">
               <Button
                 variant="contained"
-                className="m-3 w-0 md:w-40"
+                className="m-3 w-0 sm:w-40"
                 color="error"
                 onClick={() => {
                   navigate("/before");
@@ -403,8 +407,11 @@ export default function Main() {
             tag={"h2"}
             className="font-serif text-center text-3xl md:text-5xl xl:text-6xl fw-bold m-4 text-[#458258] flex justify-center gap-3"
           >
-              <img src={`/assets/images/icon.png`} className="w-8 h-8 md:w-12 md:h-12 xl:w-16 xl:h-16" />
-              Question {questionNumber}
+            <img
+              src={`/assets/images/icon.png`}
+              className="w-8 h-8 md:w-12 md:h-12 xl:w-16 xl:h-16"
+            />
+            Question {questionNumber}
           </MDBTypography>
           <div className="w-2/3 m-auto md:w-1/2 xl:w-1/3">
             <Slider

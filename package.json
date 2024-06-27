@@ -4,6 +4,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "react-scripts start",
     "start": "react-scripts start",
     "build": "react-scripts build"
   },
